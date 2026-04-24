@@ -1,18 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cameron Kani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f1117;
+            color: #e8e8e8;
+            min-height: 100vh;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 24px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200, 162, 52, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200, 162, 52, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: #c8a234;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 300;
+            color: #9ca3af;
+            max-width: 520px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+
+        .tag {
+            background: rgba(200, 162, 52, 0.1);
+            border: 1px solid rgba(200, 162, 52, 0.3);
+            color: #c8a234;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: #4b5563;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .scroll-hint::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 36px;
+            background: linear-gradient(to bottom, #4b5563, transparent);
+        }
+
+        /* ── Nav Cards ── */
+        .nav-section {
+            padding: 80px 24px 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 260px;
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            filter: brightness(0.55);
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.45);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+        }
+
+        .card-body {
+            position: relative;
+            padding: 20px;
+        }
+
+        .card-icon {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-sub {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.04em;
+        }
+
+        .card-arrow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1rem;
+            color: #c8a234;
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity 0.25s, transform 0.25s;
+        }
+
+        .card:hover .card-arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* Resume card — no image */
+        .card-resume {
+            background: linear-gradient(135deg, #1c1f2e 0%, #12141d 100%);
+            border: 1px solid rgba(200, 162, 52, 0.2);
+        }
+
+        .card-resume .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid #1f2231;
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #374151;
+        }
+    </style>
 </head>
 <body>
-	<h1>Hello, my name is Cameron</h1>
-	<p>Welcome to the Website Index.</p>
-	<section id="parts-of-me">
-		<h2>What do you want to find out?:</h2>
-		<a href="STEM.html">My STEM Experience, </a>
-		<a href="athletic.html">My Athletic Career, </a>
-		<a href="acting.html">My Acting Career, </a>
-		<a href="games.html">Favorite Games</a>
-		<a href="resume.html">My Resume</a>
-	</section>
+
+    <section class="hero">
+        <p class="hero-eyebrow">Welcome</p>
+        <h1>Cameron <span>Kani</span></h1>
+        <p class="hero-tagline">
+            Researcher, athlete, and builder — driven by curiosity at the intersection of science, math, and technology.
+        </p>
+        <div class="hero-tags">
+            <span class="tag">ML & Bioinformatics</span>
+            <span class="tag">Wayve.ai Intern</span>
+            <span class="tag">CIF State Athlete</span>
+            <span class="tag">Mock Trial Co-Captain</span>
+            <span class="tag">Theater</span>
+        </div>
+        <div class="scroll-hint">Explore</div>
+    </section>
+
+    <section class="nav-section">
+        <p class="section-label">Explore</p>
+        <div class="cards">
+
+            <a class="card" href="STEM.html">
+                <img src="images/STEM.jpg" alt="STEM">
+                <div class="card-overlay"></div>
+                <span class="card-arrow">↗</span>
+                <div class="card-body">
+                    <div class="card-icon">🔬</div>
+                    <div class="card-title">STEM</div>
+                    <div class="card-sub">Research &amp; Engineering</div>
+                </div>
+            </a>
+
+            <a class="card" href="athletic.html">
+                <img src="images/RUNNING.JPG" alt="Athletics">
+                <div class="card-overlay"></div>
+                <span class="card-arrow">↗</span>
+                <div class="card-body">
+                    <div class="card-icon">🏅</div>
+                    <div class="card-title">Athletics</div>
+                    <div class="card-sub">Track, XC &amp; Soccer</div>
+                </div>
+            </a>
+
+            <a class="card" href="acting.html">
+                <img src="images/ANTONIO.jpeg" alt="Acting">
+                <div class="card-overlay"></div>
+                <span class="card-arrow">↗</span>
+                <div class="card-body">
+                    <div class="card-icon">🎭</div>
+                    <div class="card-title">Acting</div>
+                    <div class="card-sub">Theater &amp; Performance</div>
+                </div>
+            </a>
+
+            <a class="card" href="games.html">
+                <img src="images/Paul.jpg" alt="Games">
+                <div class="card-overlay"></div>
+                <span class="card-arrow">↗</span>
+                <div class="card-body">
+                    <div class="card-icon">🎮</div>
+                    <div class="card-title">Games</div>
+                    <div class="card-sub">Favorites &amp; Reviews</div>
+                </div>
+            </a>
+
+            <a class="card card-resume" href="resume.html">
+                <span class="card-arrow">↗</span>
+                <div class="card-body">
+                    <div class="card-icon">📄</div>
+                    <div class="card-title">Resume</div>
+                    <div class="card-sub">Experience &amp; Honors</div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Cameron Kani
+    </footer>
+
 </body>
 </html>
