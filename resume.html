@@ -6,61 +6,73 @@
     <title>Cameron Kani's Resume</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Calibri', Arial, sans-serif;
+            margin: 40px 60px;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.4;
         }
         .header {
             text-align: center;
-            color: #000000;
+            margin-bottom: 15px;
         }
         .header h1 {
-            margin-bottom: 5px;
-            font-size: 36px;
+            margin: 0 0 5px 0;
+            font-size: 20px;
             font-weight: bold;
+            letter-spacing: 1px;
         }
         .header p {
-            margin-top: 0;
-            font-size: 16px;
+            margin: 0;
+            font-size: 11px;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .section h2 {
-            border-bottom: 2px solid #e7e751;
-            padding-bottom: 5px;
-            color: #000000;
+            font-size: 12px;
             font-weight: bold;
-        }
-        .section ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .section ul li {
-            margin-bottom: 10px;
+            margin: 0 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px solid #000000;
         }
         .subsection {
             margin-bottom: 10px;
         }
-        .subsection h3 {
-            margin-bottom: 5px;
-            color: #264653;
-            font-weight: bold;
+        .subsection-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2px;
         }
-        .subsection p {
-            margin-top: 0;
-            margin-bottom: 5px;
+        .subsection-title {
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .subsection-date {
+            font-size: 11px;
+            font-style: italic;
         }
         .subsection ul {
-            margin-top: 0;
+            margin: 2px 0 0 0;
+            padding-left: 20px;
+            font-size: 11px;
         }
-        .contact {
-            text-align: center;
-            margin-top: 20px;
+        .subsection ul li {
+            margin-bottom: 3px;
+        }
+        .summary {
+            font-size: 11px;
+        }
+        .summary ul {
+            margin: 5px 0 0 0;
+            padding-left: 20px;
+        }
+        .summary ul li {
+            margin-bottom: 3px;
         }
         a {
-            color: #517de5;
+            color: #000000;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -68,154 +80,142 @@
 
     <div class="header">
         <h1>CAMERON KANI</h1>
-        <p>e: <a href="mailto:kani2cmk@gmail.com">kani2cmk@gmail.com</a> | m: 650-868-8712</p>
+        <p>kani2cmk@gmail.com | 650-868-8712</p>
     </div>
 
-    <div class="section">
-        <h2>Education</h2>
+    <div class="section summary">
+        <h2>Summary</h2>
         <ul>
-            <li>
-                <h3>Crystal Springs Upland School</h3>
-                <p>Aug 22 – current</p>
-                <ul>
-                    <li>GPA: 4.11</li>
-                    <li>Awards: First Place, Computer & Data Science category @ 2024 Crystal STEM Symposium</li>
-                    <li>Varsity Athlete: 2024 California State Sectional Competition in 4x400m relay & school record holder for Track & Field</li>
-                    <li>Varsity Athlete: 2024 3rd at State in CIF Cross Country</li>
-                    <li>Varsity Athlete: 2025 12th at State in CIF 4x800m</li>
-                </ul>
-            </li>
+            <li>Passion for interdisciplinary research, especially intersection of math, biology and technology</li>
+            <li>Collaborative team member and leader in both academic and athletic environments</li>
         </ul>
     </div>
 
     <div class="section">
         <h2>Research & Honors</h2>
-        <ul>
-            <li class="subsection">
-                <h3>Golden Gate STEM Fair, Third Place, Computer Science Category</h3>
-                <p>2023 Feb 24 – Apr 24</p>
-                <p><a href="https://ggstemfair.org">https://ggstemfair.org</a></p>
-                <ul>
-                    <li>Won Third Place for Python-based machine learning AI model used for early heart disease diagnosis, with 94% accuracy</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Junior Science and Humanities Symposium, Norcal Regional Finalist, Biomedical Science Category</h3>
-                <p>2024 Dec 23 – Feb 24</p>
-                <p><a href="https://jshs.org">https://jshs.org</a></p>
-                <ul>
-                    <li>Research paper selected from national open submissions to compete at N. California Regionals In-Person presentation</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Golden Gate STEM Fair, Third Place, Biomedical Science Category</h3>
-                <p>2024 Feb 23 – Apr 23</p>
-                <p><a href="https://ggstemfair.org">https://ggstemfair.org</a></p>
-                <ul>
-                    <li>Won Third Place for data analysis isolating relationship between nitrogen and body weight extremes, and highlighting the inverse relationship between agricultural advancements and nutrient dense food production</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Paradigm Challenge, Finalist, Personal Health Category</h3>
-                <p>2025 June</p>
-                <p><a href="https://www.projectparadigm.org/">https://www.projectparadigm.org/</a></p>
-                <ul>
-                    <li>Won Third Place for data analysis isolating relationship between nitrogen and body weight extremes, and highlighting the inverse relationship between agricultural advancements and nutrient dense food production</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Carnegie Mellon Informatics & Mathematics Competition (CMIMC)</h3>
-                <p>2023 Apr 23</p>
-                <p><a href="https://cmimc.math.cmu.edu">https://cmimc.math.cmu.edu</a></p>
-                <ul>
-                    <li>Won Third Place in Math Team Competition for Estimathon category</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>USC's Junior Scholars Program</h3>
-                <p>2025 June 26-July 18th</p>
-                <p><a href="https://eirf.org/education/">https://eirf.org/education/</a></p>
-                <ul>
-                    <li>One of 8 students that year to do research at the Ellison Institute Research Foundation</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Additional Research (not yet submitted)</h3>
-                <ul>
-                    <li>Voting system: applying block chain technology for ballot tabulation to eliminate voter fraud, lost ballots, etc.</li>
-                    <li>Cancer treatment: labeling tumors with negatively charged nanoparticles to be targeted by powerful photon rays</li>
-                </ul>
-            </li>
-        </ul>
+        
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Junior Scholar, Ellison Medical Institute (USC affiliated cancer research & treatment institute)</span>
+                <span class="subsection-date">Jun 25 – Jul 25</span>
+            </div>
+            <ul>
+                <li>One of eight junior scholars chosen from international applicants for summer fellowship</li>
+                <li>Integrated biology, math and computer science to research cancer treatment</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Junior Science and Humanities Symposium, Norcal Regional Finalist, Biomedical Science Category</span>
+                <span class="subsection-date">Dec 23 – Feb 24</span>
+            </div>
+            <ul>
+                <li>DoD-funded STEM contest with over 12,000 submissions annually nationwide</li>
+                <li>Built Python-based machine learning AI model used for early heart disease diagnosis, with 94% accuracy</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Golden Gate (CA) STEM Fair, Third Place, Biomedical Science Category</span>
+                <span class="subsection-date">Feb 23 – Apr 23</span>
+            </div>
+            <ul>
+                <li>Synthesized and analyzed data showing how dietary nitrogen impacts body weight</li>
+            </ul>
+        </div>
     </div>
 
     <div class="section">
-        <h2>Work & Community Service</h2>
-        <ul>
-            <li class="subsection">
-                <h3>Tutor (online)</h3>
-                <p>2023 Aug 24 – current</p>
-                <ul>
-                    <li>Offer math subjects ranging from Arithmetic to Geometry, and science subjects include biology & chemistry</li>
-                    <li>Volunteer tutor serving students (3rd-8th) through multiple local organizations, including students from ESL-based families, students with learning disabilities and families who can’t afford formal tutoring agencies</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Tutor (in-person), Crystal Math Ambassador Program</h3>
-                <p>2024 Apr 24 – current</p>
-                <ul>
-                    <li>Founding member of on-campus, drop-in tutoring program for students (9-12 grades)</li>
-                    <li>Provide homework assistance & test preparation for Geometry, Algebra I, Algebra II, Pre-Calculus</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Machine Learning / Evaluation and Tooling Intern at Wayve</h3>
-                <p>2025 June 3rd – August 12th</p>
-                <p>https://wayve.ai</p>
-                <ul>
-                    <li>First high school intern at the company. Worked on a team of 8 people (US Driving Intelligence Team)</li>
-                    <li>Learned about Machine Learning methods (MLPs, DNNs, CNNs), Self Driving Car Methods, and created my own AI model</li>
-                </ul>
-            </li>
-        </ul>
+        <h2>Paid Employment</h2>
+        
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Machine Learning & Evaluation Intern, Wayve.ai</span>
+                <span class="subsection-date">Jun 25 – Aug 25</span>
+            </div>
+            <ul>
+                <li>Developed AI model to improve lane merges and splits</li>
+                <li>Created app using LiDAR and linear algebra, and handed off to full-time programmers for production testing</li>
+                <li>Collaborated with US engineering team and UK management</li>
+            </ul>
+        </div>
     </div>
 
     <div class="section">
-        <h2>Leadership Roles</h2>
-        <ul>
-            <li class="subsection">
-                <h3>Vice President, Biomedical Research Club, Science Olympiad Club</h3>
-                <p>2023 Apr 22 – current</p>
-                <ul>
-                    <li>Establish weekly club meeting agendas, create presentation slides & co-present during on-campus club meetings</li>
-                    <li>Research & identify rotating topics, including recruiting guest speakers from local scientific community</li>
-                    <li>Voted by club members to serve as co-president next year for both clubs (24 total members)</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Captain, Crystal Springs Mock Trial Team (V)</h3>
-                <p>2024 Nov 23 – current</p>
-                <ul>
-                    <li>Selected by coaches & varsity teammates to serve as JV captain and deliver closing argument</li>
-                    <li>Directed JV attorney cohorts to create cohesive case strategy formulation and objection handling exercises (40 total members)</li>
-                </ul>
-            </li>
-            <li class="subsection">
-                <h3>Captain, Crystal Springs Cross Country Team (V)</h3>
-                <p>2025 Nov 23 – current</p>
-                <ul>
-                    <li>Selected by coaches & varsity teammates to serve as V captain</li>
-                    <li>Served as a role model and warmup leader for all members (40 people)</li>
-                </ul>
-            </li>
-        </ul>
+        <h2>Leadership & Community Impact</h2>
+        
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Co-Captain, Crystal Springs Mock Trial</span>
+                <span class="subsection-date">Sep 23 – current</span>
+            </div>
+            <ul>
+                <li>Recruit coaches, train new members and guide 40 students through courtroom competition</li>
+                <li>Led team to 3rd place finish in county in 2025 (highest in school history)</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">President, Biomedical Research Club</span>
+                <span class="subsection-date">Apr 22 – current</span>
+            </div>
+            <ul>
+                <li>Establish weekly club meeting agendas, create slide content & present during on-campus club meetings</li>
+                <li>Research & identify rotating topics; recruit guest speakers from local scientific community</li>
+                <li>Help members select research topics and prepare for STEM competitions</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Captain, Crystal Athletics</span>
+                <span class="subsection-date">Nov 22 – Feb 25</span>
+            </div>
+            <ul>
+                <li>Served as team captain for boys soccer and track & field</li>
+                <li>Directed warm-ups, led drills, and called in-game huddles; led JV soccer to first WBAL (Norcal league) championship</li>
+                <li>Cross Country: CIF (CA) 2024 State Championship - top 5 runner for 3rd place team</li>
+                <li>Track & Field: CIF (CA) 2025 State Championship - lead runner in 4x800 for 12th place team; 4x400 school record</li>
+                <li>3-Time Recipient, WBAL All-League 1st/2nd Team Honors</li>
+            </ul>
+        </div>
+
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Volunteer Tutor</span>
+                <span class="subsection-date">Aug 24 – current</span>
+            </div>
+            <ul>
+                <li>Independent tutor serving 3rd-8th graders through multiple local organizations (ESL, LD, low-income math support)</li>
+                <li>Founding member of Crystal Math Ambassadors; chosen by math faculty to help peers with on-campus drop-in help (Geometry through Pre-Calculus)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        
+        <div class="subsection">
+            <div class="subsection-header">
+                <span class="subsection-title">Crystal Springs Upland School</span>
+                <span class="subsection-date">Aug 22 – current</span>
+            </div>
+            <ul>
+                <li>GPA: 4.11/4.3 weighted</li>
+                <li>AP Scholar with Honors (5 in Calculus B/C & Physics)</li>
+                <li>First Place, 2024 Crystal STEM Symposium, Computer & Data Science category</li>
+            </ul>
+        </div>
     </div>
 
     <div class="section">
         <h2>Personal Pursuits</h2>
-        <ul>
-            <li>Theater: 2 school productions/yr, most recently performed in Henrik Ibsen's An Enemy of the People and The Prom (musical)</li>
-            <li>Free Time: Video games, anime & manga, downhill skiing, scuba diving</li>
+        <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 11px;">
+            <li>Theater: audition & perform in two school productions per year</li>
+            <li>Free Time: video games, piano, anime & manga, downhill skiing, scuba diving</li>
         </ul>
     </div>
 
