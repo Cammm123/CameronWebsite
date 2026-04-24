@@ -3,147 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cameron Kani STEM Experience Resume</title>
+    <title>STEM — Cameron Kani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background: #0f1117;
+            color: #e8e8e8;
+            min-height: 100vh;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 56px;
+            background: rgba(15, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .header {
-            background: url('images/STEM.jpg') no-repeat center center;
-            background-size: cover;
-            color: #fff;
-            padding: 20px;
-            text-align: left;
+        .nav-logo { font-weight: 700; font-size: 1rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #c8a234; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #9ca3af;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #c8a234; }
+
+        /* ── Hero ── */
+        .hero {
             position: relative;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 60px 50px;
+            margin-top: 56px;
+            overflow: hidden;
         }
-        .header::before {
-            content: "";
+        .hero img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value to control the darkness */
-            z-index: 1;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
         }
-        .header div {
-            position: relative;
-            z-index: 2;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-        .header p {
-            margin: 5px 0 0;
-            font-size: 16px;
-        }
-        .header .contact {
+        .hero::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            text-align: right;
+            inset: 0;
+            background: linear-gradient(to top, #0f1117 0%, transparent 60%);
         }
-        .section {
-            margin: 20px 0;
-        }
-        .section h2 {
-            border-bottom: 2px solid #51e797;
-            padding-bottom: 5px;
-            color: #51e797;
-            font-weight: bold;
-        }
-        .profile, .education, .accomplishments {
-            margin-bottom: 20px;
-        }
-        .education ul, .accomplishments ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .education ul li, .accomplishments ul li {
+        .hero-content { position: relative; z-index: 2; }
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
             margin-bottom: 10px;
         }
-        .highlight {
-            color: #51e797;
-            font-weight: bold;
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
         }
-        .link {
-            color: #2a9d8f;
+
+        /* ── Content ── */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
         }
-        .pictures img {
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 24px;
+        }
+
+        .prose {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #9ca3af;
+            line-height: 1.8;
+            margin-bottom: 56px;
+        }
+        .prose a { color: #c8a234; text-decoration: none; }
+        .prose a:hover { text-decoration: underline; }
+
+        /* ── Timeline ── */
+        .timeline { margin-bottom: 56px; display: flex; flex-direction: column; gap: 0; }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 110px 1px 1fr;
+            gap: 0 24px;
+            padding-bottom: 32px;
+        }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .t-year {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #c8a234;
+            padding-top: 4px;
+            text-align: right;
+        }
+        .t-line {
+            background: rgba(200,162,52,0.25);
+            position: relative;
+        }
+        .t-line::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 50%;
+            transform: translateX(-50%);
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #c8a234;
+        }
+        .t-body { padding-top: 0; }
+        .t-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+        .t-sub { font-size: 0.8rem; color: #9ca3af; line-height: 1.5; }
+        .t-sub a { color: #c8a234; text-decoration: none; }
+        .t-sub a:hover { text-decoration: underline; }
+
+        /* ── Accomplishment cards ── */
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 56px; }
+        .card {
+            background: #161820;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 24px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .card:hover { border-color: rgba(200,162,52,0.35); transform: translateY(-3px); }
+        .card-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #c8a234;
+            background: rgba(200,162,52,0.1);
+            border: 1px solid rgba(200,162,52,0.2);
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+        .card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+        .card p { font-size: 0.8rem; color: #9ca3af; line-height: 1.55; }
+        .card a { color: #c8a234; font-size: 0.78rem; text-decoration: none; display: inline-block; margin-top: 10px; }
+        .card a:hover { text-decoration: underline; }
+
+        /* ── Photo ── */
+        .photo img {
             width: 100%;
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid #1f2231;
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #374151;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div>
-            <h1>Cameron Kani</h1>
-            <p>STEM Experience</p>
-        </div>
-        <div class="contact">
-            <p>650-868-8712 | <a href="mailto:kani2cmk@gmail.com" class="link">kani2cmk@gmail.com</a></p>
-        </div>
+<nav>
+    <a class="nav-logo" href="index.html">Cameron <span>Kani</span></a>
+    <div class="nav-links">
+        <a href="STEM.html" class="active">STEM</a>
+        <a href="athletic.html">Athletics</a>
+        <a href="acting.html">Acting</a>
+        <a href="games.html">Games</a>
+        <a href="resume.html">Resume</a>
     </div>
+</nav>
 
-    <div class="section profile">
-        <p>I've always been a student who enjoys taking what I learn in class, and extending the ideas to either create or learn something new. I find STEM competitions a great way to experience this feeling. Unlike school's rigid curriculum, STEM competitions provide me the power to choose a topic I feel interested in. I get to do my own researching and make my own mistakes off the training wheels of school classes and projects.</p>
-        <p>Want to learn more about me? Visit my website: <a href="https://cammm123.github.io/CameronWebsite/" class="link">https://cammm123.github.io/CameronWebsite/</a></p>
-    </div>
-
-    <div class="section education">
-        <h2>Education</h2>
-        <p><strong>Junior Year, August 2019 - June 2026</strong></p>
-        <p><strong>Crystal Springs Uplands School,</strong> <a href="https://www.crystal.org/" class="link">https://www.crystal.org/</a></p>
-        <p>Outside School Education Below</p>
-        <ul>
-            <li><strong>Summer 2022:</strong> Introduction to Data Analysis, see my project! (<a href="https://colab.research.google.com/drive/17lRMXbwhlvIKGT-6uVbFHwvZue4RgsFH?usp=sharing" class="link">link</a>)</li>
-            <li><strong>Summer 2023:</strong> Introduction to Machine Learning, see my project! (<a href="https://colab.research.google.com/drive/1SIbtRyIzeweUKM5O_mWTqsPcjUM69U7m?usp=sharing" class="link">link</a>)</li>
-            <li><strong>Summer 2024:</strong> Introduction to Computational Biology, see curriculum (<a href="https://www.cmu.edu/pre-college/academic-programs/computational-biology.html" class="link">link</a>)</li>
-            <li><strong>Summer 2025:</strong> USC Junior Scholars at Ellison Institute of Technology, see program (<a href="https://eirf.org/education/" class="link">link</a>)</li>
-            <li><strong>Summer 2025:</strong> Machine Learning / Evaluation and Tooling Intern at Wayve</li>
-        </ul>
-    </div>
-
-    <div class="section accomplishments">
-        <h2>Accomplishments</h2>
-        <ul>
-            <li><strong>Optimizing Nitrogen Consumption Project</strong><br>3rd in Golden Gate STEM Fair<br>See Project: <a href="https://github.com/Cammm123/OptimizingNitrogenConsumption" class="link">link</a><br>May 2023</li>
-            <li><strong>The Future of Disease Diagnosis</strong><br>2nd in Golden Gate STEM Fair, Regional Qualification in Junior Science and Humanities Symposium<br>See Project: <a href="https://github.com/Cammm123/HeartDiseaseML" class="link">link</a><br>March 2024</li>
-            <li><strong>Controlling Elections for Cancer Treatment</strong><br>2nd Crystal STEM Symposium<br>See Project: <a href="https://docs.google.com/presentation/d/1SdNxesPyRL8Nl-wK73nkntcbce8MS7bXXmzF6lhjgJ8/edit?usp=sharing" class="link">link</a><br>March 2024</li>
-            <li><strong>Novel ALS Treatment</strong><br>BioEngineering Highschool Competition<br>See Project: <a href="https://docs.google.com/document/d/1Ijdwi6YAYnGOnwty3NxwNROYFP2YafAbXA1TfDC319U/edit?usp=sharing" class="link">link</a><br>April 2024</li>
-            <li><strong>Novel ALS Treatment</strong><br>Finalist in Paradigm Competition<br>See Project: <a href="https://docs.google.com/document/d/1Ijdwi6YAYnGOnwty3NxwNROYFP2YafAbXA1TfDC319U/edit?usp=sharing" class="link">link</a><br>June 2025</li>
-        </ul>
-    </div>
-
-    <div class="section pictures">
-        <h2>Pictures in Action</h2>
-        <ul>
-            <li><img src="images/STEM1.jpg" alt="STEM in Action"></li>
-        </ul>
+<div class="hero">
+    <img src="images/STEM.jpg" alt="STEM">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Research &amp; Engineering</p>
+        <h1>STEM Experience</h1>
     </div>
 </div>
 
+<div class="content">
+
+    <p class="section-label">About</p>
+    <p class="prose">
+        I've always been a student who enjoys taking what I learn in class and extending those ideas to create or discover something new. STEM competitions give me that freedom — unlike school's rigid curriculum, they let me choose a topic I care about, do my own research, and make my own mistakes. I find that the best learning happens off the training wheels of school projects.
+    </p>
+
+    <p class="section-label">Education &amp; Programs</p>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="t-year">Summer 2022</div>
+            <div class="t-line"></div>
+            <div class="t-body">
+                <div class="t-title">Introduction to Data Analysis</div>
+                <div class="t-sub"><a href="https://colab.research.google.com/drive/17lRMXbwhlvIKGT-6uVbFHwvZue4RgsFH?usp=sharing">View project →</a></div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="t-year">Summer 2023</div>
+            <div class="t-line"></div>
+            <div class="t-body">
+                <div class="t-title">Introduction to Machine Learning</div>
+                <div class="t-sub"><a href="https://colab.research.google.com/drive/1SIbtRyIzeweUKM5O_mWTqsPcjUM69U7m?usp=sharing">View project →</a></div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="t-year">Summer 2024</div>
+            <div class="t-line"></div>
+            <div class="t-body">
+                <div class="t-title">Introduction to Computational Biology</div>
+                <div class="t-sub">Carnegie Mellon University Pre-College Program — <a href="https://www.cmu.edu/pre-college/academic-programs/computational-biology.html">Program info →</a></div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="t-year">Summer 2025</div>
+            <div class="t-line"></div>
+            <div class="t-body">
+                <div class="t-title">Junior Scholar — Ellison Institute of Technology (USC)</div>
+                <div class="t-sub">One of eight scholars chosen globally for bioinformatics fellowship. Researched cancer treatment at the intersection of biology, math, and CS. — <a href="https://eirf.org/education/">Program info →</a></div>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="t-year">Summer 2025</div>
+            <div class="t-line"></div>
+            <div class="t-body">
+                <div class="t-title">Machine Learning &amp; Evaluation Intern — Wayve.ai</div>
+                <div class="t-sub">Developed AI model for lane merges/splits. Built LiDAR + linear algebra app handed off for production testing.</div>
+            </div>
+        </div>
+    </div>
+
+    <p class="section-label">Accomplishments</p>
+    <div class="cards">
+        <div class="card">
+            <span class="card-badge">May 2023</span>
+            <h3>Optimizing Nitrogen Consumption</h3>
+            <p>3rd Place — Golden Gate STEM Fair<br>Analyzed how dietary nitrogen impacts body weight.</p>
+            <a href="https://github.com/Cammm123/OptimizingNitrogenConsumption">View on GitHub →</a>
+        </div>
+        <div class="card">
+            <span class="card-badge">March 2024</span>
+            <h3>The Future of Disease Diagnosis</h3>
+            <p>2nd Place — Golden Gate STEM Fair &amp; JSHS Norcal Regional Finalist<br>Python ML model for early heart disease diagnosis with 94% accuracy.</p>
+            <a href="https://github.com/Cammm123/HeartDiseaseML">View on GitHub →</a>
+        </div>
+        <div class="card">
+            <span class="card-badge">March 2024</span>
+            <h3>Controlling Elections for Cancer Treatment</h3>
+            <p>2nd Place — Crystal STEM Symposium</p>
+            <a href="https://docs.google.com/presentation/d/1SdNxesPyRL8Nl-wK73nkntcbce8MS7bXXmzF6lhjgJ8/edit?usp=sharing">View presentation →</a>
+        </div>
+        <div class="card">
+            <span class="card-badge">April 2024</span>
+            <h3>Novel ALS Treatment</h3>
+            <p>BioEngineering High School Competition &amp; Paradigm Competition Finalist (June 2025)</p>
+            <a href="https://docs.google.com/document/d/1Ijdwi6YAYnGOnwty3NxwNROYFP2YafAbXA1TfDC319U/edit?usp=sharing">View paper →</a>
+        </div>
+    </div>
+
+    <p class="section-label">In Action</p>
+    <div class="photo">
+        <img src="images/STEM1.jpg" alt="Cameron doing STEM research">
+    </div>
+
+</div>
+
+<footer>&copy; 2025 Cameron Kani</footer>
 
 </body>
 </html>

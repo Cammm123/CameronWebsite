@@ -1,199 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cameron Kani Athletics Resume</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      width: 80%;
-      margin: auto;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .header {
-      background: url('images/SOCCER.jpg') no-repeat center center;
-      background-size: cover;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-    .header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1;
-    }
-    .header div {
-      position: relative;
-      z-index: 2;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-    .header p {
-      margin: 5px 0 0;
-      font-size: 16px;
-    }
-    .section {
-      margin: 20px 0;
-    }
-    .section h2 {
-      border-bottom: 2px solid #3991e9;
-      padding-bottom: 5px;
-      color: #3991e9;
-      font-weight: bold;
-    }
-    .subsection h3 {
-      color: #555;
-      margin-top: 15px;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    ul li {
-      margin-bottom: 10px;
-    }
-    .highlight {
-      background-color: #3991e9;
-      color: #fff;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    .pictures img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      margin-top: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    details {
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 10px;
-    }
-    summary {
-      font-weight: bold;
-      font-size: 18px;
-      cursor: pointer;
-      color: #3991e9;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athletics — Cameron Kani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f1117;
+            color: #e8e8e8;
+            min-height: 100vh;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 56px;
+            background: rgba(15, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-logo { font-weight: 700; font-size: 1rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #c8a234; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #9ca3af;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #c8a234; }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 60px 50px;
+            margin-top: 56px;
+            overflow: hidden;
+        }
+        .hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #0f1117 0%, transparent 60%);
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 10px;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        /* ── Content ── */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 24px;
+        }
+
+        /* ── Stats ── */
+        .stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+        }
+        .stat {
+            background: #161820;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px 28px;
+            flex: 1;
+            min-width: 130px;
+        }
+        .stat-value { font-size: 1.4rem; font-weight: 700; color: #c8a234; }
+        .stat-label { font-size: 0.72rem; color: #6b7280; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        /* ── Accordion ── */
+        .accordion { margin-bottom: 56px; display: flex; flex-direction: column; gap: 12px; }
+        .acc-item {
+            background: #161820;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .acc-item[open] { border-color: rgba(200,162,52,0.3); }
+        .acc-item summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            user-select: none;
+            color: #e8e8e8;
+        }
+        .acc-item summary::-webkit-details-marker { display: none; }
+        .acc-chevron {
+            font-size: 0.8rem;
+            color: #c8a234;
+            transition: transform 0.25s;
+        }
+        .acc-item[open] .acc-chevron { transform: rotate(180deg); }
+        .acc-body { padding: 0 24px 24px; }
+
+        .sport-section { margin-bottom: 20px; }
+        .sport-section h3 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 12px;
+        }
+        .sport-section ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sport-section ul li {
+            font-size: 0.875rem;
+            color: #d1d5db;
+            padding-left: 14px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .sport-section ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: #c8a234;
+        }
+        .sport-note { font-size: 0.75rem; color: #6b7280; margin-top: 10px; font-style: italic; }
+
+        /* ── Photo grid ── */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .photo-grid img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+            transition: transform 0.3s, filter 0.3s;
+            filter: brightness(0.9);
+        }
+        .photo-grid img:hover { transform: scale(1.02); filter: brightness(1); }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid #1f2231;
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #374151;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <div>
-      <h1>CAMERON KANI</h1>
-      <p>Class of 2026</p>
+<nav>
+    <a class="nav-logo" href="index.html">Cameron <span>Kani</span></a>
+    <div class="nav-links">
+        <a href="STEM.html">STEM</a>
+        <a href="athletic.html" class="active">Athletics</a>
+        <a href="acting.html">Acting</a>
+        <a href="games.html">Games</a>
+        <a href="resume.html">Resume</a>
     </div>
-  </div>
+</nav>
 
-  <div class="section">
-    <h2>Profile</h2>
-    <p><span class="highlight">Height:</span> 5’10” <span class="highlight">Weight:</span> 155 lb</p>
-    <p><span class="highlight">DOB:</span> 07/26/2007</p>
-  </div>
-
-  <details>
-    <summary>Soccer</summary>
-    <div class="subsection">
-      <p><span class="highlight">Position:</span> Outside Defender, Center Defender, Center Forward</p>
-
-      <h3>High School</h3>
-      <ul>
-        <li><strong>2024-2025*:</strong> V Starter, 11th Grade, CCS Finalists</li>
-        <li><strong>2023-2024:</strong> JV Captain, V Starter, 10th Grade</li>
-        <li><strong>2022-2023:</strong> JV Starter, 9th Grade, WBAL Champions</li>
-      </ul>
-
-      <h3>Middle School</h3>
-      <ul>
-        <li><strong>2021-2022*:</strong> Varsity Starter, 8th Grade, WBAL Champions</li>
-        <li><strong>2019-2020*:</strong> JV Starter, 6th Grade, WBAL Champions</li>
-      </ul>
-      <p><em>* Crystal MS soccer team was undefeated during these 2 seasons. 7th grade soccer cancelled due to COVID-19.</em></p>
-
-      <h3>Club Experience</h3>
-      <ul>
-        <li><strong>2022–‘24:</strong> WSC Crush 07, National Premier League (Jersey #15)</li>
-        <li><strong>2019–‘21:</strong> MVLA 07 Navy, Norcal Premier (Jersey #9)</li>
-        <li><strong>2013–’19:</strong> MVLA 07 White (U7–U13), Norcal Gold (Jersey #9)</li>
-      </ul>
-
-      <h3>Honors</h3>
-      <ul>
-        <li><strong>February/2025:</strong> V WBAL Champions, CCS Finalists, CSUS 11th Grade</li>
-        <li><strong>February/2023:</strong> JV WBAL Champions, CSUS 9th Grade</li>
-        <li><strong>December/2022:</strong> WBAL Champions, CSUS 8th Grade</li>
-        <li><strong>December/2019:</strong> WBAL Champions, CSUS 6th Grade</li>
-        <li><strong>3/2019:</strong> Santa Cruz Spring Cup, Champions, MVLA 07 White</li>
-        <li><strong>8/2018:</strong> Santa Cruz Fall Cup, 2nd Place, MVLA 07 White</li>
-        <li><strong>6/2018:</strong> Cal N Dist 11 Spring Cup, 2nd Place, MVLA 07 White</li>
-        <li><strong>4/2018:</strong> Bay Area Spring Cup Champions, MVLA 07 White</li>
-        <li><strong>4/2017:</strong> Bay Area Spring Cup, Champions, MVLA 07 White</li>
-        <li><strong>5/2016:</strong> Cal N Dist 11 Spring Cup Champions, MVLA 07 White</li>
-        <li><strong>11/2014:</strong> Cal N Dist 11 Fall Cup Champions, MVLA 07 White</li>
-      </ul>
+<div class="hero">
+    <img src="images/RUNNING.JPG" alt="Running">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Track, XC &amp; Soccer</p>
+        <h1>Athletics</h1>
     </div>
-  </details>
+</div>
 
-  <details>
-    <summary>Running</summary>
-    <div class="subsection">
-      <h3>High School</h3>
-      <ul>
-        <li><strong>Spring 2025:</strong> V Track and Field Runner (3rd Fastest), 11th Grade</li>
-        <li><strong>Fall 2024:</strong> V Cross Country Runner (5th Faster), 11th Grade</li>
-        <li><strong>Spring 2024:</strong> V Track and Field Runner, 10th Grade</li>
-        <li><strong>Fall 2023:</strong> JV Cross Country Runner, 10th Grade</li>
-        <li><strong>Spring 2023:</strong> V Track and Field Runner, 9th Grade</li>
-      </ul>
+<div class="content">
 
-      <h3>Honors</h3>
-      <ul>
-        <li><strong>Spring 2025:</strong> Track V 12th at State (4x800: 7:53), split 49 in 4x400 for CCS Qualifer: team scratched</li>
-        <li><strong>Fall 2024:</strong> Cross Country 3rd at State (5th Runner)</li>
-        <li><strong>Spring 2024:</strong> Track V CCS Finalist (4x400m) + School Record 3:25.87, split 51.99</li>
-        <li><strong>Spring 2023:</strong> Track V WBAL Finalist (400m: 56)</li>
-      </ul>
+    <p class="section-label">Profile</p>
+    <div class="stats">
+        <div class="stat"><div class="stat-value">5'10"</div><div class="stat-label">Height</div></div>
+        <div class="stat"><div class="stat-value">155 lb</div><div class="stat-label">Weight</div></div>
+        <div class="stat"><div class="stat-value">Class of '26</div><div class="stat-label">Year</div></div>
+        <div class="stat"><div class="stat-value">3×</div><div class="stat-label">WBAL All-League</div></div>
+        <div class="stat"><div class="stat-value">CIF State</div><div class="stat-label">XC + Track</div></div>
     </div>
-  </details>
 
-  <div class="section pictures">
-    <h2>Pictures in Action</h2>
-    <ul>
-      <li><img src="images/SOCCER1.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER2.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER3.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER4.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER5.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER6.jpg" alt="Soccer in Action"></li>
-      <li><img src="images/SOCCER7.jpg" alt="Soccer in Action"></li>
-    </ul>
-  </div>
+    <p class="section-label">Sports</p>
+    <div class="accordion">
+
+        <details class="acc-item">
+            <summary>
+                ⚽ Soccer
+                <span class="acc-chevron">▼</span>
+            </summary>
+            <div class="acc-body">
+                <div class="sport-section">
+                    <h3>Position</h3>
+                    <ul><li>Outside Defender · Center Defender · Center Forward</li></ul>
+                </div>
+                <div class="sport-section">
+                    <h3>High School</h3>
+                    <ul>
+                        <li><strong>2024–2025:</strong> Varsity Starter, 11th Grade — CCS Finalists</li>
+                        <li><strong>2023–2024:</strong> JV Captain + Varsity Starter, 10th Grade</li>
+                        <li><strong>2022–2023:</strong> JV Starter, 9th Grade — WBAL Champions</li>
+                    </ul>
+                </div>
+                <div class="sport-section">
+                    <h3>Middle School</h3>
+                    <ul>
+                        <li><strong>2021–2022*:</strong> Varsity Starter, 8th Grade — WBAL Champions</li>
+                        <li><strong>2019–2020*:</strong> JV Starter, 6th Grade — WBAL Champions</li>
+                    </ul>
+                    <p class="sport-note">* Crystal MS soccer was undefeated these two seasons. 7th grade cancelled due to COVID-19.</p>
+                </div>
+                <div class="sport-section">
+                    <h3>Club</h3>
+                    <ul>
+                        <li><strong>2022–'24:</strong> WSC Crush 07, National Premier League (#15)</li>
+                        <li><strong>2019–'21:</strong> MVLA 07 Navy, Norcal Premier (#9)</li>
+                        <li><strong>2013–'19:</strong> MVLA 07 White (U7–U13), Norcal Gold (#9)</li>
+                    </ul>
+                </div>
+                <div class="sport-section">
+                    <h3>Honors</h3>
+                    <ul>
+                        <li>Feb 2025 — V WBAL Champions, CCS Finalists (11th Grade)</li>
+                        <li>Feb 2023 — JV WBAL Champions (9th Grade)</li>
+                        <li>Dec 2022 — WBAL Champions (8th Grade)</li>
+                        <li>Dec 2019 — WBAL Champions (6th Grade)</li>
+                        <li>Mar 2019 — Santa Cruz Spring Cup Champions, MVLA 07 White</li>
+                        <li>Aug 2018 — Santa Cruz Fall Cup, 2nd Place</li>
+                        <li>Jun 2018 — Cal N Dist 11 Spring Cup, 2nd Place</li>
+                        <li>Apr 2018 — Bay Area Spring Cup Champions</li>
+                        <li>Apr 2017 — Bay Area Spring Cup Champions</li>
+                        <li>May 2016 — Cal N Dist 11 Spring Cup Champions</li>
+                        <li>Nov 2014 — Cal N Dist 11 Fall Cup Champions</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <details class="acc-item">
+            <summary>
+                🏃 Running
+                <span class="acc-chevron">▼</span>
+            </summary>
+            <div class="acc-body">
+                <div class="sport-section">
+                    <h3>High School</h3>
+                    <ul>
+                        <li><strong>Spring 2025:</strong> Varsity Track &amp; Field (3rd fastest), 11th Grade</li>
+                        <li><strong>Fall 2024:</strong> Varsity Cross Country (5th fastest), 11th Grade</li>
+                        <li><strong>Spring 2024:</strong> Varsity Track &amp; Field, 10th Grade</li>
+                        <li><strong>Fall 2023:</strong> JV Cross Country, 10th Grade</li>
+                        <li><strong>Spring 2023:</strong> Varsity Track &amp; Field, 9th Grade</li>
+                    </ul>
+                </div>
+                <div class="sport-section">
+                    <h3>Honors</h3>
+                    <ul>
+                        <li>Spring 2025 — CIF State Track: 12th place team (4x800: 7:53); split 49 in 4x400 for CCS Qualifier (team scratched)</li>
+                        <li>Fall 2024 — CIF State Cross Country: 3rd place team (5th runner)</li>
+                        <li>Spring 2024 — CCS Finalist 4x400m; School Record 3:25.87 (split 51.99)</li>
+                        <li>Spring 2023 — WBAL Finalist 400m (56s)</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+    </div>
+
+    <p class="section-label">In Action</p>
+    <div class="photo-grid">
+        <img src="images/SOCCER1.jpg" alt="Soccer">
+        <img src="images/SOCCER2.jpg" alt="Soccer">
+        <img src="images/SOCCER3.jpg" alt="Soccer">
+        <img src="images/SOCCER4.jpg" alt="Soccer">
+        <img src="images/SOCCER5.jpg" alt="Soccer">
+        <img src="images/SOCCER6.jpg" alt="Soccer">
+        <img src="images/SOCCER7.JPG" alt="Soccer">
+        <img src="images/RUNNING1.jpg" alt="Running">
+    </div>
 
 </div>
+
+<footer>&copy; 2025 Cameron Kani</footer>
 
 </body>
 </html>

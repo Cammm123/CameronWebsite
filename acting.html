@@ -3,149 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cameron Kani Acting Resume</title>
+    <title>Acting — Cameron Kani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background: #0f1117;
+            color: #e8e8e8;
+            min-height: 100vh;
         }
-        .container {
-            width: 90%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 56px;
+            background: rgba(15, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .header {
-            grid-column: 1 / 3;
-            background: url('images/YOUR_HEADER_IMAGE.jpg') no-repeat center center;
-            background-size: cover;
-            color: #fff;
-            padding: 20px;
-            text-align: left;
+        .nav-logo { font-weight: 700; font-size: 1rem; color: #fff; text-decoration: none; }
+        .nav-logo span { color: #c8a234; }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #9ca3af;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #c8a234; }
+
+        /* ── Hero ── */
+        .hero {
             position: relative;
-            border-radius: 10px;
+            height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 60px 50px;
+            margin-top: 56px;
+            overflow: hidden;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-        .header p {
-            margin: 5px 0 0;
-            font-size: 16px;
-        }
-        .header .contact {
+        .hero img {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            text-align: right;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            filter: brightness(0.35);
         }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #0f1117 0%, transparent 60%);
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 10px;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        /* ── Content ── */
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c8a234;
+            margin-bottom: 24px;
+        }
+
+        /* ── Productions list ── */
         .productions {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 0;
+            margin-bottom: 56px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            overflow: hidden;
         }
-        .productions h2 {
-            background-color: #f2d7d9;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .productions p {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .productions p span {
-            font-style: italic;
-            font-size: 16px;
-            display: block;
-            margin-top: 5px;
-        }
-        /* Custom fonts for different productions */
-        .production-1 { font-family: 'Times New Roman', Times, serif; font-size: 20px; }
-        .production-2 { font-family: 'Comic Sans MS', cursive, sans-serif; font-size: 22px; }
-        .production-3 { font-family: 'Courier New', Courier, monospace; font-size: 18px; }
-        .production-4 { font-family: 'Georgia', serif; font-size: 24px; font-weight: normal; }
-        .production-5 { font-family: 'Verdana', sans-serif; font-size: 20px; font-weight: bolder; }
-        .production-6 { font-family: 'Arial', sans-serif; font-size: 20px; }
-        .production-7 { font-family: 'Impact', sans-serif; font-size: 26px; text-transform: uppercase; }
-        .production-8 { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; font-size: 22px; }
-        .production-9 { font-family: 'Lucida Sans', sans-serif; font-size: 20px; }
-        .production-10 { font-family: 'Garamond', serif; font-size: 18px; }
-        .production-11 { font-family: 'Trebuchet MS', sans-serif; font-size: 20px; }
-        .production-12 { font-family: 'Calibri', sans-serif; font-size: 20px; }
-        .production-13 { font-family: 'Tahoma', sans-serif; font-size: 20px; }
-        
-        .images {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .prod-row {
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
             align-items: center;
+            gap: 20px;
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
         }
-        .images img {
+        .prod-row:last-child { border-bottom: none; }
+        .prod-row:hover { background: rgba(255,255,255,0.03); }
+        .prod-year {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #c8a234;
+            white-space: nowrap;
+        }
+.prod-title { font-weight: 600; font-size: 0.95rem; }
+        .prod-role { font-size: 0.78rem; color: #9ca3af; margin-top: 2px; }
+        .prod-num {
+            font-size: 0.65rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        /* ── Photo grid ── */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .photo-grid img {
             width: 100%;
-            height: auto;
+            aspect-ratio: 3/4;
+            object-fit: cover;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: block;
+            transition: transform 0.3s, filter 0.3s;
+            filter: brightness(0.88);
+        }
+        .photo-grid img.landscape {
+            aspect-ratio: 4/3;
+        }
+        .photo-grid img:hover { transform: scale(1.02); filter: brightness(1); }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid #1f2231;
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #374151;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div>
-            <h1>Cameron Kani</h1>
-            <p>Acting Resume</p>
-        </div>
-        <div class="contact">
-            <p>650-868-8712 | <a href="mailto:kani2cmk@gmail.com" style="color: #fff;">kani2cmk@gmail.com</a></p>
-        </div>
+<nav>
+    <a class="nav-logo" href="index.html">Cameron <span>Kani</span></a>
+    <div class="nav-links">
+        <a href="STEM.html">STEM</a>
+        <a href="athletic.html">Athletics</a>
+        <a href="acting.html" class="active">Acting</a>
+        <a href="games.html">Games</a>
+        <a href="resume.html">Resume</a>
     </div>
+</nav>
 
-    <div class="productions">
-        <h2>Productions</h2>
-        <p class="production-1">The Lion King - Hyena, 2015</p>
-        <p class="production-2">Snow White - Huntsman, 2015</p>
-        <p class="production-3">Peter Pan - Smee, 2016 <span>Sherlock Holmes - Henry, 2016</span></p>
-        <p class="production-4">Little Shop of Horrors - Dentist, 2017</p>
-        <p class="production-5">Animal Farm - Crow, 2018</p>
-        <p class="production-6">Xanadu - Erato, 2018</p>
-        <p class="production-7">Wizard of Oz - Toto, 2021</p>
-        <p class="production-8">Appropriate Audience Behavior - Hamlet, 2021</p>
-        <p class="production-9">The Dragon - Townsperson, 2022</p>
-        <p class="production-10">12th Night - Antonio, 2023</p>
-        <p class="production-11">Legally Blonde - Sundeep Padamadan, 2024</p>
-        <p class="production-12">An Enemy of the People - Drunk, 2024</p>
-        <p class="production-13">The Prom - Sheldon Saperstein, 2025</p>
-        <p class="production-14">War of the Worlds - The Stranger, 2025</p>
-        <p class="production-15">Something Rotten - Lord Clapham, 2026</p>
-    </div>
-
-    <div class="images">
-        <img src="images/IMAGE1.png" alt="Production Image 1">
-        <img src="images/IMAGE2.png" alt="Production Image 2">
-        <img src="images/IMAGE3.png" alt="Production Image 3">
-        <img src="images/IMAGE4.png" alt="Production Image 4">
-        <img src="images/Crow.JPG" alt="Production Image 5">
-        <img src="images/IMAGE1.png" alt="Production Image 6">
-        <img src="images/IMAGE2.png" alt="Production Image 7">
-        <img src="images/IMAGE3.png" alt="Production Image 8">
-        <img src="images/TOWNSPERSON1.jpg" alt="Production Image 9">
-        <img src="images/ANTONIO.jpeg" alt="Cameron as Antonio">
-        <img src="images/Paul.jpg" alt="Cameron as Paul the Super Star">
-        <img src="images/Drunk.jpg" alt="Cameron as The Drunk">
-        <img src="images/IMAGE13.png" alt="Production Image 13">
+<div class="hero">
+    <img src="images/ANTONIO.jpeg" alt="Cameron as Antonio">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Theater &amp; Performance</p>
+        <h1>Acting</h1>
     </div>
 </div>
+
+<div class="content">
+
+    <p class="section-label">Productions</p>
+    <div class="productions">
+        <div class="prod-row">
+            <div class="prod-year">2015</div>
+            <div class="prod-info">
+                <div class="prod-title">The Lion King</div>
+                <div class="prod-role">Hyena</div>
+            </div>
+            <div class="prod-num">#01</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2015</div>
+            <div class="prod-info">
+                <div class="prod-title">Snow White</div>
+                <div class="prod-role">Huntsman</div>
+            </div>
+            <div class="prod-num">#02</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2016</div>
+            <div class="prod-info">
+                <div class="prod-title">Peter Pan</div>
+                <div class="prod-role">Smee</div>
+            </div>
+            <div class="prod-num">#03</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2016</div>
+            <div class="prod-info">
+                <div class="prod-title">Sherlock Holmes</div>
+                <div class="prod-role">Henry</div>
+            </div>
+            <div class="prod-num">#04</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2017</div>
+            <div class="prod-info">
+                <div class="prod-title">Little Shop of Horrors</div>
+                <div class="prod-role">Dentist</div>
+            </div>
+            <div class="prod-num">#05</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2018</div>
+            <div class="prod-info">
+                <div class="prod-title">Animal Farm</div>
+                <div class="prod-role">Crow</div>
+            </div>
+            <div class="prod-num">#06</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2018</div>
+            <div class="prod-info">
+                <div class="prod-title">Xanadu</div>
+                <div class="prod-role">Erato</div>
+            </div>
+            <div class="prod-num">#07</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2021</div>
+            <div class="prod-info">
+                <div class="prod-title">Wizard of Oz</div>
+                <div class="prod-role">Toto</div>
+            </div>
+            <div class="prod-num">#08</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2021</div>
+            <div class="prod-info">
+                <div class="prod-title">Appropriate Audience Behavior</div>
+                <div class="prod-role">Hamlet</div>
+            </div>
+            <div class="prod-num">#09</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2022</div>
+            <div class="prod-info">
+                <div class="prod-title">The Dragon</div>
+                <div class="prod-role">Townsperson</div>
+            </div>
+            <div class="prod-num">#10</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2023</div>
+            <div class="prod-info">
+                <div class="prod-title">12th Night</div>
+                <div class="prod-role">Antonio</div>
+            </div>
+            <div class="prod-num">#11</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2024</div>
+            <div class="prod-info">
+                <div class="prod-title">Legally Blonde</div>
+                <div class="prod-role">Sundeep Padamadan</div>
+            </div>
+            <div class="prod-num">#12</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2024</div>
+            <div class="prod-info">
+                <div class="prod-title">An Enemy of the People</div>
+                <div class="prod-role">Drunk</div>
+            </div>
+            <div class="prod-num">#13</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2025</div>
+            <div class="prod-info">
+                <div class="prod-title">The Prom</div>
+                <div class="prod-role">Sheldon Saperstein</div>
+            </div>
+            <div class="prod-num">#14</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2025</div>
+            <div class="prod-info">
+                <div class="prod-title">War of the Worlds</div>
+                <div class="prod-role">The Stranger</div>
+            </div>
+            <div class="prod-num">#15</div>
+        </div>
+        <div class="prod-row">
+            <div class="prod-year">2026</div>
+            <div class="prod-info">
+                <div class="prod-title">Something Rotten</div>
+                <div class="prod-role">Lord Clapham</div>
+            </div>
+            <div class="prod-num">#16</div>
+        </div>
+    </div>
+
+    <p class="section-label">On Stage</p>
+    <div class="photo-grid">
+        <img src="images/Crow.JPG" alt="Cameron as Crow in Animal Farm">
+        <img src="images/TOWNSPERSON1.jpg" alt="Cameron as Townsperson in The Dragon">
+        <img src="images/ANTONIO.jpeg" alt="Cameron as Antonio in 12th Night">
+        <img src="images/Paul.jpg" class="landscape" alt="Cameron as Sundeep in Legally Blonde">
+        <img src="images/Drunk.jpg" alt="Cameron as The Drunk in An Enemy of the People">
+    </div>
+
+</div>
+
+<footer>&copy; 2025 Cameron Kani</footer>
 
 </body>
 </html>
