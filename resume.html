@@ -21,13 +21,19 @@
         line-height: 1.45;
         padding: 48px 56px;
         width: 100%;
-        max-width: 760px;
+        max-width: 780px;
         box-shadow: 0 20px 50px rgba(28,30,26,0.12);
     }
-    .r-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 22px; border-bottom: 2px solid #17181a; padding-bottom: 14px; }
-    .r-header h1 { font-family: var(--display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.01em; }
-    .r-contact { font-family: var(--mono); font-size: 0.72rem; color: #444; text-align: right; line-height: 1.7; }
-    .r-contact a { color: #444; }
+    .r-header { margin-bottom: 20px; border-bottom: 2px solid #17181a; padding-bottom: 14px; }
+    .r-header h1 { font-family: var(--display); font-weight: 700; font-size: 1.9rem; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .r-contact-line {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: #444;
+        line-height: 1.6;
+    }
+    .r-contact-line a { color: #444; }
+    .r-contact-line .sep { color: #bbb; margin: 0 6px; }
 
     .r-section { margin-bottom: 20px; }
     .r-section h2 {
@@ -41,14 +47,14 @@
     }
     .r-item { margin-bottom: 12px; }
     .r-item:last-child { margin-bottom: 0; }
-    .r-item-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 3px; }
+    .r-item-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
     .r-item-title { font-weight: 600; font-size: 0.86rem; }
-    .r-item-date { font-family: var(--mono); font-size: 0.72rem; color: #555; white-space: nowrap; }
+    .r-item-sub { font-size: 0.78rem; color: #444; margin-bottom: 3px; }
+    .r-item-date { font-family: var(--mono); font-size: 0.72rem; color: #555; white-space: nowrap; flex-shrink: 0; }
     .r-item ul { padding-left: 18px; font-size: 0.82rem; color: #222; }
     .r-item li { margin-bottom: 3px; }
-    .r-summary { font-size: 0.84rem; color: #222; }
-    .r-summary ul { padding-left: 18px; margin-top: 4px; }
-    .r-inline-list { font-size: 0.82rem; color: #222; }
+    .r-item p { font-size: 0.82rem; color: #222; }
+    .r-skills { font-size: 0.82rem; color: #222; line-height: 1.7; }
 
     @media print {
         .top-nav, .waypoint-rail, footer, .print-btn { display: none !important; }
@@ -75,90 +81,8 @@
 
     <div class="r-header">
         <h1>Cameron Kani</h1>
-        <div class="r-contact">
-            <a href="mailto:kani2cmk@gmail.com">kani2cmk@gmail.com</a><br>
-            650-868-8712<br>
-            github.com/Cammm123
-        </div>
-    </div>
-
-    <div class="r-section r-summary">
-        <ul>
-            <li>First-year computational biology student researching vision-language navigation for autonomous systems</li>
-            <li>Builds and ships mobile software independently, end to end</li>
-        </ul>
-    </div>
-
-    <div class="r-section">
-        <h2>Research</h2>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Research Intern, Stanford Autonomous Systems Laboratory</span>
-                <span class="r-item-date">Summer 2026</span>
-            </div>
-            <ul>
-                <li>Extended the WORLDS vision-language navigation harness from quadcopter drones to a fixed-wing C-12 aircraft</li>
-                <li>Built CalCity, a benchmark for evaluating navigation-language models in real Californian urban environments</li>
-                <li>Designed a pilot-facing route-planning interface and ran systematic agent failure analysis</li>
-                <li>Collaborated with a team of two postdocs and three PhD researchers</li>
-            </ul>
-        </div>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Junior Scholar, Ellison Institute of Technology (USC-affiliated)</span>
-                <span class="r-item-date">Summer 2025</span>
-            </div>
-            <ul>
-                <li>One of eight junior scholars selected internationally for a bioinformatics research fellowship</li>
-                <li>Integrated biology, math, and computer science to research cancer treatment</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="r-section">
-        <h2>Projects</h2>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Cellar — wine-tasting app (React Native, Expo, Anthropic API)</span>
-                <span class="r-item-date">2026</span>
-            </div>
-            <ul>
-                <li>Built a Beli-style pairwise ranking app with AI-powered wine label recognition; deployed via Expo EAS</li>
-            </ul>
-        </div>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Early heart disease diagnosis model (Python, scikit-learn)</span>
-                <span class="r-item-date">2024</span>
-            </div>
-            <ul>
-                <li>Built a machine learning classifier reaching 94% accuracy; JSHS NorCal Regional Finalist, 2nd place Golden Gate STEM Fair</li>
-            </ul>
-        </div>
-        <div class="r-item">
-            <p class="r-inline-list">Six additional independently shipped apps: bird-song identifier, plant identifier, vehicle identifier, travel planner, charades game, and an architecture reference app — each with its own CI/deployment pipeline.</p>
-        </div>
-    </div>
-
-    <div class="r-section">
-        <h2>Leadership</h2>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Co-Captain, Crystal Springs Mock Trial</span>
-                <span class="r-item-date">2023 – 2025</span>
-            </div>
-            <ul>
-                <li>Recruited coaches, trained new members, and guided 40 students through courtroom competition; led team to 3rd place in county (highest in school history)</li>
-            </ul>
-        </div>
-        <div class="r-item">
-            <div class="r-item-head">
-                <span class="r-item-title">Captain, Crystal Athletics (soccer, track &amp; field)</span>
-                <span class="r-item-date">2022 – 2025</span>
-            </div>
-            <ul>
-                <li>CIF (CA) State Championship — cross country (2024) and track &amp; field 4×800 (2025); 3× WBAL All-League</li>
-            </ul>
+        <div class="r-contact-line">
+            Pittsburgh, PA<span class="sep">|</span>Bay Area, CA<span class="sep">|</span><a href="mailto:kani2cmk@gmail.com">kani2cmk@gmail.com</a><span class="sep">|</span>650-868-8712<span class="sep">|</span><a href="https://github.com/Cammm123">github.com/Cammm123</a><span class="sep">|</span><a href="https://www.linkedin.com/in/cameron-kani-134b69372">LinkedIn</a>
         </div>
     </div>
 
@@ -166,19 +90,111 @@
         <h2>Education</h2>
         <div class="r-item">
             <div class="r-item-head">
-                <span class="r-item-title">Carnegie Mellon University — B.S. Computational Biology</span>
-                <span class="r-item-date">2026 – 2030</span>
+                <span class="r-item-title">Carnegie Mellon University, School of Computer Science</span>
+                <span class="r-item-date">Aug 2026 – May 2030</span>
             </div>
+            <div class="r-item-sub">B.S. Computational Biology | Pittsburgh, PA</div>
+            <ul>
+                <li>Coursework: Mathematical Foundations for Computer Science, Matrices &amp; Linear Transformations, Modern Biology</li>
+            </ul>
         </div>
         <div class="r-item">
             <div class="r-item-head">
                 <span class="r-item-title">Crystal Springs Uplands School</span>
-                <span class="r-item-date">2022 – 2026</span>
+                <span class="r-item-date">Aug 2022 – May 2026</span>
             </div>
             <ul>
-                <li>AP Scholar with Honors (5s in Calculus BC and Physics); Cum Laude</li>
+                <li>4.13/4.30 weighted GPA, Cum Laude; AP Scholar with Honors (5 in Calculus BC and Physics)</li>
             </ul>
         </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Research Experience</h2>
+        <div class="r-item">
+            <div class="r-item-head">
+                <span class="r-item-title">Research Intern, Autonomous Systems Laboratory, Stanford University</span>
+                <span class="r-item-date">Summer 2026</span>
+            </div>
+            <div class="r-item-sub">Helped extend WORLDS, a vision-language navigation harness for search and disaster response, from quadcopter-only flight to a multi-aircraft setup built around the C-12; worked on a team of two postdocs and three PhD-stage researchers</div>
+            <ul>
+                <li>Built CalCity, a CityNav-style benchmark over California City, from satellite imagery and street data — designed the annotation workflow, then rebuilt it after 300 episodes to reach 1,000+ labeled and split episodes</li>
+                <li>Developed a route-planning GUI that turns the agent's plan into a flight path for C-12 pilots and surfaces the map data the model requests mid-mission</li>
+                <li>Ran failure analysis across full episode traces, separating successful agent reasoning from failures: color-identification tools were burning compute, and directional tools misread place names ("East Road" as a heading, "Market Square" as a shape)</li>
+            </ul>
+        </div>
+        <div class="r-item">
+            <div class="r-item-head">
+                <span class="r-item-title">Junior Scholar, Ellison Institute of Technology (USC)</span>
+                <span class="r-item-date">Jun 2025 – Jul 2025</span>
+            </div>
+            <ul>
+                <li>Selected as one of eight scholars from an international applicant pool for a bioinformatics summer fellowship</li>
+                <li>Applied computational and statistical methods to cancer treatment research at the intersection of biology, mathematics, and computer science</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Industry Experience</h2>
+        <div class="r-item">
+            <div class="r-item-head">
+                <span class="r-item-title">Machine Learning &amp; Evaluation Intern, Wayve.ai</span>
+                <span class="r-item-date">Jun 2025 – Aug 2025</span>
+            </div>
+            <ul>
+                <li>Developed and evaluated a model to improve autonomous lane merge and split behavior</li>
+                <li>Built a LiDAR application grounded in linear algebra methods and handed it off to full-time engineers for production testing</li>
+                <li>Collaborated across a US engineering team and UK management</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Projects &amp; Research Awards</h2>
+        <div class="r-item">
+            <p><strong>The Future of Disease Diagnosis</strong> — Python machine learning model for early heart disease diagnosis, 94% accuracy. NorCal Regional Finalist, Junior Science and Humanities Symposium (DoD-funded, 12,000+ national submissions); 2nd Place, Golden Gate STEM Fair. (2024)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>Novel ALS Treatment</strong> — Finalist, Paradigm Competition; BioEngineering High School Competition entrant. (2024 – 2025)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>Optimizing Nitrogen Consumption</strong> — 3rd Place, Golden Gate STEM Fair. Synthesized and analyzed data on how dietary nitrogen affects body weight. (2023)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>Crystal STEM Symposium</strong> — First Place, Computer &amp; Data Science category. (2024)</p>
+        </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Honors</h2>
+        <div class="r-item">
+            <p><strong>Founders Award, Crystal Springs Uplands School</strong> — Presented by the Head of School to the graduating senior who most fully embodies the values the school's founders stood for. (2026)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>CIF California State Championships</strong> — Cross Country: top-5 runner on 3rd-place team (2024). Track &amp; Field: lead 4x800 leg, 12th-place team; school-record 4x400 (2025). Three-time WBAL All-League selection. (2024 – 2025)</p>
+        </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Leadership &amp; Service</h2>
+        <div class="r-item">
+            <p><strong>Co-Captain, Mock Trial</strong> — Trained new members and guided 40 students through courtroom competition; recruited coaches. Led the team to 3rd in the county, the highest finish in school history. (2023 – 2026)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>President, Biomedical Research Club</strong> — Set weekly agendas, built and presented content, recruited guest speakers from the local scientific community, and helped members prepare for STEM competitions. (2022 – 2026)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>Volunteer Tutor; Founding Member, Crystal Math Ambassadors</strong> — Tutored 3rd–8th graders in math and ESL through local organizations; selected by math faculty for on-campus peer drop-in help, geometry through pre-calculus. (2024 – 2026)</p>
+        </div>
+        <div class="r-item">
+            <p><strong>Captain, Varsity Soccer and Track &amp; Field</strong> — Directed warm-ups and drills, called in-game huddles, and led JV soccer to its first WBAL championship. (2022 – 2025)</p>
+        </div>
+    </div>
+
+    <div class="r-section">
+        <h2>Skills</h2>
+        <p class="r-skills">Python, machine learning, bioinformatics. Vision-language agents and tool-call evaluation, benchmark construction and annotation pipelines, satellite and geospatial imagery, LiDAR and perception data, applied linear algebra, Git/GitHub.</p>
     </div>
 
 </div>
