@@ -1,327 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cameron Kani</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0f1117;
-            color: #e8e8e8;
-            min-height: 100vh;
-        }
-
-        /* ── Hero ── */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 60px 24px 80px;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200, 162, 52, 0.12) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200, 162, 52, 0.06) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .hero-eyebrow {
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #c8a234;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-
-        .hero h1 span {
-            color: #c8a234;
-        }
-
-        .hero-tagline {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            font-weight: 300;
-            color: #9ca3af;
-            max-width: 520px;
-            line-height: 1.6;
-            margin-bottom: 48px;
-        }
-
-        .hero-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 64px;
-        }
-
-        .tag {
-            background: rgba(200, 162, 52, 0.1);
-            border: 1px solid rgba(200, 162, 52, 0.3);
-            color: #c8a234;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            padding: 6px 14px;
-            border-radius: 999px;
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            color: #4b5563;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .scroll-hint::after {
-            content: '';
-            display: block;
-            width: 1px;
-            height: 36px;
-            background: linear-gradient(to bottom, #4b5563, transparent);
-        }
-
-        /* ── Nav Cards ── */
-        .nav-section {
-            padding: 80px 24px 100px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #c8a234;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            height: 260px;
-            border-radius: 16px;
-            overflow: hidden;
-            text-decoration: none;
-            color: #ffffff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
-        }
-
-        .card img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-            filter: brightness(0.55);
-        }
-
-        .card:hover img {
-            transform: scale(1.05);
-            filter: brightness(0.45);
-        }
-
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-        }
-
-        .card-body {
-            position: relative;
-            padding: 20px;
-        }
-
-        .card-icon {
-            font-size: 1.4rem;
-            margin-bottom: 6px;
-        }
-
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .card-sub {
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.65);
-            letter-spacing: 0.04em;
-        }
-
-        .card-arrow {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1rem;
-            color: #c8a234;
-            opacity: 0;
-            transform: translate(-4px, 4px);
-            transition: opacity 0.25s, transform 0.25s;
-        }
-
-        .card:hover .card-arrow {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        /* Resume card — no image */
-        .card-resume {
-            background: linear-gradient(135deg, #1c1f2e 0%, #12141d 100%);
-            border: 1px solid rgba(200, 162, 52, 0.2);
-        }
-
-        .card-resume .card-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        /* ── Footer ── */
-        footer {
-            border-top: 1px solid #1f2231;
-            padding: 28px 24px;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #374151;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cameron Kani — Computational Biology, CMU</title>
+<meta name="description" content="Cameron Kani — computational biology student at Carnegie Mellon University. Vision-language navigation research at Stanford's Autonomous Systems Laboratory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-    <section class="hero">
-        <p class="hero-eyebrow">Welcome</p>
-        <h1>Cameron <span>Kani</span></h1>
-        <p class="hero-tagline">
-            Researcher, athlete, and builder — driven by curiosity at the intersection of science, math, and technology.
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="top-nav">
+    <a class="nav-name" href="#top">Cameron Kani</a>
+    <div class="nav-links">
+        <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#honors">Honors</a>
+        <a href="personal.html">More</a>
+        <a href="resume.html" class="resume-link">Résumé</a>
+    </div>
+</nav>
+
+<div class="waypoint-rail" id="rail" aria-hidden="true">
+    <div class="rail-line">
+        <div class="rail-dot" data-target="hero" style="top:2%"></div>
+        <span class="rail-label" style="top:2%">start</span>
+
+        <div class="rail-dot" data-target="research" style="top:26%"></div>
+        <span class="rail-label" style="top:26%">research</span>
+
+        <div class="rail-dot" data-target="projects" style="top:50%"></div>
+        <span class="rail-label" style="top:50%">projects</span>
+
+        <div class="rail-dot" data-target="honors" style="top:72%"></div>
+        <span class="rail-label" style="top:72%">honors</span>
+
+        <div class="rail-dot" data-target="contact" style="top:94%"></div>
+        <span class="rail-label" style="top:94%">contact</span>
+    </div>
+</div>
+
+<div class="page-shell" id="main">
+
+    <section class="hero" id="hero" style="scroll-margin-top: 70px;">
+        <p class="hero-coords">Pittsburgh, PA — Carnegie Mellon University</p>
+        <h1 id="top">Cameron Kani</h1>
+        <p class="hero-lede">I build systems that help machines find their way — from a drone's flight path to a fixed-wing aircraft's route plan.</p>
+        <p class="hero-sub">
+            First-year studying computational biology at Carnegie Mellon. This past summer I worked in Stanford's
+            Autonomous Systems Laboratory, extending a vision-language navigation model from quadcopters to aircraft.
+            Outside of research, I build and ship small mobile apps end to end.
         </p>
-        <div class="hero-tags">
-            <span class="tag">ML & Bioinformatics</span>
-            <span class="tag">Wayve.ai Intern</span>
-            <span class="tag">CIF State Athlete</span>
-            <span class="tag">Mock Trial Co-Captain</span>
-            <span class="tag">Theater</span>
+        <div class="hero-actions">
+            <a class="btn primary" href="#research">View research</a>
+            <a class="btn" href="resume.html">Résumé</a>
+            <a class="btn" href="mailto:kani2cmk@gmail.com">Email</a>
         </div>
-        <div class="scroll-hint">Explore</div>
     </section>
 
-    <section class="nav-section">
-        <p class="section-label">Explore</p>
-        <div class="cards">
+    <section class="section" id="research" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Research</h2>
+            <span class="section-tag">vision-language navigation</span>
+        </div>
 
-            <a class="card" href="STEM.html">
-                <img src="images/STEM.jpg" alt="STEM">
-                <div class="card-overlay"></div>
-                <span class="card-arrow">↗</span>
-                <div class="card-body">
-                    <div class="card-icon">🔬</div>
-                    <div class="card-title">STEM</div>
-                    <div class="card-sub">Research &amp; Engineering</div>
+        <div class="log-entry">
+            <div class="log-date">2026</div>
+            <div class="log-body">
+                <div class="log-title">Stanford Autonomous Systems Laboratory</div>
+                <div class="log-role">Research Intern — Summer 2026</div>
+                <p>
+                    Worked within a team of two postdocs and three PhD researchers on WORLDS, a vision-language
+                    navigation harness originally built for quadcopter drones. My work extended it to a new class
+                    of aircraft and built out the evaluation infrastructure around it.
+                </p>
+                <ul>
+                    <li>Extended the WORLDS navigation harness from quadcopters to a fixed-wing C-12 aircraft, adapting it to new flight dynamics and sensor geometry</li>
+                    <li>Built CalCity, a benchmark for evaluating navigation-language models against real Californian urban environments</li>
+                    <li>Designed a pilot-facing route-planning interface on top of the harness</li>
+                    <li>Ran systematic failure analysis on agent navigation decisions to identify where language grounding breaks down</li>
+                </ul>
+                <p class="log-note">
+                    Alongside this, I've been reading through the broader vision-language navigation literature —
+                    WORLDS, HTNav, UrbanNav, OpenUAV, and AerialVLA — using WORLDS as a baseline for comparison.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Projects</h2>
+            <span class="section-tag">built end to end</span>
+        </div>
+        <p class="section-intro">
+            I like shipping things, not just prototyping them. Most of these are mobile apps built and deployed
+            entirely from Expo/React Native pipelines.
+        </p>
+
+        <div class="log-entry">
+            <div class="log-date">2026</div>
+            <div class="log-body">
+                <div class="log-title">Cellar</div>
+                <div class="log-role">React Native · Expo · Anthropic API</div>
+                <p>
+                    A wine-tasting app in the spirit of Beli: pairwise comparisons build a personal ranking over
+                    time, and a label-recognition feature (built on the Anthropic API) lets you log a bottle by
+                    photographing it. Designed with a warm, dark interface. Built and deployed via Expo EAS.
+                </p>
+            </div>
+        </div>
+
+        <div class="log-entry">
+            <div class="log-date">2024</div>
+            <div class="log-body">
+                <div class="log-title">Early heart disease diagnosis model</div>
+                <div class="log-role">Python · scikit-learn</div>
+                <p>
+                    A machine learning classifier for early heart disease diagnosis, reaching 94% accuracy.
+                    Recognized as a JSHS NorCal Regional Finalist and 2nd place at the Golden Gate STEM Fair.
+                </p>
+                <div class="log-links">
+                    <a href="https://github.com/Cammm123/HeartDiseaseML">View on GitHub →</a>
                 </div>
-            </a>
+            </div>
+        </div>
 
-            <a class="card" href="athletic.html">
-                <img src="images/RUNNING.JPG" alt="Athletics">
-                <div class="card-overlay"></div>
-                <span class="card-arrow">↗</span>
-                <div class="card-body">
-                    <div class="card-icon">🏅</div>
-                    <div class="card-title">Athletics</div>
-                    <div class="card-sub">Track, XC &amp; Soccer</div>
-                </div>
-            </a>
+        <p class="log-note" style="max-width: 560px;">
+            I've also built and shipped six other small apps end to end — a bird-song identifier, a plant
+            identifier, a vehicle identifier, a travel planner, and a charades game among them — each with its
+            own deployment pipeline through GitHub Codespaces and EAS Build.
+        </p>
+    </section>
 
-            <a class="card" href="acting.html">
-                <img src="images/ANTONIO.jpeg" alt="Acting">
-                <div class="card-overlay"></div>
-                <span class="card-arrow">↗</span>
-                <div class="card-body">
-                    <div class="card-icon">🎭</div>
-                    <div class="card-title">Acting</div>
-                    <div class="card-sub">Theater &amp; Performance</div>
-                </div>
-            </a>
+    <section class="section" id="honors" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Honors</h2>
+        </div>
+        <ul class="honors-list">
+            <li>
+                <span class="honors-date">2025</span>
+                <span class="honors-text">Junior Scholar, <span class="org">Ellison Institute of Technology (USC)</span> — one of eight scholars selected internationally for a bioinformatics research fellowship</span>
+            </li>
+            <li>
+                <span class="honors-date">2024</span>
+                <span class="honors-text">NorCal Regional Finalist, <span class="org">Junior Science &amp; Humanities Symposium</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">2024</span>
+                <span class="honors-text">2nd Place, <span class="org">Golden Gate STEM Fair</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">2023</span>
+                <span class="honors-text">3rd Place, <span class="org">Golden Gate STEM Fair</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">—</span>
+                <span class="honors-text">AP Scholar with Honors — 5s in Calculus BC and Physics</span>
+            </li>
+        </ul>
+    </section>
 
-            <a class="card" href="games.html">
-                <img src="images/Paul.jpg" alt="Games">
-                <div class="card-overlay"></div>
-                <span class="card-arrow">↗</span>
-                <div class="card-body">
-                    <div class="card-icon">🎮</div>
-                    <div class="card-title">Games</div>
-                    <div class="card-sub">Favorites &amp; Reviews</div>
-                </div>
-            </a>
+    <section class="section" id="more" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Outside of work</h2>
+        </div>
+        <p class="section-intro">
+            Track &amp; cross country, theater, and a children's magic show I co-run with a friend.
+            <a href="personal.html">More about me →</a>
+        </p>
+        <div class="personal-tags">
+            <span>CIF State Championship</span>
+            <span>Theater</span>
+            <span>Sleight of Mind (magic show)</span>
+            <span>Vintage watches</span>
+            <span>Puzzles &amp; ciphers</span>
+        </div>
+    </section>
 
-            <a class="card card-resume" href="resume.html">
-                <span class="card-arrow">↗</span>
-                <div class="card-body">
-                    <div class="card-icon">📄</div>
-                    <div class="card-title">Resume</div>
-                    <div class="card-sub">Experience &amp; Honors</div>
-                </div>
-            </a>
-
+    <section class="section" id="contact" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Contact</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <span class="k">email</span>
+                <span class="v"><a href="mailto:kani2cmk@gmail.com">kani2cmk@gmail.com</a></span>
+            </div>
+            <div class="contact-item">
+                <span class="k">github</span>
+                <span class="v"><a href="https://github.com/Cammm123">github.com/Cammm123</a></span>
+            </div>
+            <div class="contact-item">
+                <span class="k">résumé</span>
+                <span class="v"><a href="resume.html">view / print</a></span>
+            </div>
         </div>
     </section>
 
     <footer>
-        &copy; 2025 Cameron Kani
+        <span>© 2026 Cameron Kani</span>
+        <span>last updated Sep 2026</span>
     </footer>
+
+</div>
+
+<script>
+(function() {
+    var dots = document.querySelectorAll('.rail-dot');
+    if (!dots.length) return;
+    var map = {};
+    dots.forEach(function(d) { map[d.dataset.target] = d; });
+
+    var sections = Array.from(dots).map(function(d) {
+        return document.getElementById(d.dataset.target);
+    }).filter(Boolean);
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            var dot = map[entry.target.id];
+            if (!dot) return;
+            if (entry.isIntersecting) {
+                dots.forEach(function(d) { d.classList.remove('active'); });
+                dot.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    sections.forEach(function(s) { observer.observe(s); });
+})();
+</script>
 
 </body>
 </html>
