@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cameron Kani — Computational Biology, CMU</title>
+<meta name="description" content="Cameron Kani — computational biology student at Carnegie Mellon University. Vision-language navigation research at Stanford's Autonomous Systems Laboratory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="top-nav">
+    <a class="nav-name" href="#top">Cameron Kani</a>
+    <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#honors">Honors</a>
+        <a href="personal.html">More</a>
+        <a href="resume.html" class="resume-link">Résumé</a>
+    </div>
+</nav>
+
+<div class="waypoint-rail" id="rail" aria-hidden="true">
+    <div class="rail-line">
+        <div class="rail-dot" data-target="hero" style="top:2%"></div>
+        <span class="rail-label" style="top:2%">start</span>
+
+        <div class="rail-dot" data-target="work" style="top:26%"></div>
+        <span class="rail-label" style="top:26%">work</span>
+
+        <div class="rail-dot" data-target="projects" style="top:50%"></div>
+        <span class="rail-label" style="top:50%">projects</span>
+
+        <div class="rail-dot" data-target="honors" style="top:72%"></div>
+        <span class="rail-label" style="top:72%">honors</span>
+
+        <div class="rail-dot" data-target="contact" style="top:94%"></div>
+        <span class="rail-label" style="top:94%">contact</span>
+    </div>
+</div>
+
+<div class="page-shell" id="main">
+
+    <section class="hero" id="hero" style="scroll-margin-top: 70px;">
+        <p class="hero-coords">Pittsburgh, PA — Carnegie Mellon University</p>
+        <h1 id="top">Cameron Kani</h1>
+        <p class="hero-lede">I build systems that help machines find their way — from a drone's flight path to a fixed-wing aircraft's route plan.</p>
+        <p class="hero-sub">
+            First-year studying computational biology at Carnegie Mellon. This past summer I worked in Stanford's
+            Autonomous Systems Laboratory, extending a vision-language navigation model from quadcopters to aircraft.
+        </p>
+        <div class="hero-actions">
+            <a class="btn primary" href="#work">View experience</a>
+            <a class="btn" href="resume.html">Résumé</a>
+            <a class="btn" href="https://www.linkedin.com/in/cameron-kani-134b69372">LinkedIn</a>
+        </div>
+    </section>
+
+    <section class="section" id="work" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Work Experience</h2>
+            <span class="section-tag">internships</span>
+        </div>
+
+        <div class="log-entry">
+            <div class="log-date">2026</div>
+            <div class="log-body">
+                <div class="log-title">Stanford Autonomous Systems Laboratory</div>
+                <div class="log-role">Research Intern — Summer 2026</div>
+                <p>
+                    Worked within a team of two postdocs and three PhD researchers on WORLDS, a vision-language
+                    navigation harness originally built for quadcopter drones. My work extended it to a new class
+                    of aircraft and built out the evaluation infrastructure around it.
+                </p>
+                <ul>
+                    <li>Extended the WORLDS navigation harness from quadcopters to a fixed-wing C-12 aircraft, adapting it to new flight dynamics and sensor geometry</li>
+                    <li>Built CalCity, a benchmark for evaluating navigation-language models against real Californian urban environments</li>
+                    <li>Designed a pilot-facing route-planning interface on top of the harness</li>
+                    <li>Ran systematic failure analysis on agent navigation decisions to identify where language grounding breaks down</li>
+                </ul>
+                <p class="log-note">
+                    Alongside this, I've been reading through the broader vision-language navigation literature —
+                    WORLDS, HTNav, UrbanNav, OpenUAV, and AerialVLA — using WORLDS as a baseline for comparison.
+                </p>
+            </div>
+        </div>
+
+        <div class="log-entry">
+            <div class="log-date">2025</div>
+            <div class="log-body">
+                <div class="log-title">Wayve</div>
+                <div class="log-role">Machine Learning &amp; Evaluation Intern — Summer 2025</div>
+                <p>
+                    Wayve is a London-based autonomous driving company that pioneered the "end-to-end" approach to
+                    self-driving AI — rather than hand-coded rules and detailed maps, a single model learns to
+                    drive directly from camera data, the way a human does. The approach has drawn major industry
+                    backing, including a 2026 investment from Microsoft, NVIDIA, and Uber at an $8.6B valuation,
+                    and is now moving into commercial deployment through Uber robotaxi trials and a licensing deal
+                    with Nissan for consumer vehicles.
+                </p>
+                <ul>
+                    <li>Developed and evaluated a model to improve autonomous lane merge and split behavior</li>
+                    <li>Built a LiDAR application grounded in linear algebra methods and handed it off to full-time engineers for production testing</li>
+                    <li>Collaborated across a US engineering team and UK management</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Projects</h2>
+            <span class="section-tag">independent research</span>
+        </div>
+        <p class="section-intro">
+            Research and data-science work I've pursued outside formal lab positions, mostly through
+            competitions and independent study.
+        </p>
+
+        <div class="log-entry">
+            <div class="log-date">2024–25</div>
+            <div class="log-body">
+                <div class="log-title">Novel ALS treatment</div>
+                <div class="log-role">Bioengineering</div>
+                <p>
+                    Researched and proposed a novel treatment approach for ALS (amyotrophic lateral sclerosis).
+                    Finalist, Paradigm Competition; entrant, BioEngineering High School Competition.
+                </p>
+            </div>
+        </div>
+
+        <div class="log-entry">
+            <div class="log-date">2024</div>
+            <div class="log-body">
+                <div class="log-title">Early heart disease diagnosis model</div>
+                <div class="log-role">Python · scikit-learn</div>
+                <p>
+                    A machine learning classifier for early heart disease diagnosis, reaching 94% accuracy.
+                    NorCal Regional Finalist, Junior Science &amp; Humanities Symposium; 2nd place, Golden Gate STEM Fair.
+                </p>
+                <div class="log-links">
+                    <a href="https://github.com/Cammm123/HeartDiseaseML">View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="log-entry">
+            <div class="log-date">2023</div>
+            <div class="log-body">
+                <div class="log-title">Optimizing nitrogen consumption</div>
+                <div class="log-role">Data analysis</div>
+                <p>
+                    Synthesized and analyzed data on how dietary nitrogen affects body weight. 3rd place,
+                    Golden Gate STEM Fair.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="honors" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Honors</h2>
+        </div>
+        <ul class="honors-list">
+            <li>
+                <span class="honors-date">2025</span>
+                <span class="honors-text">Junior Scholar, <span class="org">Ellison Institute of Technology (USC)</span> — one of eight scholars selected internationally for a bioinformatics research fellowship</span>
+            </li>
+            <li>
+                <span class="honors-date">2024</span>
+                <span class="honors-text">NorCal Regional Finalist, <span class="org">Junior Science &amp; Humanities Symposium</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">2024</span>
+                <span class="honors-text">2nd Place, <span class="org">Golden Gate STEM Fair</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">2023</span>
+                <span class="honors-text">3rd Place, <span class="org">Golden Gate STEM Fair</span>, Biomedical Science</span>
+            </li>
+            <li>
+                <span class="honors-date">—</span>
+                <span class="honors-text">AP Scholar with Honors — 5s in Calculus BC and Physics</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="section" id="more" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Outside of work</h2>
+        </div>
+        <p class="section-intro">
+            Track &amp; cross country, theater, and a children's magic show I co-run with a friend.
+            <a href="personal.html">More about me →</a>
+        </p>
+        <div class="personal-tags">
+            <span>CIF State Championship</span>
+            <span>Theater</span>
+            <span>Sleight of Mind (magic show)</span>
+            <span>Vintage watches</span>
+            <span>Puzzles &amp; ciphers</span>
+        </div>
+    </section>
+
+    <section class="section" id="contact" style="scroll-margin-top: 70px;">
+        <div class="section-head">
+            <h2>Contact</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <span class="k">linkedin</span>
+                <span class="v"><a href="https://www.linkedin.com/in/cameron-kani-134b69372">in/cameron-kani</a></span>
+            </div>
+            <div class="contact-item">
+                <span class="k">github</span>
+                <span class="v"><a href="https://github.com/Cammm123">github.com/Cammm123</a></span>
+            </div>
+            <div class="contact-item">
+                <span class="k">résumé</span>
+                <span class="v"><a href="resume.html">view / print</a></span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>© 2026 Cameron Kani</span>
+        <span>last updated Sep 2026</span>
+    </footer>
+
+</div>
+
+<script>
+(function() {
+    var dots = document.querySelectorAll('.rail-dot');
+    if (!dots.length) return;
+    var map = {};
+    dots.forEach(function(d) { map[d.dataset.target] = d; });
+
+    var sections = Array.from(dots).map(function(d) {
+        return document.getElementById(d.dataset.target);
+    }).filter(Boolean);
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            var dot = map[entry.target.id];
+            if (!dot) return;
+            if (entry.isIntersecting) {
+                dots.forEach(function(d) { d.classList.remove('active'); });
+                dot.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    sections.forEach(function(s) { observer.observe(s); });
+})();
+</script>
+
+</body>
+</html>
