@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cameron Kani</title>
+  <meta name="description" content="Cameron Kani — computational biology at Carnegie Mellon. Machines that find their way, old watches, magic, and cryptic clues.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="index.html">ck<b>.</b></a>
+      <div>
+        <a href="resume.html">résumé</a>
+        <a href="https://github.com/Cammm123">github</a>
+        <a href="https://www.linkedin.com/in/cameron-kani-134b69372">linkedin</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <h1><span data-scramble>cameron kani</span><span class="caret">_</span></h1>
+        <p class="sub" data-scramble>computational biology @ carnegie mellon</p>
+        <p>Hi, I'm Cameron. I'm drawn to one question asked a few different ways: <strong>how does a machine find its way?</strong> Sometimes the machine is a drone or an aircraft. Sometimes it's a model trying to make sense of biology.</p>
+        <p>This past summer I was at Stanford's Autonomous Systems Lab, teaching a vision-language navigation model built for quadcopters to fly a fixed-wing aircraft. The summer before, I worked on self-driving at Wayve.</p>
+      </div>
+      <div class="watch">
+        <div id="watch" role="button" tabindex="0" aria-label="A mechanical watch. Click for a bit of watch history."></div>
+        <p class="fact" id="fact" aria-live="polite">click the watch.</p>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="label" data-scramble>recently</h2>
+      <ul class="rows">
+        <li><span class="when">2026 →</span><span class="what"><b>Carnegie Mellon</b> <span>· computational biology, first year</span></span></li>
+        <li><span class="when">summer 2026</span><span class="what"><b>Stanford ASL</b> <span>· vision-language navigation for fixed-wing aircraft</span></span></li>
+        <li><span class="when">summer 2025</span><span class="what"><b>Wayve</b> <span>· ML &amp; evaluation for autonomous driving</span></span></li>
+        <li><span class="when">2025</span><span class="what"><b>Ellison Institute (USC)</b> <span>· junior scholar, bioinformatics</span></span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="label" data-scramble>things i like</h2>
+      <div class="likes">
+        <div class="like">
+          <h3><i>◷</i>old watches</h3>
+          <p>A mechanical watch hasn't been the most accurate way to tell time in over fifty years. What's left is the craft and the history, and I think that's the more interesting part anyway.</p>
+        </div>
+        <div class="like">
+          <h3><i>♠</i>magic</h3>
+          <p>Cards and mentalism. I co-run a children's magic show called Sleight of Mind. I'm still a beginner, which is most of the fun.</p>
+        </div>
+        <div class="like">
+          <h3><i>?</i>cryptic clues</h3>
+          <p>Puzzles where the sentence is lying to you, but fairly. The best ones feel obvious the moment you see them.</p>
+        </div>
+        <div class="like">
+          <h3><i>↗</i>machines that navigate</h3>
+          <p>Drones, aircraft, cars, and the language models learning to steer them. I love finding exactly where they get lost.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2 class="label" data-scramble>more</h2>
+      <a href="resume.html">full résumé →</a>
+      <a href="https://github.com/Cammm123">github →</a>
+      <a href="https://www.linkedin.com/in/cameron-kani-134b69372">linkedin →</a>
+    </section>
+
+    <footer>
+      <p class="cipher" id="cipher" title="hmm"></p>
+      <p>∴ the key is in the window.</p>
+      <div class="answer" id="answer">
+        <span>answer:</span>
+        <input id="answer-input" autocomplete="off" spellcheck="false" aria-label="Your answer">
+        <span class="nope" id="nope">not quite.</span>
+      </div>
+      <div class="fine"><span>© 2026 cameron kani</span><span>pittsburgh, pa</span></div>
+    </footer>
+  </div>
+
+  <div class="hint" id="hint">(click anywhere)</div>
+
+  <script src="main.js"></script>
+</body>
+</html>
