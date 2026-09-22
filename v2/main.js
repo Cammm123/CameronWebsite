@@ -115,11 +115,84 @@ function scramble(el, dur = 800) {
   requestAnimationFrame(frame);
 }
 
-const seen = new IntersectionObserver(entries => {
-  for (const e of entries) if (e.isIntersecting) { scramble(e.target); seen.unobserve(e.target); }
-}, { threshold: .6 });
-document.querySelectorAll("[data-scramble]").forEach(el => seen.observe(el));
-document.querySelectorAll("nav div a").forEach(a => a.addEventListener("mouseenter", () => scramble(a, 350)));
+// Every block of text sits scrambled until it scrolls into view, then decodes.
+// It scrambles again once it leaves, so scrolling back up replays it.
+const BLOCKS = "h1, h2, h3, p, li, .head, nav a, .fine > *, .cta a, .term-row, .prompt";
+const SKIP = "#cipher, #fact, .room, .caret, svg, script, input, .answer, .hint";
+const REPLAY_ON_HOVER = "nav div a, .term-row";
+const LOWER = "abcdefghijklmnopqrstuvwxyz";
+
+// proportional text gets same-case letters so line wrapping barely moves
+function noise(ch, mono) {
+  if (ch === " " || ch === "\n" || ch === " ") return ch;
+  if (mono) return GLYPHS[(Math.random() * GLYPHS.length) | 0];
+  if (/[a-z]/.test(ch)) return LOWER[(Math.random() * 26) | 0];
+  if (/[A-Z]/.test(ch)) return LOWER[(Math.random() * 26) | 0].toUpperCase();
+  if (/[0-9]/.test(ch)) return String((Math.random() * 10) | 0);
+  return ch;
+}
+
+const blocks = new Map();
+if (!reduceMotion) {
+  for (const el of document.querySelectorAll(BLOCKS)) {
+    if (el.closest(SKIP) || el.parentElement.closest(BLOCKS)) continue;
+    const nodes = [];
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => n.parentElement.closest(SKIP) || !n.nodeValue.trim()
+        ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+    });
+    while (walk.nextNode()) nodes.push(walk.currentNode);
+    if (!nodes.length) continue;
+    const orig = nodes.map(n => Array.from(n.nodeValue));
+    const text = nodes.map(n => n.nodeValue);
+    const mono = nodes.map(n => /mono/i.test(getComputedStyle(n.parentElement).fontFamily));
+    const len = orig.reduce((a, o) => a + o.length, 0);
+    blocks.set(el, { nodes, orig, text, mono, len, raf: 0 });
+  }
+}
+
+function hideBlock(b) {
+  cancelAnimationFrame(b.raf);
+  b.nodes.forEach((n, i) => { n.nodeValue = b.orig[i].map(c => noise(c, b.mono[i])).join(""); });
+}
+
+function revealBlock(b, dur = b.len > 80 ? 420 : 750) {
+  cancelAnimationFrame(b.raf);
+  let start, frame = 0;
+  const tick = t => {
+    start ??= t;
+    const p = Math.min((t - start) / dur, 1);
+    const front = p * b.len;
+    const churn = frame++ % 2 === 0; // re-roll the noise every other frame
+    let offset = 0;
+    b.nodes.forEach((n, i) => {
+      const o = b.orig[i];
+      if (offset + o.length <= front) {
+        if (n.nodeValue !== b.text[i]) n.nodeValue = b.text[i];
+      } else if (churn || offset < front) {
+        n.nodeValue = o.map((c, k) => (offset + k < front ? c : noise(c, b.mono[i]))).join("");
+      }
+      offset += o.length;
+    });
+    if (p < 1) b.raf = requestAnimationFrame(tick);
+  };
+  b.raf = requestAnimationFrame(tick);
+}
+
+const watcher = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    const b = blocks.get(e.target);
+    e.isIntersecting ? revealBlock(b) : hideBlock(b);
+  }
+}, { rootMargin: "0px 0px -6% 0px" });
+
+for (const [el, b] of blocks) {
+  hideBlock(b);
+  watcher.observe(el);
+  if (el.matches(REPLAY_ON_HOVER)) {
+    el.addEventListener("mouseenter", () => { hideBlock(b); revealBlock(b, 350); });
+  }
+}
 
 /* ---------- the watch ---------- */
 const FACTS = [
@@ -131,10 +204,57 @@ const FACTS = [
   "wristwatches were long thought of as women's jewelry. world war i helped change that, since checking a pocket watch in a trench was impractical.",
 ];
 
+// Gear outline centered on 0,0: trapezoid teeth, or sharp ones for an escape wheel.
+function gearPath(r, teeth, depth, sharp = false) {
+  const step = (Math.PI * 2) / teeth;
+  const pt = (a, rad) => `${(Math.cos(a) * rad).toFixed(2)},${(Math.sin(a) * rad).toFixed(2)}`;
+  let d = "";
+  for (let i = 0; i < teeth; i++) {
+    const a = i * step;
+    const tooth = sharp
+      ? [pt(a, r - depth), pt(a + step * .75, r), pt(a + step * .8, r - depth)]
+      : [pt(a, r - depth), pt(a + step * .18, r), pt(a + step * .47, r), pt(a + step * .65, r - depth)];
+    d += (i ? "L" : "M") + tooth.join("L");
+  }
+  return d + "Z";
+}
+
+// A spoked wheel: toothed rim, cut-outs showing the plate, a hub, and a jeweled pivot.
+function wheel(id, cx, cy, r, teeth, spokes = 4, sharp = false) {
+  let arms = "";
+  for (let i = 0; i < spokes; i++) {
+    const a = (i / spokes) * Math.PI * 2;
+    arms += `<line x1="0" y1="0" x2="${(Math.cos(a) * r * .8).toFixed(2)}" y2="${(Math.sin(a) * r * .8).toFixed(2)}"/>`;
+  }
+  return `<g transform="translate(${cx} ${cy})"><g id="${id}">
+    <path d="${gearPath(r, teeth, sharp ? r * .28 : Math.max(1.1, r * .09), sharp)}" fill="url(#gilt)"/>
+    <circle r="${r * .8}" fill="#15162a"/>
+    <g stroke="#b3b7d3" stroke-width="${Math.max(1.4, r * .13)}" stroke-linecap="round">${arms}</g>
+    <circle r="${r * .22}" fill="url(#gilt)"/>
+  </g></g>`;
+}
+
+const jewel = (x, y, r = 1.9) =>
+  `<circle cx="${x}" cy="${y}" r="${r + .9}" fill="#c9ccdf"/><circle cx="${x}" cy="${y}" r="${r}" fill="#d63a63"/><circle cx="${x - r * .35}" cy="${y - r * .35}" r="${r * .3}" fill="#ffd1dc"/>`;
+const screw = (x, y, a = 30) =>
+  `<g transform="translate(${x} ${y}) rotate(${a})"><circle r="2.6" fill="#3f6fe0"/><circle r="2.6" fill="url(#blued)"/><line x1="-2.2" x2="2.2" stroke="#0b1433" stroke-width=".8"/></g>`;
+
+// Hairspring: an Archimedean spiral around the balance staff.
+function spiral(turns, r0, r1) {
+  let d = "";
+  const n = turns * 40;
+  for (let i = 0; i <= n; i++) {
+    const a = (i / 40) * Math.PI * 2, rad = r0 + (r1 - r0) * (i / n);
+    d += (i ? "L" : "M") + (Math.cos(a) * rad).toFixed(2) + "," + (Math.sin(a) * rad).toFixed(2);
+  }
+  return d;
+}
+
 (function watch() {
   const el = document.getElementById("watch");
   if (!el) return;
   const day = new Date().getDate();
+  const MONO = `font-family="JetBrains Mono, monospace"`;
 
   let ticks = "";
   for (let i = 0; i < 60; i++) {
@@ -144,12 +264,24 @@ const FACTS = [
   for (let h = 0; h < 12; h++) {
     if (h === 3) continue; // the date window lives here
     idx += h === 0
-      ? `<g transform="rotate(0 100 100)"><rect x="95.5" y="24" width="3" height="13" rx=".6"/><rect x="101.5" y="24" width="3" height="13" rx=".6"/></g>`
+      ? `<rect x="95.5" y="24" width="3" height="13" rx=".6"/><rect x="101.5" y="24" width="3" height="13" rx=".6"/>`
       : `<rect x="98.5" y="24" width="3" height="11" rx=".6" transform="rotate(${h * 30} 100 100)"/>`;
   }
+  let caseScrews = "";
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + .3;
+    caseScrews += `<g transform="translate(${(100 + Math.cos(a) * 85.5).toFixed(2)} ${(100 + Math.sin(a) * 85.5).toFixed(2)}) rotate(${i * 47})"><circle r="1.9" fill="#232540"/><line x1="-1.5" x2="1.5" stroke="#0c0c16" stroke-width=".6"/></g>`;
+  }
+  let timing = "";
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2;
+    timing += `<circle cx="${(Math.cos(a) * 17.5).toFixed(2)}" cy="${(Math.sin(a) * 17.5).toFixed(2)}" r="1.1" fill="url(#gilt)"/>`;
+  }
+  let ratchet = "";
+  for (let i = 0; i < 24; i++) ratchet += `<path d="M0,-11 L2.6,-11 L0,-8.6Z" transform="rotate(${i * 15})"/>`;
 
-  el.innerHTML = `
-  <svg viewBox="0 0 200 200" aria-hidden="true">
+  const front = `
+  <svg class="face front" viewBox="0 0 200 200" aria-hidden="true">
     <defs>
       <radialGradient id="dial" cx="40%" cy="35%" r="75%">
         <stop offset="0" stop-color="#171833"/><stop offset="1" stop-color="#08080f"/>
@@ -166,33 +298,167 @@ const FACTS = [
     <g stroke="#3b3e58" stroke-width=".8">${ticks}</g>
     <g fill="#d6d8ec">${idx}</g>
     <rect x="143" y="93" width="19" height="14" rx="1" fill="#e9e8f3"/>
-    <text x="152.5" y="103.8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="#101018">${day}</text>
-    <text x="100" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="2" fill="#d6d8ec">CK</text>
-    <text x="100" y="138" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="5.5" letter-spacing="1.5" fill="#7c80a0">AUTOMATIC</text>
-    <text x="100" y="146" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="4.5" letter-spacing="1" fill="#3b3e58">21,600 VPH</text>
+    <text x="152.5" y="103.8" text-anchor="middle" ${MONO} font-size="9.5" fill="#101018">${day}</text>
+    <text x="100" y="58" text-anchor="middle" ${MONO} font-size="8" letter-spacing="2" fill="#d6d8ec">CK</text>
+    <text x="100" y="138" text-anchor="middle" ${MONO} font-size="5.5" letter-spacing="1.5" fill="#7c80a0">AUTOMATIC</text>
+    <text x="100" y="146" text-anchor="middle" ${MONO} font-size="4.5" letter-spacing="1" fill="#3b3e58">21,600 VPH</text>
     <polygon id="hh" points="100,54 104,100 100,108 96,100" fill="#d6d8ec"/>
     <polygon id="mh" points="100,30 102.8,100 100,108 97.2,100" fill="#d6d8ec"/>
     <g id="sh"><line x1="100" y1="116" x2="100" y2="26" stroke="#a78bfa" stroke-width="1.1"/><circle cx="100" cy="114" r="2.6" fill="#a78bfa"/></g>
     <circle cx="100" cy="100" r="3.6" fill="#a78bfa"/><circle cx="100" cy="100" r="1.4" fill="#07070c"/>
   </svg>`;
 
-  const hh = el.querySelector("#hh"), mh = el.querySelector("#mh"), sh = el.querySelector("#sh");
-  const rot = (node, deg) => node.setAttribute("transform", `rotate(${deg} 100 100)`);
-  function tick() {
+  // Seen from behind, the crown sits on the left.
+  const back = `
+  <svg class="face back" viewBox="0 0 200 200" aria-hidden="true">
+    <defs>
+      <linearGradient id="bcase" x1="1" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3a3c5c"/><stop offset=".5" stop-color="#1a1b2c"/><stop offset="1" stop-color="#34365a"/>
+      </linearGradient>
+      <radialGradient id="plate" cx="45%" cy="40%" r="70%">
+        <stop offset="0" stop-color="#23254099"/><stop offset="1" stop-color="#101120"/>
+      </radialGradient>
+      <pattern id="geneva" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+        <rect width="4.5" height="9" fill="#ffffff" opacity=".035"/>
+      </pattern>
+      <linearGradient id="gilt" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e2e4f4"/><stop offset=".55" stop-color="#8d91b3"/><stop offset="1" stop-color="#c3c6de"/>
+      </linearGradient>
+      <radialGradient id="blued" cx="35%" cy="35%" r="70%">
+        <stop offset="0" stop-color="#9ab8ff" stop-opacity=".9"/><stop offset=".5" stop-color="#3f6fe0" stop-opacity="0"/><stop offset="1" stop-color="#1b2f86" stop-opacity=".8"/>
+      </radialGradient>
+      <linearGradient id="rotorg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#8b8fb4"/><stop offset=".5" stop-color="#3d4060"/><stop offset="1" stop-color="#6f7399"/>
+      </linearGradient>
+      <linearGradient id="bridge" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3a3d5e"/><stop offset="1" stop-color="#23253d"/>
+      </linearGradient>
+      <path id="ring" d="M100,100 m-75,0 a75,75 0 1,1 150,0 a75,75 0 1,1 -150,0"/>
+    </defs>
+    <rect x="76" y="0" width="48" height="26" rx="4" fill="#12131f"/>
+    <rect x="76" y="174" width="48" height="26" rx="4" fill="#12131f"/>
+    <rect x="3" y="92" width="9" height="16" rx="2" fill="#2c2e48"/>
+    <circle cx="100" cy="100" r="89" fill="url(#bcase)"/>
+    ${caseScrews}
+    <circle cx="100" cy="100" r="81" fill="#0b0b15"/>
+    <circle cx="100" cy="100" r="81" fill="url(#plate)"/>
+    <circle cx="100" cy="100" r="81" fill="url(#geneva)"/>
+    <text ${MONO} font-size="3.6" letter-spacing=".9" fill="#5d6185"><textPath href="#ring" startOffset="2%">CALIBRE CK-26 · TWENTY-ONE JEWELS · 21,600 VPH · ADJUSTED FIVE POSITIONS · PITTSBURGH ·</textPath></text>
+
+    <!-- mainspring barrel, with the ratchet wheel the rotor winds -->
+    ${wheel("bk-barrel", 57, 104, 17, 72, 0)}
+    <g transform="translate(57 104)"><g id="bk-ratchet" fill="#c3c6de"><circle r="9" fill="#9da1c0"/>${ratchet}<circle r="3" fill="#6d7194"/></g></g>
+
+    ${wheel("bk-center", 104, 95, 19, 64, 4)}
+    ${wheel("bk-third", 133, 75, 12, 42, 4)}
+    ${wheel("bk-fourth", 137, 114, 14, 48, 5)}
+    ${wheel("bk-escape", 114, 136, 9.5, 15, 3, true)}
+    ${wheel("bk-rev1", 148, 140, 9, 30, 3)}
+    ${wheel("bk-rev2", 160, 122, 9, 30, 3)}
+    ${wheel("bk-crownw", 36, 86, 8, 28, 0)}
+
+    <!-- pallet fork, snapping side to side on every beat -->
+    <g transform="translate(101 142)"><g id="bk-pallet">
+      <path d="M-1.2,0 L-20,1.2 L-20,-1.2Z M0,0 L10,-5 M0,0 L10,5" stroke="#c3c6de" stroke-width="1.3" fill="#c3c6de" stroke-linecap="round"/>
+      <circle cx="10" cy="-5" r="1.2" fill="#d63a63"/><circle cx="10" cy="5" r="1.2" fill="#d63a63"/>
+    </g></g>
+
+    <!-- balance wheel and hairspring -->
+    <g transform="translate(77 146)"><g id="bk-balance">
+      <circle r="17.5" fill="none" stroke="url(#gilt)" stroke-width="2.6"/>
+      ${timing}
+      <g stroke="#b3b7d3" stroke-width="1.6"><line x1="-17" x2="17"/><line y1="-17" y2="17"/></g>
+    </g>
+    <path id="bk-spring" d="${spiral(6, 2.5, 11)}" fill="none" stroke="#b9bdd8" stroke-width=".45" opacity=".85"/></g>
+
+    <!-- bridges -->
+    <path d="M150,62 L133,75 L137,114 L114,136" fill="none" stroke="url(#bridge)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M150,62 L133,75 L137,114 L114,136" fill="none" stroke="#ffffff" stroke-opacity=".06" stroke-width="1" transform="translate(-1.5 -1.5)"/>
+    <path d="M44,168 L77,146" stroke="url(#bridge)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M32,110 L57,104 L84,92 L104,95" fill="none" stroke="url(#bridge)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".92"/>
+    ${jewel(133, 75)}${jewel(137, 114)}${jewel(114, 136, 1.6)}${jewel(77, 146, 2.2)}${jewel(104, 95, 2.1)}${jewel(101, 142, 1.3)}${jewel(148, 140, 1.5)}${jewel(160, 122, 1.5)}
+    ${screw(150, 62, 20)}${screw(44, 168, 75)}${screw(32, 110, 140)}${screw(57, 104, 10)}${screw(125, 128, 110)}${screw(36, 86, 95)}
+
+    <!-- off-center micro-rotor: it swings like a pendulum, and moving the mouse winds it -->
+    <g transform="translate(78 62)"><g id="bk-rotor">
+      <path d="M-25,0 A25,25 0 0,0 25,0 L11,0 A11,11 0 0,1 -11,0Z" fill="url(#rotorg)"/>
+      <path d="M-25,0 A25,25 0 0,0 25,0 L11,0 A11,11 0 0,1 -11,0Z" fill="url(#geneva)"/>
+      <text y="18" text-anchor="middle" ${MONO} font-size="5" letter-spacing="1.4" fill="#1b1c2e">CK</text>
+      <circle r="11" fill="none" stroke="#6f7399" stroke-width=".6" opacity=".6"/>
+    </g>${screw(0, 0, 55)}</g>
+
+    <ellipse cx="78" cy="62" rx="52" ry="30" fill="#ffffff" opacity=".04" transform="rotate(-35 78 62)"/>
+  </svg>`;
+
+  el.innerHTML = `<div class="flip">${front}${back}</div>`;
+  const flip = el.firstElementChild;
+
+  const $ = s => el.querySelector(s);
+  const hh = $("#hh"), mh = $("#mh"), sh = $("#sh");
+  const parts = ["barrel", "ratchet", "center", "third", "fourth", "escape", "pallet", "balance", "spring", "rotor", "rev1", "rev2", "crownw"]
+    .reduce((o, k) => (o[k] = $("#bk-" + k), o), {});
+  const rot = (node, deg) => node.setAttribute("transform", `rotate(${deg.toFixed(2)})`);
+  const rotC = (node, deg) => node.setAttribute("transform", `rotate(${deg.toFixed(2)} 100 100)`);
+
+  // rotor physics: a weighted pendulum that settles hanging down
+  let rotor = 0.6, rotorV = 0, wound = 0, flipped = false;
+  addEventListener("pointermove", e => {
+    if (!flipped) return;
+    rotorV += Math.max(-8, Math.min(8, e.movementX)) * .0012;
+    rotorV = Math.max(-.3, Math.min(.3, rotorV));
+  });
+
+  function frame() {
     const n = new Date();
-    const s = n.getSeconds() + Math.floor(n.getMilliseconds() / 1000 * 6) / 6; // 6 beats per second
+    const beats = Math.floor(n.getMilliseconds() / 1000 * 6); // 6 beats per second
+    const s = n.getSeconds() + beats / 6;
     const m = n.getMinutes() + s / 60;
     const h = (n.getHours() % 12) + m / 60;
-    rot(sh, s * 6); rot(mh, m * 6); rot(hh, h * 30);
-    requestAnimationFrame(tick);
+    rotC(sh, s * 6); rotC(mh, m * 6); rotC(hh, h * 30);
+
+    if (flipped) {
+      const t = performance.now() / 1000;
+      const beat = Math.floor(t * 6);
+      rot(parts.balance, Math.sin(t * Math.PI * 2 * 3) * 200); // 3 Hz, like 21,600 vph
+      rot(parts.spring, Math.sin(t * Math.PI * 2 * 3) * 25);
+      rot(parts.pallet, beat % 2 ? 9 : -9);
+      rot(parts.escape, -beat * 12);
+      rot(parts.fourth, s * 6); // the seconds wheel really turns once a minute
+      rot(parts.third, -t * 9);
+      rot(parts.center, m * 6);
+      rot(parts.barrel, -t * .6);
+
+      rotorV += -Math.sin(rotor) * .0035; // gravity pulls the weight down
+      rotorV *= .985;
+      rotor += rotorV;
+      wound += Math.abs(rotorV) * 1.4; // winds in both directions
+      rot(parts.rotor, rotor * 180 / Math.PI);
+      rot(parts.ratchet, wound * 180 / Math.PI);
+      rot(parts.rev1, -rotor * 540 / Math.PI); // reversing wheels follow the rotor
+      rot(parts.rev2, rotor * 540 / Math.PI);
+      rot(parts.crownw, wound * 60 / Math.PI);
+    }
+    requestAnimationFrame(frame);
   }
-  tick();
+  frame();
 
   const fact = document.getElementById("fact");
-  let i = -1;
-  const next = () => { i = (i + 1) % FACTS.length; fact.dataset.final = FACTS[i]; scramble(fact, 600); };
-  el.addEventListener("click", next);
-  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); next(); } });
+  let i = -1, seenBack = false;
+  function toggle() {
+    flipped = !flipped;
+    flip.classList.toggle("flipped", flipped);
+    if (flipped && !seenBack) {
+      seenBack = true;
+      rotorV += .09; // give the rotor a nudge on its first reveal
+      fact.dataset.final = "that's the movement. move your mouse to wind the rotor.";
+    } else {
+      i = (i + 1) % FACTS.length;
+      fact.dataset.final = FACTS[i];
+    }
+    scramble(fact, 600);
+  }
+  el.addEventListener("click", toggle);
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
 })();
 
 /* ---------- the cipher in the footer ---------- */

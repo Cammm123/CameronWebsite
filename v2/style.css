@@ -76,8 +76,17 @@ nav .logo b { color: var(--purple); font-weight: 400; }
 
 /* watch */
 .watch { text-align: center; user-select: none; }
-.watch svg { width: 100%; max-width: 220px; height: auto; cursor: pointer; display: block; margin: 0 auto; transition: transform .4s; }
-.watch svg:hover { transform: rotate(-3deg) scale(1.02); }
+.watch #watch { width: 100%; max-width: 220px; margin: 0 auto; perspective: 900px; cursor: pointer; outline: none; }
+.watch .flip {
+  position: relative; width: 100%; aspect-ratio: 1;
+  transform-style: preserve-3d;
+  transition: transform .9s cubic-bezier(.3, .7, .2, 1);
+}
+.watch #watch:hover .flip { transform: rotateY(-8deg) rotateX(4deg); }
+.watch .flip.flipped, .watch #watch:hover .flip.flipped { transform: rotateY(180deg); }
+.watch .face { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.watch .face.back { transform: rotateY(180deg); }
+.watch #watch:focus-visible .flip { outline: 1px dashed var(--purple); outline-offset: 6px; border-radius: 50%; }
 .watch .fact {
   font: 11.5px/1.55 var(--mono);
   color: var(--dim);
@@ -101,18 +110,6 @@ section { margin-bottom: 64px; }
 .rows .what b { font-weight: 500; }
 .rows .what span { color: var(--dim); }
 
-.likes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.like {
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--panel) 80%, transparent);
-  border-radius: 6px;
-  padding: 18px 18px 16px;
-  transition: border-color .25s, transform .25s;
-}
-.like:hover { border-color: var(--purple); transform: translateY(-2px); }
-.like h3 { font: 500 13px var(--mono); margin: 0 0 8px; color: var(--text); }
-.like h3 i { font-style: normal; color: var(--purple); margin-right: 8px; }
-.like p { margin: 0; font-size: 14px; color: #a9acc6; line-height: 1.65; }
 
 .cta { font: 13px var(--mono); }
 .cta a { margin-right: 22px; }
@@ -207,7 +204,6 @@ footer {
   .hero { grid-template-columns: 1fr; gap: 28px; }
   .watch { max-width: 200px; margin: 0 auto; }
   .rows li { grid-template-columns: 1fr; gap: 0; }
-  .likes { grid-template-columns: 1fr; }
   .card { width: 64px; height: 92px; }
   .card .m { font-size: 28px; }
 }
@@ -215,3 +211,47 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* blog */
+nav a.blog { color: var(--purple); }
+nav a.blog:hover { color: var(--text); }
+
+
+
+.takes { list-style: none; margin: 0; padding: 0; counter-reset: take; }
+.takes li {
+  counter-increment: take;
+  display: grid; grid-template-columns: 44px 1fr; row-gap: 2px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+.takes li:last-child { border-bottom: 1px solid var(--line); }
+.takes li::before { content: counter(take, decimal-leading-zero); font: 12px/1.9 var(--mono); color: var(--purple); grid-row: span 2; }
+.takes b { font-weight: 500; }
+.takes span { color: #a9acc6; font-size: 14px; }
+
+.post { max-width: 640px; }
+.post .meta { font: 12px var(--mono); color: var(--dim); margin: 0 0 8px; }
+.post h1 { font: 500 clamp(26px, 5vw, 34px)/1.2 var(--mono); letter-spacing: -.01em; margin: 0 0 36px; }
+.post p { font-size: 17px; line-height: 1.85; color: #c3c6dc; margin: 0 0 22px; }
+.post em { color: var(--text); }
+.post a { color: var(--text); border-bottom: 1px solid var(--purple); }
+.post a:hover { color: var(--purple); }
+.post .end { font: 12px var(--mono); color: var(--faint); margin-top: 44px; }
+
+/* blog: posts listed like files in a terminal */
+.term { font: 13px/1.9 var(--mono); }
+.term .prompt { color: var(--dim); margin: 0 0 6px; }
+.term .prompt b { color: var(--purple); font-weight: 400; }
+.term-row {
+  display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap;
+  border: 0; padding: 2px 8px; margin: 0 -8px; border-radius: 3px;
+}
+.term-row .d { color: var(--dim); }
+.term-row .f { color: var(--text); }
+.term-row .cur { color: var(--purple); opacity: 0; }
+.term-row .go { color: var(--faint); margin-left: auto; opacity: 0; transition: opacity .2s; }
+.term-row:hover { background: rgba(167, 139, 250, .07); color: var(--text); }
+.term-row:hover .f { color: var(--purple); }
+.term-row:hover .cur { opacity: 1; animation: blink 1s steps(1) infinite; margin-left: -18px; }
+.term-row:hover .go { opacity: 1; }
+
