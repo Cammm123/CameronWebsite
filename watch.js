@@ -94,6 +94,8 @@ const DIAL_TEXT = [
   ["21,600 VPH", 100, 146, 4.5, 1, "#3b3e58"],
 ];
 const RING_TEXT = "CALIBRE CK-26 · TWENTY-ONE JEWELS · 21,600 VPH · ADJUSTED FIVE POSITIONS · PITTSBURGH ·";
+// The riddle is shifted by today's date, so the engraving says which letter stands for A.
+const KEY_TEXT = `KEY · ${String.fromCharCode(65 + day % 26)}→A`;
 
 const BACK_DEFS = `
   <radialGradient id="plate" cx="45%" cy="40%" r="70%">
@@ -254,10 +256,12 @@ async function build3D(el) {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
 
   const camera = new THREE.PerspectiveCamera(30, 1, .1, 20);
-  camera.position.set(0, 0, 4.7);
+  camera.fov = 34;
+  camera.position.set(0, 0, 4.3);
+  camera.updateProjectionMatrix();
 
   // colored light so the steel picks up the site's blue and purple
-  const key = new THREE.DirectionalLight(0xffffff, 1.4);
+  const key = new THREE.DirectionalLight(0xffffff, 2);
   key.position.set(-1.2, 1.6, 3);
   key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024);
@@ -265,25 +269,23 @@ async function build3D(el) {
   key.shadow.camera.right = key.shadow.camera.top = 1;
   key.shadow.bias = -.0005;
   key.shadow.radius = 3;
-  const blue = new THREE.PointLight(0x6ea8ff, 6, 8); blue.position.set(2.2, -1.2, 1.5);
-  const purple = new THREE.PointLight(0xa78bfa, 6, 8); purple.position.set(-2.2, 1.4, -1.2);
+  const blue = new THREE.PointLight(0x6ea8ff, 10, 8); blue.position.set(2.2, -1.2, 1.5);
+  const purple = new THREE.PointLight(0xa78bfa, 10, 8); purple.position.set(-2.2, 1.4, -1.2);
   scene.add(key, blue, purple);
 
   const watch = new THREE.Group();
   scene.add(watch);
 
-  const steel = new THREE.MeshPhysicalMaterial({
-    color: 0x8a8fb6, metalness: 1, roughness: .16, clearcoat: 1, clearcoatRoughness: .08, side: THREE.DoubleSide,
-  });
-  const polished = new THREE.MeshPhysicalMaterial({ color: 0xe4e6f5, metalness: 1, roughness: .12, clearcoat: 1 });
-  const glass = new THREE.MeshPhysicalMaterial({
-    color: 0x05050c, metalness: 0, roughness: .02, transparent: true, opacity: .3,
-    clearcoat: 1, clearcoatRoughness: 0, envMapIntensity: 2.2, depthWrite: false,
+  // satin gunmetal: brushed, not mirror-polished
+  const steel = new THREE.MeshStandardMaterial({ color: 0x2c2e40, metalness: .9, roughness: .42, side: THREE.DoubleSide });
+  const polished = new THREE.MeshStandardMaterial({ color: 0xc9cce0, metalness: .8, roughness: .35 });
+  const glass = new THREE.MeshStandardMaterial({
+    color: 0x05050c, metalness: 0, roughness: .1, transparent: true, opacity: .12, envMapIntensity: .5, depthWrite: false,
   });
 
   // case: one lathed profile from the caseback lip, round the flank, up to the bezel
   const profile = [
-    [.80, -.115], [.80, -.145], [.835, -.152], [.875, -.148], [.905, -.13], [.928, -.085], [.94, -.02],
+    [.80, -.2], [.80, -.255], [.835, -.27], [.875, -.265], [.91, -.24], [.935, -.17], [.948, -.07], [.945, .0],
     [.936, .045], [.918, .088], [.89, .113], [.865, .126], [.84, .13], [.826, .124], [.818, .1], [.815, .05],
   ].map(([r, z]) => new THREE.Vector2(r, z));
   const caseGeo = new THREE.LatheGeometry(profile, 160);
@@ -292,17 +294,17 @@ async function build3D(el) {
 
   // lugs and crown
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
-    const lug = new THREE.Mesh(new RoundedBoxGeometry(.15, .34, .11, 4, .045), steel);
-    lug.position.set(sx * .4, sy * .86, -.03);
+    const lug = new THREE.Mesh(new RoundedBoxGeometry(.15, .34, .2, 4, .05), steel);
+    lug.position.set(sx * .4, sy * .86, -.08);
     lug.rotation.z = sx * sy * -.08;
     watch.add(lug);
   }
-  const crown = new THREE.Mesh(new THREE.CylinderGeometry(.078, .078, .085, 24), steel);
+  const crown = new THREE.Mesh(new THREE.CylinderGeometry(.085, .085, .09, 20), steel);
   crown.rotation.z = Math.PI / 2;
-  crown.position.set(.99, 0, -.01);
+  crown.position.set(1.0, 0, -.08);
   const stem = new THREE.Mesh(new THREE.CylinderGeometry(.032, .032, .07, 16), steel);
   stem.rotation.z = Math.PI / 2;
-  stem.position.set(.935, 0, -.01);
+  stem.position.set(.945, 0, -.08);
   watch.add(crown, stem);
 
   // caseback screws
@@ -311,7 +313,7 @@ async function build3D(el) {
   for (let i = 0; i < 6; i++) {
     const a = (i / 6) * Math.PI * 2 + .3;
     const s = new THREE.Mesh(screwGeo, polished);
-    s.position.set(Math.cos(a) * .853, Math.sin(a) * .853, -.152);
+    s.position.set(Math.cos(a) * .853, Math.sin(a) * .853, -.27);
     watch.add(s);
   }
 
@@ -363,26 +365,6 @@ async function build3D(el) {
   crystal.renderOrder = 2;
   watch.add(crystal);
 
-  // a soft streak of reflected light across the glass
-  const glareCanvas = Object.assign(document.createElement("canvas"), { width: 256, height: 256 });
-  {
-    const g = glareCanvas.getContext("2d");
-    g.translate(128, 128); g.rotate(-.7); g.scale(1, .42);
-    const grad = g.createRadialGradient(0, -150, 60, 0, -150, 205);
-    grad.addColorStop(0, "rgba(255,255,255,0)");
-    grad.addColorStop(.72, "rgba(255,255,255,0)");
-    grad.addColorStop(.86, "rgba(230,232,255,.9)");
-    grad.addColorStop(1, "rgba(255,255,255,0)");
-    g.fillStyle = grad;
-    g.fillRect(-256, -300, 512, 600);
-  }
-  const glare = new THREE.Mesh(new THREE.CircleGeometry(.8, 64), new THREE.MeshBasicMaterial({
-    map: new THREE.CanvasTexture(glareCanvas), transparent: true, opacity: .22,
-    blending: THREE.AdditiveBlending, depthWrite: false,
-  }));
-  glare.position.z = .185;
-  glare.renderOrder = 3;
-  watch.add(glare);
 
   // back: the movement, redrawn every frame onto a canvas behind an exhibition window
   const W0 = 20, SPAN = 160; // the window shows x/y 20..180 of the drawing
@@ -409,6 +391,19 @@ async function build3D(el) {
       ctx.restore();
       a += w / 2 / 75;
     }
+    ctx.font = `500 5.2px "JetBrains Mono", monospace`;
+    ctx.fillStyle = "#a78bfa";
+    const kw = Array.from(KEY_TEXT, ch => ctx.measureText(ch).width + .8);
+    a = Math.PI / 2 + kw.reduce((x, w) => x + w, 0) / 2 / 77;
+    Array.from(KEY_TEXT).forEach((ch, i) => {
+      a -= kw[i] / 2 / 77;
+      ctx.save();
+      ctx.translate(100 + Math.cos(a) * 77, 100 + Math.sin(a) * 77);
+      ctx.rotate(a - Math.PI / 2);
+      ctx.fillText(ch, 0, 0);
+      ctx.restore();
+      a -= kw[i] / 2 / 77;
+    });
   }
   const sprites = await Promise.all(PARTS.map(p => p === "BRIDGES"
     ? svgImage(TEX * 200 / SPAN, TEX * 200 / SPAN, "0 0 200 200", BACK_DEFS, BRIDGES)
@@ -435,10 +430,10 @@ async function build3D(el) {
   const movement = new THREE.Mesh(new THREE.CircleGeometry(.8, 96),
     new THREE.MeshStandardMaterial({ map: movTex, roughness: .6, metalness: 0, envMapIntensity: .4 }));
   movement.rotation.y = Math.PI;
-  movement.position.z = -.11;
+  movement.position.z = -.2;
   const backGlass = new THREE.Mesh(new THREE.CircleGeometry(.8, 96), glass);
   backGlass.rotation.y = Math.PI;
-  backGlass.position.z = -.14;
+  backGlass.position.z = -.25;
   backGlass.renderOrder = 2;
   watch.add(movement, backGlass);
   drawMovement(pose(true));
@@ -453,7 +448,7 @@ async function build3D(el) {
   new ResizeObserver(fit).observe(el);
 
   // tilt toward the pointer; flip on click
-  let tx = 0, ty = 0, flipAngle = 0;
+  let tx = 0, ty = 0, flipAngle = 0, lean = -.3;
   addEventListener("pointermove", e => {
     const r = el.getBoundingClientRect();
     const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
@@ -473,8 +468,9 @@ async function build3D(el) {
     const target = state.flipped ? Math.PI : 0;
     flipAngle += (target - flipAngle) * (motionOff ? 1 : .075);
     const float = motionOff ? 0 : Math.sin(t * .7) * .04;
-    watch.rotation.x += (tx + float - watch.rotation.x) * .08;
-    watch.rotation.y = flipAngle + (state.flipped ? -ty : ty) * (motionOff ? 0 : 1);
+    lean += ((state.flipped ? .3 : -.3) - lean) * (motionOff ? 1 : .075); // rest at an angle so the case's depth shows
+    watch.rotation.x += (.16 + tx + float - watch.rotation.x) * .08;
+    watch.rotation.y = flipAngle + lean + (state.flipped ? -ty : ty) * (motionOff ? 0 : 1);
     watch.position.y = motionOff ? 0 : Math.sin(t * .9) * .015;
 
     const showingBack = Math.cos(flipAngle) < 0;
@@ -517,6 +513,7 @@ function build2D(el) {
     ${rect(76, 0, 48, 26, "#12131f")}${rect(76, 174, 48, 26, "#12131f")}${rect(3, 92, 9, 16, "#2c2e48")}
     <circle cx="100" cy="100" r="89" fill="url(#bcase)"/>${caseScrews}${PLATE}
     <text ${MONO} font-size="3.6" letter-spacing=".9" fill="#5d6185"><textPath href="#ring" startOffset="2%">${RING_TEXT}</textPath></text>
+    <text x="100" y="176" text-anchor="middle" ${MONO} font-size="5" letter-spacing=".8" fill="#a78bfa">${KEY_TEXT}</text>
     ${parts}
     <ellipse cx="78" cy="62" rx="52" ry="30" fill="#ffffff" opacity=".04" transform="rotate(-35 78 62)"/></svg>`;
 

@@ -221,6 +221,7 @@ footer {
   nav a { margin-left: 14px; }
   .hero { grid-template-columns: 1fr; gap: 28px; }
   .riddle .key::after { content: " ↓"; }
+  .lists { grid-template-columns: 1fr; gap: 0; }
   .hint { display: none; }
   .watch { max-width: 280px; width: 100%; margin: 0 auto; }
   .watch #watch { max-width: 200px; }
@@ -239,17 +240,23 @@ nav a.blog:hover { color: var(--text); }
 
 
 
-.takes { list-style: none; margin: 0; padding: 0; counter-reset: take; }
+/* the two lists sit side by side; a description opens when you point at its bullet */
+.lists { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.takes { list-style: none; margin: 0; padding: 0; }
 .takes li {
-  counter-increment: take;
-  position: relative; padding: 7px 0 7px 36px;
-  border-top: 1px solid var(--line); line-height: 1.6;
+  position: relative; padding: 5px 0 5px 20px;
+  line-height: 1.5; cursor: default; outline: none;
 }
-.takes li:last-child { border-bottom: 1px solid var(--line); }
-.takes li::before { content: counter(take, decimal-leading-zero); font: 12px/1.9 var(--mono); color: var(--purple); position: absolute; left: 0; top: 7px; }
-.takes b { font-weight: 500; }
-.takes span { color: #a9acc6; font-size: 14px; }
-.takes b + span::before { content: " — "; color: var(--faint); }
+.takes li::before { content: "▸"; position: absolute; left: 0; top: 6px; font: 11px/1.9 var(--mono); color: var(--purple); transition: transform .25s; }
+.takes b { font-weight: 500; font-size: 14.5px; transition: color .2s; }
+.takes span {
+  display: block; color: #a9acc6; font-size: 13px;
+  max-height: 0; opacity: 0; overflow: hidden;
+  transition: max-height .35s ease, opacity .3s, margin .3s;
+}
+.takes li:hover b, .takes li:focus b { color: var(--blue); }
+.takes li:hover::before, .takes li:focus::before { transform: rotate(90deg); }
+.takes li:hover span, .takes li:focus span { max-height: 8em; opacity: 1; margin-top: 3px; }
 
 .post { max-width: 640px; }
 .post .meta { font: 12px var(--mono); color: var(--dim); margin: 0 0 8px; }

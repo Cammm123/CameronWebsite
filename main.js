@@ -211,7 +211,7 @@ function caesar(text, shift) {
 (function cipher() {
   const el = document.getElementById("cipher");
   if (!el) return;
-  // the key changes daily: it's whatever the watch's date window says
+  // the key changes daily; the back of the watch has it engraved
   el.textContent = caesar(CLUE, new Date().getDate() % 26);
 
   const input = document.getElementById("answer-input");
@@ -295,6 +295,6 @@ function openRoom() {
 }
 
 console.log(
-  "%cnice of you to check the source.%c\nthe page is hiding something. the answer is technically in here, but that's no fun. start at the bottom of the page.",
+  "%cnice of you to check the source.%c\nthe page is hiding something. the answer is technically in here, but that's no fun. start with the riddle.",
   "color:#a78bfa;font:14px monospace", "color:#7c80a0;font:12px monospace"
 );
