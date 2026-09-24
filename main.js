@@ -228,7 +228,7 @@ for (const [el, b] of blocks) {
 })();
 
 /* ---------- the cipher in the footer ---------- */
-const CLUE = "floor of a ship, or what a magician shuffles (4). then type it.";
+const CLUE = "floor of a ship";
 const ANSWER = "deck";
 
 function caesar(text, shift) {
