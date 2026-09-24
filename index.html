@@ -32,27 +32,12 @@
           <p>Hi, my name is Cameron Kani and I am a freshman at Carnegie Mellon University.</p>
         </header>
 
-        <div class="lists stage">
-          <section>
-            <h2 class="label">things i like</h2>
-            <ol class="takes">
-              <li tabindex="0"><b>Running</b><span>Only if it's a morning run. The breath of the cold fresh air is the greatest feeling of every day.</span></li>
-              <li tabindex="0"><b>Working out</b><span>It feels like I am playing a video game and upgrading my own body after every workout.</span></li>
-              <li tabindex="0"><b>Learning new things</b><span>I love learning about random fun facts!</span></li>
-              <li tabindex="0"><b>Optimizing things with AI</b><span>It feels like a superpower to be able to make any creative idea in your mind a real thing. Everyone now has this superpower with AI.</span></li>
-              <li tabindex="0"><b>Root beer</b><span>It’s just the greatest soda. Specifically Mug.</span></li>
-            </ol>
-          </section>
-
-          <section>
-            <h2 class="label">hot takes</h2>
-            <ol class="takes">
-              <li tabindex="0"><b>Energy drinks are dumb</b><span>Why rely on caffeine? Buying that energy drink every day can add up fast, especially in today’s economy. Also, they don’t even taste that good.</span></li>
-              <li tabindex="0"><b>The NIH should direct all funding to cure everyone who is lactose intolerant immediately</b><span>No justification needed for this one.</span></li>
-              <li tabindex="0"><b>A boat license is the coolest thing you can have</b><span>You’re able to live on water, drive on water, and swim in water whenever you want.</span></li>
-            </ol>
-          </section>
-        </div>
+        <section class="term-win stage" id="term" aria-label="Terminal. Type commands to look around the site.">
+          <div class="t-bar"><span>cameron@cmu: <b class="t-title">~</b></span><span class="t-panda" aria-hidden="true">ʕ◉ᴥ◉ʔ</span></div>
+          <div class="t-out" id="t-out" aria-live="polite"></div>
+          <label class="t-line"><span class="t-prompt"><b class="t-path">~</b> $</span>
+            <input id="t-input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type a command"></label>
+        </section>
       </div>
 
       <aside class="side stage">
@@ -78,8 +63,6 @@
     </footer>
   </div>
 
-  <div class="hint" id="hint">(click anywhere)</div>
-
   <script type="importmap">
     { "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
@@ -87,6 +70,7 @@
     } }
   </script>
   <script src="main.js"></script>
+  <script src="terminal.js"></script>
   <script type="module" src="watch.js"></script>
 </body>
 </html>

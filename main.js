@@ -1,14 +1,12 @@
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const COLORS = ["#6ea8ff", "#a78bfa", "#8b9dff"];
 
-/* ---------- background field: click anywhere to add points ---------- */
+/* ---------- background field: a slow drift of faint points ---------- */
 (function field() {
   const cv = document.getElementById("field");
   if (!cv) return;
   const ctx = cv.getContext("2d");
   const LINK = 115;
   const pts = [];
-  const rings = [];
   let W, H;
 
   function resize() {
@@ -21,70 +19,31 @@ const COLORS = ["#6ea8ff", "#a78bfa", "#8b9dff"];
   resize();
   addEventListener("resize", resize);
 
-  const base = Math.round(Math.min(60, (W * H) / 22000));
-  for (let i = 0; i < base; i++) {
-    pts.push({ x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
-      c: "#3b3e58", r: 1.1, spawned: false });
+  const n = Math.round(Math.min(60, (W * H) / 22000));
+  for (let i = 0; i < n; i++) {
+    pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25 });
   }
-
-  function burst(x, y) {
-    rings.push({ x, y, t: 0 });
-    for (let i = 0; i < 9; i++) {
-      const a = (Math.PI * 2 * i) / 9 + Math.random() * .4;
-      const sp = 1 + Math.random() * 1.8;
-      pts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-        c: COLORS[(Math.random() * COLORS.length) | 0], r: 2, spawned: true });
-    }
-    // keep it light: drop the oldest spawned points past a cap
-    let extra = pts.filter(p => p.spawned).length - 140;
-    for (let i = 0; extra > 0 && i < pts.length; i++) {
-      if (pts[i].spawned) { pts.splice(i--, 1); extra--; }
-    }
-    if (reduceMotion) draw();
-  }
-
-  document.addEventListener("click", e => {
-    if (e.target.closest("a, button, input, #watch, .room, .riddle")) return;
-    burst(e.clientX, e.clientY);
-    document.getElementById("hint")?.classList.add("gone");
-  });
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = ctx.fillStyle = "#3b3e58";
+    ctx.lineWidth = .8;
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
         const a = pts[i], b = pts[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const d = Math.hypot(dx, dy);
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
         if (d < LINK) {
-          ctx.globalAlpha = (1 - d / LINK) * (a.spawned || b.spawned ? .75 : .35);
-          ctx.strokeStyle = a.spawned ? a.c : b.spawned ? b.c : "#3b3e58";
-          ctx.lineWidth = .8;
+          ctx.globalAlpha = (1 - d / LINK) * .35;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
         }
       }
     }
-    for (let i = rings.length - 1; i >= 0; i--) {
-      const r = rings[i];
-      ctx.globalAlpha = Math.max(0, 1 - r.t / 40) * .6;
-      ctx.strokeStyle = "#a78bfa";
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(r.x, r.y, 4 + r.t * 1.4, 0, Math.PI * 2); ctx.stroke();
-      if (++r.t > 40 || reduceMotion) rings.splice(i, 1);
-    }
     ctx.globalAlpha = 1;
-    for (const p of pts) {
-      ctx.fillStyle = p.c;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-    }
+    for (const p of pts) { ctx.beginPath(); ctx.arc(p.x, p.y, 1.1, 0, Math.PI * 2); ctx.fill(); }
   }
 
   function step() {
     for (const p of pts) {
-      // spawned points coast out, then settle into the same slow drift
-      const sp = Math.hypot(p.vx, p.vy);
-      if (sp > .18) { p.vx *= .975; p.vy *= .975; }
       p.x += p.vx; p.y += p.vy;
       if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
       if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
@@ -93,6 +52,74 @@ const COLORS = ["#6ea8ff", "#a78bfa", "#8b9dff"];
     requestAnimationFrame(step);
   }
   reduceMotion ? draw() : requestAnimationFrame(step);
+})();
+
+/* ---------- the panda: roams the bottom edge, and pops out wherever you click ---------- */
+const PANDA = "ʕ◉ᴥ◉ʔ";
+const HELLOS = ["hi!", "hello :)", "hey there", "boo!", "♪", "psst, try the terminal", "you found me", "hi again"];
+
+(function panda() {
+  const roamer = document.createElement("div");
+  roamer.className = "roamer";
+  roamer.setAttribute("aria-hidden", "true");
+  roamer.innerHTML = `<span class="r-face">${PANDA}</span><span class="r-say">click anywhere!</span>`;
+  document.body.append(roamer);
+  const face = roamer.firstElementChild;
+
+  let x = 40, target = x, pauseUntil = 0, hiddenUntil = 0, lastMove = performance.now(), napping = false;
+  const place = () => { roamer.style.transform = `translateX(${x}px)`; };
+  place();
+
+  function tick(t) {
+    const idle = t - lastMove > 45000;
+    if (idle !== napping) { napping = idle; face.textContent = idle ? "ʕ-ᴥ-ʔ zz" : PANDA; }
+    if (!napping && t > pauseUntil && t > hiddenUntil) {
+      const dx = target - x;
+      if (Math.abs(dx) < 1) {
+        pauseUntil = t + 1500 + Math.random() * 5000; // sit for a bit, then wander somewhere new
+        target = 20 + Math.random() * Math.max(0, innerWidth - 110);
+        roamer.classList.remove("walking");
+      } else {
+        x += Math.sign(dx) * Math.min(Math.abs(dx), .7);
+        roamer.classList.add("walking");
+        place();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  if (!reduceMotion) requestAnimationFrame(tick);
+  addEventListener("pointermove", () => { lastMove = performance.now(); });
+
+  let greeted = false;
+  document.addEventListener("click", e => {
+    lastMove = performance.now();
+    if (e.target.closest("a, button, input, label, #watch, .room, .riddle, #term")) return;
+    if (!greeted) { greeted = true; roamer.classList.add("greeted"); }
+    peek(e.clientX, e.clientY);
+    // it ducks away at the bottom and reappears under the spot you clicked
+    roamer.classList.add("ducked");
+    hiddenUntil = performance.now() + 2300;
+    setTimeout(() => {
+      x = target = Math.max(10, Math.min(innerWidth - 80, e.clientX - 25));
+      place();
+      roamer.classList.remove("ducked", "walking");
+      pauseUntil = performance.now() + 2500;
+    }, 2300);
+  });
+
+  function peek(px, py) {
+    const old = document.querySelectorAll(".peek");
+    if (old.length > 3) old[0].remove();
+    const el = document.createElement("div");
+    el.className = "peek";
+    el.setAttribute("aria-hidden", "true");
+    el.style.left = px + "px";
+    el.style.top = py + "px";
+    el.innerHTML = `<div class="p-hole"></div><div class="p-mask"><span class="p-face">${PANDA}</span></div>
+      <span class="p-say">${HELLOS[(Math.random() * HELLOS.length) | 0]}</span>`;
+    document.body.append(el);
+    setTimeout(() => el.remove(), 2400);
+  }
 })();
 
 /* ---------- text that decodes itself ---------- */
@@ -117,7 +144,7 @@ function scramble(el, dur = 800) {
 
 // Text sits still until you point at it; then it scrambles and decodes.
 const BLOCKS = "h1, h2, h3, p, li, .head, nav a, .fine > *, .cta a, .term-row, .prompt";
-const SKIP = "#cipher, #fact, .room, .caret, svg, script, input, .answer, .hint, .riddle";
+const SKIP = "#cipher, #fact, .room, .caret, svg, script, input, .answer, .hint, .riddle, #term, .roamer, .peek";
 const LOWER = "abcdefghijklmnopqrstuvwxyz";
 
 // proportional text gets same-case letters so line wrapping barely moves
