@@ -357,11 +357,16 @@ async function build3D(el) {
   for (const h of [hourHand, minHand, secBar, secTail]) h.castShadow = true;
   watch.add(hourHand, minHand, secHand, cap);
 
-  // domed crystal over the dial
-  const R = 5.8, rim = .83;
-  const crystal = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 8, 0, Math.PI * 2, 0, Math.asin(rim / R)), glass);
-  crystal.rotation.x = Math.PI / 2;
-  crystal.position.z = .128 - Math.sqrt(R * R - rim * rim) + 0; // rim meets the bezel
+  // a thick "box" crystal: a solid lens that stands above the bezel and bends the dial beneath it
+  const lens = [
+    [0, .125], [.82, .125], [.822, .15], [.818, .178], [.806, .198], [.78, .213], [.7, .226], [.5, .237], [.25, .243], [0, .245],
+  ].map(([r, z]) => new THREE.Vector2(r, z));
+  const crystalGeo = new THREE.LatheGeometry(lens, 128);
+  crystalGeo.rotateX(Math.PI / 2);
+  const crystal = new THREE.Mesh(crystalGeo, new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, metalness: 0, roughness: 0, transmission: 1, thickness: .05, ior: 1.4,
+    attenuationColor: 0x9aa2e0, attenuationDistance: 1.6, specularIntensity: .45, envMapIntensity: .5,
+  }));
   crystal.renderOrder = 2;
   watch.add(crystal);
 

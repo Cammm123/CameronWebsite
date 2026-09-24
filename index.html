@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add("js")</script>
 </head>
-<body>
+<body class="is-home">
   <canvas id="field" aria-hidden="true"></canvas>
 
   <div class="wrap">
@@ -24,48 +24,53 @@
       </div>
     </nav>
 
-    <header class="hero stage">
-      <div>
-        <h1><span>cameron kani</span><span class="caret">_</span></h1>
-        <p class="sub">computational biology @ carnegie mellon</p>
-        <p>Hi, my name is Cameron Kani and I am a freshman at Carnegie Mellon University.</p>
-        <div class="riddle">
-          <p class="riddle-label">// riddle</p>
-          <p class="cipher" id="cipher"></p>
-          <p class="key">∴ the key is in the watch.</p>
-          <div class="answer" id="answer">
-            <span>&gt;</span>
-            <input id="answer-input" autocomplete="off" spellcheck="false" placeholder="answer" aria-label="Your answer">
-            <span class="nope" id="nope">not quite.</span>
-          </div>
+    <div class="home">
+      <div class="main">
+        <header class="hero stage">
+          <h1><span>cameron kani</span><span class="caret">_</span></h1>
+          <p class="sub">computational biology @ carnegie mellon</p>
+          <p>Hi, my name is Cameron Kani and I am a freshman at Carnegie Mellon University.</p>
+        </header>
+
+        <div class="lists stage">
+          <section>
+            <h2 class="label">things i like</h2>
+            <ol class="takes">
+              <li tabindex="0"><b>Running</b><span>Only if it's a morning run. The breath of the cold fresh air is the greatest feeling of every day.</span></li>
+              <li tabindex="0"><b>Working out</b><span>It feels like I am playing a video game and upgrading my own body after every workout.</span></li>
+              <li tabindex="0"><b>Learning new things</b><span>I love learning about random fun facts!</span></li>
+              <li tabindex="0"><b>Optimizing things with AI</b><span>It feels like a superpower to be able to make any creative idea in your mind a real thing. Everyone now has this superpower with AI.</span></li>
+              <li tabindex="0"><b>Root beer</b><span>It’s just the greatest soda. Specifically Mug.</span></li>
+            </ol>
+          </section>
+
+          <section>
+            <h2 class="label">hot takes</h2>
+            <ol class="takes">
+              <li tabindex="0"><b>Energy drinks are dumb</b><span>Why rely on caffeine? Buying that energy drink every day can add up fast, especially in today’s economy. Also, they don’t even taste that good.</span></li>
+              <li tabindex="0"><b>The NIH should direct all funding to cure everyone who is lactose intolerant immediately</b><span>No justification needed for this one.</span></li>
+              <li tabindex="0"><b>A boat license is the coolest thing you can have</b><span>You’re able to live on water, drive on water, and swim in water whenever you want.</span></li>
+            </ol>
+          </section>
         </div>
       </div>
-      <div class="watch">
-        <div id="watch" role="button" tabindex="0" aria-label="A mechanical watch. Click to flip it over and see the movement."></div>
-        <p class="fact" id="fact" aria-live="polite">click the watch.</p>
-      </div>
-    </header>
 
-    <div class="lists">
-    <section class="stage">
-      <h2 class="label">things i like</h2>
-      <ol class="takes">
-        <li tabindex="0"><b>Running</b><span>Only if it's a morning run. The breath of the cold fresh air is the greatest feeling of every day.</span></li>
-        <li tabindex="0"><b>Working out</b><span>It feels like I am playing a video game and upgrading my own body after every workout.</span></li>
-        <li tabindex="0"><b>Learning new things</b><span>I love learning about random fun facts!</span></li>
-        <li tabindex="0"><b>Optimizing things with AI</b><span>It feels like a superpower to be able to make any creative idea in your mind a real thing. Everyone now has this superpower with AI.</span></li>
-        <li tabindex="0"><b>Root beer</b><span>It’s just the greatest soda. Specifically Mug.</span></li>
-      </ol>
-    </section>
-
-    <section class="stage">
-      <h2 class="label">hot takes</h2>
-      <ol class="takes">
-        <li tabindex="0"><b>Energy drinks are dumb</b><span>Why rely on caffeine? Buying that energy drink every day can add up fast, especially in today’s economy. Also, they don’t even taste that good.</span></li>
-        <li tabindex="0"><b>The NIH should direct all funding to cure everyone who is lactose intolerant immediately</b><span>No justification needed for this one.</span></li>
-        <li tabindex="0"><b>A boat license is the coolest thing you can have</b><span>You’re able to live on water, drive on water, and swim in water whenever you want.</span></li>
-      </ol>
-    </section>
+      <aside class="side stage">
+        <div class="watch">
+          <div id="watch" role="button" tabindex="0" aria-label="A mechanical watch. Click to flip it over and see the movement."></div>
+          <p class="fact" id="fact" aria-live="polite">click the watch.</p>
+        </div>
+            <div class="riddle">
+              <p class="riddle-label">// riddle</p>
+              <p class="cipher" id="cipher"></p>
+              <p class="key">∴ the key is in the watch.</p>
+              <div class="answer" id="answer">
+                <span>&gt;</span>
+                <input id="answer-input" autocomplete="off" spellcheck="false" placeholder="answer" aria-label="Your answer">
+                <span class="nope" id="nope">not quite.</span>
+              </div>
+            </div>
+      </aside>
     </div>
 
     <footer class="stage">

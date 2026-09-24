@@ -56,13 +56,11 @@ nav .logo b { color: var(--purple); font-weight: 400; }
 .label::before { content: "// "; color: var(--faint); }
 
 /* hero */
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 240px;
-  gap: 40px;
-  align-items: center;
-  margin-bottom: 30px;
-}
+/* homepage: everything about me on the left, the watch and its riddle on the right */
+.is-home .wrap { max-width: 900px; }
+.home { display: grid; grid-template-columns: 1fr 250px; gap: 56px; align-items: start; }
+.hero { margin-bottom: 26px; }
+.is-home footer { margin-top: 36px; }
 .hero h1 {
   font: 500 clamp(30px, 6vw, 44px)/1.1 var(--mono);
   letter-spacing: -.02em;
@@ -98,7 +96,7 @@ nav .logo b { color: var(--purple); font-weight: 400; }
 
 /* the riddle, sitting under the watch it depends on */
 .riddle {
-  margin-top: 22px; padding: 12px 14px; max-width: 460px;
+  margin-top: 16px; padding: 12px 14px;
   border: 1px solid var(--line); border-radius: 6px;
   background: rgba(13, 13, 23, .7);
   text-align: left;
@@ -107,7 +105,7 @@ nav .logo b { color: var(--purple); font-weight: 400; }
 .riddle p { margin: 0; }
 .riddle-label { color: var(--purple); margin-bottom: 6px !important; }
 .riddle .key { color: var(--faint); margin-top: 6px !important; }
-.riddle .key::after { content: " →"; color: var(--purple); }
+.riddle .key::after { content: " ↑"; color: var(--purple); }
 
 /* sections */
 section { margin-bottom: 26px; }
@@ -219,9 +217,9 @@ footer {
 @media (max-width: 640px) {
   nav { padding-bottom: 36px; }
   nav a { margin-left: 14px; }
-  .hero { grid-template-columns: 1fr; gap: 28px; }
-  .riddle .key::after { content: " ↓"; }
+  .home { grid-template-columns: 1fr; gap: 28px; }
   .lists { grid-template-columns: 1fr; gap: 0; }
+  .side { max-width: 320px; width: 100%; margin: 0 auto; }
   .hint { display: none; }
   .watch { max-width: 280px; width: 100%; margin: 0 auto; }
   .watch #watch { max-width: 200px; }
@@ -241,16 +239,16 @@ nav a.blog:hover { color: var(--text); }
 
 
 /* the two lists sit side by side; a description opens when you point at its bullet */
-.lists { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.lists { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .takes { list-style: none; margin: 0; padding: 0; }
 .takes li {
-  position: relative; padding: 5px 0 5px 20px;
-  line-height: 1.5; cursor: default; outline: none;
+  position: relative; padding: 4px 0 4px 18px;
+  line-height: 1.45; cursor: default; outline: none;
 }
-.takes li::before { content: "▸"; position: absolute; left: 0; top: 6px; font: 11px/1.9 var(--mono); color: var(--purple); transition: transform .25s; }
-.takes b { font-weight: 500; font-size: 14.5px; transition: color .2s; }
+.takes li::before { content: "▸"; position: absolute; left: 0; top: 3px; font: 11px/1.9 var(--mono); color: var(--purple); transition: transform .25s; }
+.takes b { font-weight: 500; font-size: 13px; transition: color .2s; }
 .takes span {
-  display: block; color: #a9acc6; font-size: 13px;
+  display: block; color: #a9acc6; font-size: 12px;
   max-height: 0; opacity: 0; overflow: hidden;
   transition: max-height .35s ease, opacity .3s, margin .3s;
 }
