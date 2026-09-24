@@ -35,7 +35,6 @@
     "things_i_like": topics(LIKES),
     "hot_takes": topics(TAKES),
     "blog": dir(Object.fromEntries(POSTS.map(([date, name, href]) => [name, { type: "post", date, href }]))),
-    "riddle.txt": { type: "riddle" },
     "watch": { type: "watch" },
     "github": { type: "url", href: "https://github.com/Cammm123" },
     "linkedin": { type: "url", href: "https://www.linkedin.com/in/cameron-kani-134b69372" },
@@ -65,7 +64,7 @@
 
   const suffix = node => ({ dir: "/", watch: "*", url: "@" })[node.type] || "";
   const action = (path, node) => ({
-    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], riddle: ["cat " + path], watch: ["./watch"],
+    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], watch: ["./watch"],
     url: ["open " + path], post: ["open " + path],
   })[node.type];
   const nameHTML = (name, node, path = name) =>
@@ -102,34 +101,28 @@
     print(`opening ${esc(node.href)} in a new tab…`, "t-dim");
     window.open(node.href, "_blank", "noopener");
   }
-  // the watch and the riddle stay hidden until the terminal calls them up
+  // the watch (with its riddle underneath) stays hidden until the terminal calls it up
   const home_ = document.querySelector(".home");
   const narrow = () => matchMedia("(max-width: 640px)").matches;
   const where = () => narrow() ? "(scroll down ↓)" : "(look right →)";
-  function reveal(which) {
-    const el = document.querySelector(which === "watch" ? ".side .watch" : ".side .riddle");
-    if (!el.hidden) return false;
-    el.hidden = false;
+  function reveal() {
+    const parts = document.querySelectorAll(".side > [hidden]");
+    if (!parts.length) return false;
+    parts.forEach(el => { el.hidden = false; });
     home_.classList.add("has-side");
-    requestAnimationFrame(() => el.classList.add("shown"));
-    if (narrow()) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+    requestAnimationFrame(() => parts.forEach(el => el.classList.add("shown")));
+    if (narrow()) setTimeout(() => parts[0].scrollIntoView({ behavior: "smooth", block: "start" }), 300);
     return true;
   }
   function flipWatch() {
-    if (reveal("watch")) {
-      print(`the watch is out. ${where()}`, "t-dim");
-      panda(`run ${cmd("./watch")} again to flip it over.`, "watch-out");
+    if (reveal()) {
+      print(`the watch is out, with a riddle underneath. ${where()}`, "t-dim");
+      panda(`the key to the riddle is somewhere on the watch. run ${cmd("./watch")} again to flip it over.`, "watch-out");
       return;
     }
     document.getElementById("watch")?.click();
     print(`flipped the watch. ${where()}`, "t-dim");
-    panda("look at the back. something is engraved there…", "watch");
-  }
-  function showRiddle() {
-    if (reveal("riddle")) print(`the riddle is pinned up too. ${where()}`, "t-dim");
-    print(esc(caesar(CLUE, new Date().getDate() % 26)), "t-text");
-    print("∴ the key is in the watch.", "t-dim");
-    panda(`when you think you have it, type ${cmd("answer <word>")}`, "riddle");
+    panda(`look at the back. something is engraved there… answer with ${cmd("answer <word>")}`, "watch");
   }
   function tryAnswer(word) {
     if ((word || "").toLowerCase() === ANSWER) {
@@ -137,7 +130,7 @@
       setTimeout(openRoom, 400);
     } else {
       print("not quite.", "t-err");
-      panda(`${cmd("cat riddle.txt")} to see it again. the key is on the back of the watch (${cmd("./watch")}).`, "wrong");
+      panda(`the key is on the back of the watch. flip it with ${cmd("./watch")}.`, "wrong");
     }
   }
 
@@ -148,7 +141,6 @@
     if (node.type === "url") return openURL(node);
     if (node.type === "post") return go(node.href);
     if (node.type === "watch") return flipWatch();
-    if (node.type === "riddle") return showRiddle();
     if (node.type === "why") return cat(arg);
     if (node.type === "dir") return cd(arg);
   }
@@ -181,7 +173,7 @@
     if (!node) return notFound("cd", arg);
     if (node.type !== "dir") {
       print(`cd: not a directory: ${esc(arg)}`, "t-err");
-      const hint = { riddle: "cat riddle.txt", watch: "./watch", url: "open " + arg, post: "open " + arg, why: "cat " + arg }[node.type];
+      const hint = { watch: "./watch", url: "open " + arg, post: "open " + arg, why: "cat " + arg }[node.type];
       if (hint) panda(`that one's not a folder. try ${cmd(hint)}`);
       return;
     }
@@ -202,7 +194,6 @@
       print(esc(node.text), "t-text");
       return;
     }
-    if (node.type === "riddle") return showRiddle();
     if (node.type === "post") return go(node.href);
     if (node.type === "url") return print(`${esc(arg)} -> ${esc(node.href)}`);
     if (node.type === "dir") return print(`cat: ${esc(arg)}: is a directory`, "t-err");
@@ -214,7 +205,7 @@
     ["cd <folder>", "go into a folder (cd .. goes back)"],
     ["cat <file>", "read a file"],
     ["open <name>", "open a link, post, or the watch"],
-    ["./watch", "flip the watch over"],
+    ["./watch", "bring out the watch, then flip it over"],
     ["answer <word>", "answer the riddle"],
     ["clear", "clear the screen"],
   ];
