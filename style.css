@@ -58,7 +58,10 @@ nav .logo b { color: var(--purple); font-weight: 400; }
 /* hero */
 /* homepage: everything about me on the left, the watch and its riddle on the right */
 .is-home .wrap { max-width: 900px; }
-.home { display: grid; grid-template-columns: 1fr 250px; gap: 56px; align-items: start; }
+.home { display: grid; grid-template-columns: 1fr 0; gap: 0; align-items: start; transition: grid-template-columns .7s cubic-bezier(.2, .7, .2, 1), gap .7s; }
+.home.has-side { grid-template-columns: 1fr 250px; gap: 56px; }
+.side > * { opacity: 0; transform: translateX(24px); transition: opacity .6s .25s, transform .7s .25s cubic-bezier(.2, .7, .2, 1); }
+.side > .shown { opacity: 1; transform: none; }
 .hero { margin-bottom: 26px; }
 .is-home footer { margin-top: 36px; }
 .hero h1 {
@@ -210,7 +213,8 @@ footer {
 @media (max-width: 640px) {
   nav { padding-bottom: 36px; }
   nav a { margin-left: 14px; }
-  .home { grid-template-columns: 1fr; gap: 28px; }
+  .home, .home.has-side { grid-template-columns: 1fr; gap: 28px; }
+  .side > * { transform: translateY(16px); }
   .side { max-width: 320px; width: 100%; margin: 0 auto; }
   .roamer .r-say { display: none; }
   .watch { max-width: 280px; width: 100%; margin: 0 auto; }
@@ -376,7 +380,11 @@ sup.cite a:target { outline: 1px solid var(--purple); outline-offset: 2px; borde
 .t-ok { color: #7ee2b8; }
 .t-say { color: #c9b9ff; animation: pop .35s cubic-bezier(.3, 1.6, .5, 1) both; margin: 4px 0; }
 .t-face { color: var(--text); display: inline-block; animation: wiggle .6s .2s ease-in-out; }
-.t-cmd { white-space: nowrap; color: var(--text); font-weight: 500; background: rgba(167, 139, 250, .12); padding: 0 4px; border-radius: 3px; }
+.t-name { font: inherit; background: none; border: 0; padding: 0 2px; margin: 0 -2px; border-radius: 3px; cursor: pointer; }
+.t-name:hover, .t-name:focus-visible { background: rgba(167, 139, 250, .14); outline: none; text-decoration: underline; text-underline-offset: 3px; }
+.t-cmd { font: inherit; border: 0; cursor: pointer; white-space: nowrap; color: var(--text); font-weight: 500; background: rgba(167, 139, 250, .12); padding: 0 4px; border-radius: 3px; }
+button.t-cmd:hover, button.t-cmd:focus-visible { background: rgba(167, 139, 250, .3); outline: none; }
+b.t-cmd { cursor: default; }
 @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.97); } }
 @keyframes wiggle { 30% { transform: rotate(-10deg); } 60% { transform: rotate(8deg); } }
 .t-line { display: flex; gap: 8px; align-items: center; padding: 4px 14px 12px; cursor: text; }

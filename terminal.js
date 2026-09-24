@@ -7,6 +7,8 @@
   const pathEl = box.querySelector(".t-path");
   const titleEl = box.querySelector(".t-title");
   const PANDA = "ʕ◉ᴥ◉ʔ";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let typing = false; // true while a click is typing a command out
 
   // [folder name, title, reasoning]
   const LIKES = [
@@ -57,10 +59,17 @@
     if (once) { if (said.has(once)) return; said.add(once); }
     print(`<span class="t-face">${PANDA}</span> ${msg}`, "t-say");
   }
-  const cmd = c => `<b class="t-cmd">${esc(c)}</b>`;
+  // anything with a data-run attribute can be clicked instead of typed
+  const cmd = c => /</.test(c) ? `<b class="t-cmd">${esc(c)}</b>`
+    : `<button type="button" class="t-cmd" data-run="${esc(c)}">${esc(c)}</button>`;
 
   const suffix = node => ({ dir: "/", watch: "*", url: "@" })[node.type] || "";
-  const nameHTML = (name, node) => `<span class="t-${node.type}">${esc(name)}${suffix(node)}</span>`;
+  const action = (path, node) => ({
+    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], riddle: ["cat " + path], watch: ["./watch"],
+    url: ["open " + path], post: ["open " + path],
+  })[node.type];
+  const nameHTML = (name, node, path = name) =>
+    `<button type="button" class="t-name t-${node.type}" data-run="${esc(action(path, node).join("\n"))}">${esc(name)}${suffix(node)}</button>`;
 
   /* ---------- paths ---------- */
   function resolve(arg = "") {
@@ -83,6 +92,7 @@
     const why = node.children["why.txt"];
     print(`<b class="t-title-line">${esc(why.title)}</b>`);
     print(esc(why.text), "t-text");
+    print(`<span class="t-dim">↩</span> ${cmd("cd ..")}`, "t-back");
   }
   function go(href) {
     print(`opening ${esc(href)}…`, "t-dim");
@@ -92,12 +102,31 @@
     print(`opening ${esc(node.href)} in a new tab…`, "t-dim");
     window.open(node.href, "_blank", "noopener");
   }
+  // the watch and the riddle stay hidden until the terminal calls them up
+  const home_ = document.querySelector(".home");
+  const narrow = () => matchMedia("(max-width: 640px)").matches;
+  const where = () => narrow() ? "(scroll down ↓)" : "(look right →)";
+  function reveal(which) {
+    const el = document.querySelector(which === "watch" ? ".side .watch" : ".side .riddle");
+    if (!el.hidden) return false;
+    el.hidden = false;
+    home_.classList.add("has-side");
+    requestAnimationFrame(() => el.classList.add("shown"));
+    if (narrow()) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+    return true;
+  }
   function flipWatch() {
+    if (reveal("watch")) {
+      print(`the watch is out. ${where()}`, "t-dim");
+      panda(`run ${cmd("./watch")} again to flip it over.`, "watch-out");
+      return;
+    }
     document.getElementById("watch")?.click();
-    print(matchMedia("(max-width: 640px)").matches ? "flipped the watch. (scroll down to see it ↓)" : "flipped the watch. (look right →)", "t-dim");
+    print(`flipped the watch. ${where()}`, "t-dim");
     panda("look at the back. something is engraved there…", "watch");
   }
   function showRiddle() {
+    if (reveal("riddle")) print(`the riddle is pinned up too. ${where()}`, "t-dim");
     print(esc(caesar(CLUE, new Date().getDate() % 26)), "t-text");
     print("∴ the key is in the watch.", "t-dim");
     panda(`when you think you have it, type ${cmd("answer <word>")}`, "riddle");
@@ -134,10 +163,11 @@
     if (!node) return notFound("ls", arg);
     if (node.type !== "dir") return print(nameHTML(arg, node));
     const entries = Object.entries(node.children);
+    const at = name => (arg ? arg.replace(/\/$/, "") + "/" : "") + name;
     if (entries.every(([, n]) => n.type === "post")) {
-      for (const [name, n] of entries) print(`<span class="t-dim">${n.date}</span>  ${nameHTML(name, n)}`);
+      for (const [name, n] of entries) print(`<span class="t-dim">${n.date}</span>  ${nameHTML(name, n, at(name))}`);
     } else {
-      print(entries.map(([name, n]) => nameHTML(name, n)).join("  "), "t-ls");
+      print(entries.map(([name, n]) => nameHTML(name, n, at(name))).join("  "), "t-ls");
     }
     // the panda's tips, depending on where you are
     const here = cwd.join("/");
@@ -159,8 +189,7 @@
     pathEl.textContent = titleEl.textContent = home();
     if (isTopic(node)) {
       showTopic(node);
-      panda(`${cmd("cd ..")} to go back and pick another.`, "topic");
-    } else if (parts.length) {
+    } else if (parts.length && !typing) {
       panda(`you're in ${esc(parts.at(-1))}/ now. type ${cmd("ls")} to look inside.`, "cd-" + parts[0]);
     }
   }
@@ -225,6 +254,7 @@
   const history = [];
   let hIdx = 0;
   input.addEventListener("keydown", e => {
+    if (typing) { e.preventDefault(); return; }
     if (e.key === "Enter") {
       const line = input.value;
       input.value = "";
@@ -261,24 +291,37 @@
     else if (hits.length > 1) print(hits.map(esc).join("  "), "t-dim");
   }
 
+  function typeOut(lines) {
+    if (typing) return;
+    typing = true;
+    const queue = lines.split("\n");
+    const next = () => {
+      const text = queue.shift();
+      if (text === undefined) { typing = false; return; }
+      let i = 0;
+      const t = setInterval(() => {
+        input.value = text.slice(0, ++i);
+        if (i >= text.length) {
+          clearInterval(t);
+          setTimeout(() => { input.value = ""; run(text); setTimeout(next, 250); }, 180);
+        }
+      }, reduce ? 0 : 28);
+    };
+    next();
+  }
+  out.addEventListener("click", e => {
+    const b = e.target.closest("[data-run]");
+    if (b) typeOut(b.dataset.run);
+  });
   box.addEventListener("click", e => {
-    if (!e.target.closest("a") && !getSelection().toString()) input.focus({ preventScroll: true });
+    if (!e.target.closest("a, button") && !getSelection().toString() && !typing) input.focus({ preventScroll: true });
   });
 
   /* ---------- first boot: the panda types ls for you ---------- */
   function boot() {
-    panda("hi! this terminal is how you get around here.");
-    const cmdText = "ls";
-    let i = 0;
-    const typer = setInterval(() => {
-      input.value = cmdText.slice(0, ++i);
-      if (i >= cmdText.length) {
-        clearInterval(typer);
-        setTimeout(() => { input.value = ""; run(cmdText); }, 350);
-      }
-    }, 160);
+    panda("hi! this terminal is how you get around here. type, or click anything highlighted.");
+    setTimeout(() => typeOut("ls"), 400);
   }
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // start once the terminal has faded in
   const obs = new MutationObserver(() => {
     if (box.classList.contains("in")) { obs.disconnect(); setTimeout(boot, reduce ? 0 : 500); }

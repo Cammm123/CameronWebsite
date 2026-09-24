@@ -40,21 +40,21 @@
         </section>
       </div>
 
-      <aside class="side stage">
-        <div class="watch">
+      <aside class="side">
+        <div class="watch" hidden>
           <div id="watch" role="button" tabindex="0" aria-label="A mechanical watch. Click to flip it over and see the movement."></div>
           <p class="fact" id="fact" aria-live="polite">click the watch.</p>
         </div>
-            <div class="riddle">
-              <p class="riddle-label">// riddle</p>
-              <p class="cipher" id="cipher"></p>
-              <p class="key">∴ the key is in the watch.</p>
-              <div class="answer" id="answer">
-                <span>&gt;</span>
-                <input id="answer-input" autocomplete="off" spellcheck="false" placeholder="answer" aria-label="Your answer">
-                <span class="nope" id="nope">not quite.</span>
-              </div>
-            </div>
+        <div class="riddle" hidden>
+          <p class="riddle-label">// riddle</p>
+          <p class="cipher" id="cipher"></p>
+          <p class="key">∴ the key is in the watch.</p>
+          <div class="answer" id="answer">
+            <span>&gt;</span>
+            <input id="answer-input" autocomplete="off" spellcheck="false" placeholder="answer" aria-label="Your answer">
+            <span class="nope" id="nope">not quite.</span>
+          </div>
+        </div>
       </aside>
     </div>
 
