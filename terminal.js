@@ -35,7 +35,7 @@
     "things_i_like": topics(LIKES),
     "hot_takes": topics(TAKES),
     "blog": dir(Object.fromEntries(POSTS.map(([date, name, href]) => [name, { type: "post", date, href }]))),
-    "watch": { type: "watch" },
+    "riddle": { type: "watch" },
     "github": { type: "url", href: "https://github.com/Cammm123" },
     "linkedin": { type: "url", href: "https://www.linkedin.com/in/cameron-kani-134b69372" },
   });
@@ -62,9 +62,9 @@
   const cmd = c => /</.test(c) ? `<b class="t-cmd">${esc(c)}</b>`
     : `<button type="button" class="t-cmd" data-run="${esc(c)}">${esc(c)}</button>`;
 
-  const suffix = node => ({ dir: "/", watch: "*", url: "@" })[node.type] || "";
+  const suffix = node => ({ dir: "/", url: "@" })[node.type] || "";
   const action = (path, node) => ({
-    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], watch: ["./watch"],
+    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], watch: ["./riddle"],
     url: ["open " + path], post: ["open " + path],
   })[node.type];
   const nameHTML = (name, node, path = name) =>
@@ -117,7 +117,7 @@
   function flipWatch() {
     if (reveal()) {
       print(`the watch is out, with a riddle underneath. ${where()}`, "t-dim");
-      panda(`the key to the riddle is somewhere on the watch. run ${cmd("./watch")} again to flip it over.`, "watch-out");
+      panda(`the key to the riddle is somewhere on the watch. run ${cmd("./riddle")} again to flip the watch over.`, "watch-out");
       return;
     }
     document.getElementById("watch")?.click();
@@ -130,7 +130,7 @@
       setTimeout(openRoom, 400);
     } else {
       print("not quite.", "t-err");
-      panda(`the key is on the back of the watch. flip it with ${cmd("./watch")}.`, "wrong");
+      panda(`the key is on the back of the watch. flip it with ${cmd("./riddle")}.`, "wrong");
     }
   }
 
@@ -173,7 +173,7 @@
     if (!node) return notFound("cd", arg);
     if (node.type !== "dir") {
       print(`cd: not a directory: ${esc(arg)}`, "t-err");
-      const hint = { watch: "./watch", url: "open " + arg, post: "open " + arg, why: "cat " + arg }[node.type];
+      const hint = { watch: "./riddle", url: "open " + arg, post: "open " + arg, why: "cat " + arg }[node.type];
       if (hint) panda(`that one's not a folder. try ${cmd(hint)}`);
       return;
     }
@@ -197,15 +197,15 @@
     if (node.type === "post") return go(node.href);
     if (node.type === "url") return print(`${esc(arg)} -> ${esc(node.href)}`);
     if (node.type === "dir") return print(`cat: ${esc(arg)}: is a directory`, "t-err");
-    if (node.type === "watch") return print("cat: watch: it's a program. run it with " + cmd("./watch"), "t-err");
+    if (node.type === "watch") return print(`cat: ${esc(arg)}: it's a program. run it with ` + cmd("./riddle"), "t-err");
   }
 
   const HELP = [
     ["ls", "list what's here"],
     ["cd <folder>", "go into a folder (cd .. goes back)"],
     ["cat <file>", "read a file"],
-    ["open <name>", "open a link, post, or the watch"],
-    ["./watch", "bring out the watch, then flip it over"],
+    ["open <name>", "open a link, a post, or the riddle"],
+    ["./riddle", "bring out the riddle and its watch, then flip the watch"],
     ["answer <word>", "answer the riddle"],
     ["clear", "clear the screen"],
   ];
@@ -216,6 +216,7 @@
     cd: a => cd(a[0]),
     cat: a => cat(a[0]),
     open: a => open(a[0]),
+    "./riddle": () => flipWatch(),
     "./watch": () => flipWatch(),
     watch: () => flipWatch(),
     answer: a => tryAnswer(a[0]),
