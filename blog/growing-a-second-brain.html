@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Growing a Second Brain · Cameron Kani</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../index.html">ck<b>.</b></a>
+      <div>
+        <a href="../index.html">about</a>
+        <a class="blog" href="./">blog</a>
+      </div>
+    </nav>
+
+    <article class="post">
+      <p class="meta">october 4, 2026</p>
+      <h1>Growing a Second Brain: Learning a 1992 <i>Nature</i> Paper by Building It with AI</h1>
+      <p class="deck">A dense paper about cooperation and chaos, a web app that teaches it, and why going slowly with AI was the whole point.</p>
+<p class="trylink"><b>Try the app:</b> <a href="https://spatial-game.vercel.app/">spatial-game.vercel.app</a></p>
+<h2 class="sec">The paper I couldn't read</h2>
+<p>In 1992, Martin Nowak and Robert May published a short paper in <i>Nature</i> called "Evolutionary games and spatial chaos."<sup class="cite"><a id="cite-1" href="#ref-1">[1]</a></sup> It asks a simple question: how can cooperation survive when cheating pays more? Their answer uses a grid where every square is a player that either cooperates or defects. The paper is four pages long. It is also extremely dense, full of payoff matrices, fractions, and fractals.</p>
+<p>This semester, my professor, Phillip Compeau, has been teaching me how to use AI as a tool, not a shortcut. He calls it growing your "second brain." So I tried it on this paper. With Claude, I built a web app that runs the model and explains it to someone seeing it for the first time. By the end, I understood the paper well enough to teach it.</p>
+<h2 class="sec">One idea at a time</h2>
+<p>The game behind the paper is called the <b>Prisoner's Dilemma</b>. Two players each choose to cooperate or defect, which is another word for cheating. If both cooperate, each earns 1 point. If one defects while the other cooperates, the defector earns <i>b</i> points and the cooperator gets nothing. If both defect, neither earns anything. Because <i>b</i> is bigger than 1, defecting never pays less than cooperating, and against a cooperator it pays more. That's the puzzle: if cheating never loses one-on-one, why does cooperation exist at all?</p>
+<p>Nowak and May's idea was to put the players on a grid. Each square plays that game with its 8 neighbors and adds up its points. Then every square looks at itself and its neighbors and copies the strategy of whichever one scored highest. All the squares switch at the same moment, and the whole thing repeats.</p>
+<p>Cooperators packed together earn points from each other, while defectors surrounded by defectors earn nothing. So on a grid, what you play isn't all that matters. Who your neighbors are matters too.</p>
+<p>I didn't ask Claude to build the app in one go. Following my professor's guidance, we wrote a plan first. Then we built one small piece at a time: first how a square scores, then how the whole grid updates, then the drawing and the buttons. Every piece came with tests and numbers I could check by hand:</p>
+<ul class="plain"><li>A cooperator surrounded by cooperators scores 8.</li><li>A corner square, with only 3 neighbors, scores 3.</li><li>A single defector among cooperators turns into a 3×3 block after one step. Each of its 8 neighbors touches 7 cooperators and gets nothing from the defector, so it scores 7. The defector scores 8<i>b</i>, which beats 7, so they all copy it.</li></ul>
+<p>If I couldn't verify a piece myself, it wasn't done.</p>
+<p>That rule caught a real mistake. Early on, Claude misread the paper's range of interesting <i>b</i> values. When we ran the simulation at those values, the grid froze instead of churning, so we went back to the paper and fixed it.</p>
+<p>(In the paper's main figures, each square also plays itself. Mine don't. The paper covers that case on its last page, and it moves the interesting range to between 8/5 and 5/3.)</p>
+<p>Once the app ran, I could watch the grid change. But watching isn't the same as understanding. When I slid <i>b</i> up and down, the behavior didn't change smoothly. It jumped. That was the part of the paper I couldn't follow on my own.</p>
+<h2 class="sec">Where the world flips</h2>
+<p>Here's what those jumps look like. At <i>b</i> = 1.55, cooperators win. At 1.65, cooperators and defectors invade each other forever. At 1.80, defectors take over about 96% of the grid.</p>
+<figure class="post-fig"><img src="img/second-brain-fig1-three-b-values.svg" alt="Three grids that started from the same random mix of 90% cooperators. After 200 steps, b = 1.55 is mostly blue cooperators with thin red defector lines, b = 1.65 is a churning mix of red, blue, yellow and green, and b = 1.80 is almost entirely red with a few frozen blue clusters." loading="lazy"><figcaption class="figcap">Figure 1. The same random start at three values of <i>b</i>, after 200 steps.</figcaption></figure>
+<p>To understand why, I asked Claude to switch into tutor mode. Instead of explaining everything at once, it asked me one small question at a time and drew a picture for each step. The key idea I learned is that a cooperator scores a whole number, <i>m</i>, while a defector touching <i>k</i> cooperators scores <i>k</i> × <i>b</i>. A square's choice can only flip when a defector's score crosses a cooperator's, and they cross exactly when <i>b</i> = <i>m</i>/<i>k</i>. That's why the world flips at fractions like 8/5, not gradually.</p>
+<p>One exchange went like this:</p>
+<blockquote class="chat"><p><b>Claude:</b> A cooperator surrounded by 8 cooperators scores 8. A nearby defector touches 5 cooperators. For which <i>b</i> does the defector win?</p><p><b>Me:</b> 8/5 = 1.6, matches the drop at 1.61.</p></blockquote>
+<p>Then it showed me this:</p>
+<figure class="post-fig"><img src="img/second-brain-fig2-b160-vs-161.svg" alt="Two grids from the same start after 200 steps. At b = 1.60 the grid is 75% blue cooperators; at b = 1.61 it is only 31% cooperators, with large red regions and many changing squares." loading="lazy"><figcaption class="figcap">Figure 2. The same start at <i>b</i> = 1.60 and 1.61. Changing <i>b</i> by 0.01 drops cooperators from 75% to 31%.</figcaption></figure>
+<p>Why 1.61 and not 1.60? At exactly 1.6, the scores tie: 5 × 1.6 = 8. In a tie, a square keeps its own strategy, so the cooperators hold on. Just above 1.6, a defector touching 5 cooperators beats even a cooperator surrounded by cooperators. Every cooperator next to that defector sees the defector's higher score and switches to defecting. So 8/5 is the first threshold: the point where defectors can break into cooperator territory.</p>
+<p>The second threshold asks the opposite question: can cooperators fight back? Picture a straight border, with a block of cooperators on one side and a block of defectors on the other.</p>
+<figure class="post-fig"><img src="img/second-brain-fig3-border-scores.svg" alt="An 8 by 8 grid with four rows of blue cooperators above four rows of red defectors. Interior cooperators score 8, border cooperators score 5, border defectors score 4.95 (3 times 1.65), and defectors behind the border score 0." loading="lazy"><figcaption class="figcap">Figure 3. A straight border between cooperators and defectors, with each square's score. Squares on the outer edge of the picture have fewer neighbors, so they score less.</figcaption></figure>
+<p>Three of a border cooperator's neighbors are across the border, so it touches 5 cooperators and scores 5. A defector on the border touches 3 cooperators, so it scores 3<i>b</i>. The defectors behind it touch no cooperators and score 0. Now look at it from the border defector's point of view. The best cooperator it can see is a border cooperator with 5 points. It can't see the cooperators with 8, because they're two rows away. So it switches to cooperating only if 5 beats 3<i>b</i>, which means <i>b</i> is below 5/3, about 1.67. When that happens, the whole border moves forward one row every step. Above 5/3, the border freezes.</p>
+<figure class="post-fig"><img src="img/second-brain-fig4-border-moves.svg" alt="Three grids of a straight border between cooperators on top and defectors below. After 4 steps at b = 1.65 the border has moved down 4 rows, with the newest row green; at b = 1.68 it has not moved at all." loading="lazy"><figcaption class="figcap">Figure 4. The same border 4 steps later, at <i>b</i> = 1.65 and 1.68.</figcaption></figure>
+<p>Put the two thresholds together and the three behaviors from Figure 1 fall into place:</p>
+<ul class="plain"><li><b>Below 8/5:</b> defectors can't break in, and cooperators can still push back, so cooperators win.</li><li><b>Above 5/3:</b> defectors can break in, and cooperators can't push back, so defectors take over most of the grid.</li><li><b>In between:</b> both happen at once. Defectors break into cooperator clusters, and cooperator clusters push back into defector territory. Neither side can finish the other, so the grid never settles. In my simulation, the share of cooperators there hovers near 30%, close to the 29.9% the paper reports.</li></ul>
+<h2 class="sec">Order from simple rules</h2>
+<p>What surprised me most was a single defector in a sea of cooperators. I expected one cheater to either get swallowed up or spread into a random mess. Neither happened.</p>
+<p>At <i>b</i> = 1.63, the defector becomes a 3×3 block after one step. From there, it grows into a perfectly symmetric pattern that the paper calls an "evolutionary kaleidoscope."</p>
+<figure class="post-fig"><img src="img/second-brain-fig5-kaleidoscope.svg" alt="A single defector in a 99 by 99 grid of cooperators at b = 1.63, shown after 10, 30, and 150 steps. It grows from a small symmetric shape into a large, mirror-symmetric kaleidoscope pattern of red, blue, yellow, and green." loading="lazy"><figcaption class="figcap">Figure 5. One defector at <i>b</i> = 1.63, after 10, 30, and 150 steps.</figcaption></figure>
+<p>The reason it stays symmetric is simple. The rules treat every direction the same, and every square updates at the same moment. So a start that looks the same in every direction stays that way forever. I checked: for all 400 steps I ran, the pattern was a perfect mirror image top to bottom, left to right, and across the diagonal.</p>
+<p>Yet it never stands still. In the 400 steps I ran, it never repeated a single earlier pattern. Cooperators and defectors keep invading each other, the same back-and-forth from the last section, and the share of cooperators hovers around 30%. Nowak and May compare their model to John Conway's Game of Life,<sup class="cite"><a id="cite-2" href="#ref-2">[2]</a></sup> another grid where a few simple rules produce surprisingly rich behavior.</p>
+<p>That's the main thing I took from this project. I had assumed that something built on competition and cheating would look chaotic, random, and unpredictable. Instead, the same simple rules that churn endlessly from a random start produced something contained and ordered. Watching it happen on my own screen showed me that life can be organized, and even beautiful.</p>
+<h2 class="sec">Creating vs. creating <i>and</i> understanding</h2>
+<p>Honestly, going this slowly felt strange at first. Claude could probably have "zero-shot" the whole app, meaning built it all at once from a single prompt. I would have gotten the same cool visuals.</p>
+<p>But I would have lost two things. First, the app wouldn't be mine. Features like starting from your own photo (turned black and white, so dark pixels become defectors), the preset buttons, and the page layout came from choices I made along the way. Second, I wouldn't understand the paper. There's a difference between creating a product and creating <i>and</i> understanding it in one flow. This project is the first time I've felt like I used AI effectively, because I did both.</p>
+<h2 class="sec">Next: The Hallmarks of Cancer</h2>
+<p>Now I want to know what else I can learn this way. My next target is <i>The Hallmarks of Cancer</i>, Douglas Hanahan's map of the abilities a cell gains as it becomes cancer. I read the newest version, "Hallmarks of cancer: Then and now, and beyond,"<sup class="cite"><a id="cite-3" href="#ref-3">[3]</a></sup> in my high school biology class, and it took me about four hours to understand the first couple of pages. My plan is to build another web app that explains it, and write about it here. If it helps someone else understand the hallmarks of cancer, even better.</p>
+<p>Until then, try the app at <a href="https://spatial-game.vercel.app/">spatial-game.vercel.app</a>. Start with one defector at <i>b</i> = 1.63 and press Play.</p>
+<h2 class="sec">References</h2>
+<p class="ref" id="ref-1"><span class="refnum">[1]</span> Nowak, M. A. &amp; May, R. M. "Evolutionary games and spatial chaos." <i>Nature</i> 359, 826–829 (1992). <a class="back" href="#cite-1" aria-label="back to text">↩</a></p>
+<p class="ref" id="ref-2"><span class="refnum">[2]</span> Gardner, M. "Mathematical Games: The fantastic combinations of John Conway's new solitaire game 'life'." <i>Scientific American</i> 223, 120–123 (October 1970). <a class="back" href="#cite-2" aria-label="back to text">↩</a></p>
+<p class="ref" id="ref-3"><span class="refnum">[3]</span> Hanahan, D. "Hallmarks of cancer—Then and now, and beyond." <i>Cell</i> 189, 2254–2277 (2026). <a class="back" href="#cite-3" aria-label="back to text">↩</a></p>
+      <p class="end">— cameron · <a href="./">all posts</a></p>
+    </article>
+  </div>
+
+  <script src="../main.js"></script>
+</body>
+</html>

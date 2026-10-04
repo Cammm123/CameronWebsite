@@ -426,3 +426,25 @@ b.t-cmd { cursor: default; }
 @keyframes hole { 0% { transform: scale(0); } 12%, 82% { transform: scale(1); } 100% { transform: scale(0); } }
 @keyframes rise { 0%, 12% { transform: translateY(110%); } 30%, 72% { transform: translateY(8%); } 45% { transform: translateY(8%) rotate(-8deg); } 58% { transform: translateY(8%) rotate(6deg); } 85%, 100% { transform: translateY(110%); } }
 @keyframes say { 0%, 28% { opacity: 0; transform: translate(-50%, 4px); } 36%, 70% { opacity: 1; transform: translate(-50%, 0); } 80%, 100% { opacity: 0; } }
+
+/* Blog post figures, chat excerpts, lists and references in plain posts (growing-a-second-brain) */
+.post:not(.doc) .deck { font-size: 15px; color: var(--dim); margin: -24px 0 10px; }
+.post .trylink { font: 13px var(--mono); color: var(--dim); margin: 0 0 36px; }
+.post h2.sec { font: 600 18px var(--sans); color: var(--text); margin: 44px 0 14px; }
+.post-fig { margin: 30px 0; display: grid; gap: 10px; }
+.post-fig img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+.post-fig .figcap { text-align: center; }
+.post ul.plain { padding-left: 22px; color: #c3c6dc; font-size: 17px; line-height: 1.85; margin: 0 0 22px; }
+.post ul.plain li { margin-bottom: 8px; }
+.post ul.plain li::marker { color: var(--purple); }
+blockquote.chat {
+  margin: 0 0 22px; padding: 14px 18px; border-left: 2px solid var(--purple);
+  background: var(--panel); border-radius: 0 6px 6px 0;
+}
+blockquote.chat p { font: 14px/1.7 var(--mono); color: #c3c6dc; margin: 0 0 8px; text-indent: 0; }
+blockquote.chat p:last-child { margin-bottom: 0; }
+blockquote.chat b { color: var(--purple); font-weight: 500; }
+.post .ref { padding-left: 2em; text-indent: -2em; font-size: 14px; line-height: 1.7; margin: 0 0 12px; word-break: break-word; scroll-margin-top: 80px; }
+.post .ref:target { background: rgba(167, 139, 250, .08); border-radius: 4px; }
+.post .refnum { font: 12px var(--mono); color: var(--purple); }
+.post .ref a.back { border: 0; color: var(--purple); margin-left: 4px; }
