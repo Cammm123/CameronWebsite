@@ -95,7 +95,7 @@
   }
   function go(href) {
     print(`opening ${esc(href)}…`, "t-dim");
-    setTimeout(() => { location.href = href; }, 450);
+    setTimeout(() => { if (!fadeTo(href)) location.href = href; }, 450);
   }
   function openURL(node) {
     print(`opening ${esc(node.href)} in a new tab…`, "t-dim");

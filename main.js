@@ -6,6 +6,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!cv) return;
   const ctx = cv.getContext("2d");
   const LINK = 115;
+  const dot = getComputedStyle(document.documentElement).getPropertyValue("--faint").trim();
   const pts = [];
   let W, H;
 
@@ -26,7 +27,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = ctx.fillStyle = "#3b3e58";
+    ctx.strokeStyle = ctx.fillStyle = dot;
     ctx.lineWidth = .8;
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
@@ -53,6 +54,35 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
   reduceMotion ? draw() : requestAnimationFrame(step);
 })();
+
+/* ---------- the blog is light, the rest is dark: crossing over fades the colors ---------- */
+// Browsers with cross-document view transitions crossfade on their own (style.css).
+// Elsewhere, a veil in the next page's background color fades in before we leave.
+const LIGHT_BG = "#f7f6f2", DARK_BG = "#07070c";
+const nativeFade = "CSSViewTransitionRule" in window;
+const isLightPath = path => /\/blog\//.test(path);
+
+function fadeTo(href) {
+  if (nativeFade || reduceMotion) return false;
+  const url = new URL(href, location.href);
+  const light = isLightPath(url.pathname);
+  if (url.origin !== location.origin || light === document.documentElement.classList.contains("light")) return false;
+  const veil = document.createElement("div");
+  veil.className = "veil";
+  veil.style.background = light ? LIGHT_BG : DARK_BG;
+  document.body.append(veil);
+  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add("in")));
+  setTimeout(() => { location.href = url.href; }, 450);
+  return true;
+}
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[href]");
+  if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target) return;
+  if (fadeTo(a.href)) e.preventDefault();
+});
+// coming back with the back button restores the old page from cache, veil and all
+addEventListener("pageshow", e => { if (e.persisted) document.querySelectorAll(".veil").forEach(v => v.remove()); });
 
 /* ---------- the panda: roams the bottom edge, and pops out wherever you click ---------- */
 const PANDA = "ʕ◉ᴥ◉ʔ";
