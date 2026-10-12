@@ -400,7 +400,7 @@ sup.cite a:target { outline: 1px solid var(--purple); outline-offset: 2px; borde
 .t-dir { color: var(--purple); }
 .t-watch { color: var(--blue); }
 .t-url { color: var(--blue); }
-.t-riddle, .t-post, .t-why { color: var(--text); }
+.t-post { color: var(--text); }
 .t-ls { word-spacing: 0; }
 .t-ls span { margin-right: 4px; }
 .t-dim { color: var(--dim); }
@@ -488,3 +488,51 @@ blockquote.chat b { color: var(--purple); font-weight: 500; }
 .post .pop-label { display: block; font: 11px var(--mono); color: var(--purple); letter-spacing: .03em; margin-bottom: 3px; }
 .post .pop p { font-size: 14.5px; line-height: 1.7; color: var(--softer); margin: 0; }
 .post .pop + .pop { margin-top: -14px; }
+
+/* neovim, inside the terminal window */
+.t-doc { color: var(--text); }
+.term-win.in-vim > .t-out, .term-win.in-vim > .t-line { display: none; }
+.vim { position: relative; display: flex; flex-direction: column; font: 12.5px/1.6 var(--mono); cursor: text; }
+.v-buf { height: 232px; overflow-y: auto; padding-top: 6px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.v-row { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); }
+.v-ln { color: var(--faint); text-align: right; padding-right: 1em; user-select: none; }
+.v-line .v-ln { color: var(--purple); }
+.v-line { background: rgba(167, 139, 250, .06); }
+.v-txt { white-space: pre-wrap; word-break: break-word; color: #c3c6dc; padding-right: 12px; }
+.v-h1 .v-txt { color: var(--purple); font-weight: 500; }
+.v-h2 .v-txt { color: var(--blue); font-weight: 500; cursor: pointer; }
+.v-fold { cursor: pointer; }
+.v-fold .v-txt { display: flex; overflow: hidden; color: #9aa6d8; background: rgba(110, 168, 255, .07); white-space: pre; }
+.v-dots { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--faint); }
+.v-dots::after { content: "··································································································"; }
+.v-tilde .v-txt { color: #2c3150; }
+.v-cur { background: var(--text); color: var(--bg); }
+.v-hl { background: rgba(255, 214, 102, .85); color: var(--bg); }
+.v-hl.v-cur { background: var(--text); }
+
+.v-status { display: flex; align-items: center; gap: 10px; background: #12131f; border-top: 1px solid var(--line); font-size: 11.5px; }
+.v-mode { padding: 1px 10px; font-weight: 500; color: var(--bg); background: var(--purple); letter-spacing: .04em; }
+.v-mode.v-insert { background: #7ee2b8; }
+.v-mode.v-command, .v-mode.v-search { background: var(--blue); }
+.v-file { color: var(--text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v-pos { color: var(--dim); padding-right: 12px; white-space: pre; }
+.v-cmd { min-height: 1.6em; padding: 1px 12px; color: var(--dim); white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+.v-cmd.v-err { color: var(--red); }
+
+.v-bar { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 6px 12px 10px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--dim); }
+.v-bar button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.v-bar b { color: var(--text); font-weight: 500; background: rgba(167, 139, 250, .14); padding: 0 5px; border-radius: 3px; margin-right: 4px; }
+.v-bar button:hover b, .v-bar button:focus-visible b { background: rgba(167, 139, 250, .32); }
+.v-bar button:focus-visible { outline: none; }
+
+.v-panda {
+  position: absolute; right: 12px; bottom: 92px; max-width: 300px;
+  padding: 8px 12px; border-radius: 8px; border: 1px solid var(--purple);
+  background: #14122a; color: #d9cffd; font-size: 12px; line-height: 1.5;
+  opacity: 0; transform: translateY(8px) scale(.97); pointer-events: none;
+  transition: opacity .25s, transform .3s cubic-bezier(.3, 1.6, .5, 1);
+}
+.v-panda.on { opacity: 1; transform: none; pointer-events: auto; }
+.v-panda .v-face { color: var(--text); }
+.v-panda button { font: inherit; font-weight: 500; color: var(--bg); background: var(--purple); border: 0; border-radius: 3px; padding: 0 5px; cursor: pointer; }
+.v-input { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; border: 0; padding: 0; pointer-events: none; }

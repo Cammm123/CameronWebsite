@@ -10,18 +10,18 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let typing = false; // true while a click is typing a command out
 
-  // [folder name, title, reasoning]
+  // [title, reasoning]
   const LIKES = [
-    ["running", "Running", "Only if it's a morning run. The breath of the cold fresh air is the greatest feeling of every day."],
-    ["working_out", "Working out", "It feels like I am playing a video game and upgrading my own body after every workout."],
-    ["learning_new_things", "Learning new things", "I love learning about random fun facts!"],
-    ["optimizing_things_with_ai", "Optimizing things with AI", "It feels like a superpower to be able to make any creative idea in your mind a real thing. Everyone now has this superpower with AI."],
-    ["root_beer", "Root beer", "It’s just the greatest soda. Specifically Mug."],
+    ["Running", "Only if it's a morning run. The breath of the cold fresh air is the greatest feeling of every day."],
+    ["Working out", "It feels like I am playing a video game and upgrading my own body after every workout."],
+    ["Learning new things", "I love learning about random fun facts!"],
+    ["Optimizing things with AI", "It feels like a superpower to be able to make any creative idea in your mind a real thing. Everyone now has this superpower with AI."],
+    ["Root beer", "It’s just the greatest soda. Specifically Mug."],
   ];
   const TAKES = [
-    ["energy_drinks_are_dumb", "Energy drinks are dumb", "Why rely on caffeine? Buying that energy drink every day can add up fast, especially in today’s economy. Also, they don’t even taste that good."],
-    ["nih_lactose_funding", "The NIH should direct all funding to cure everyone who is lactose intolerant immediately", "No justification needed for this one."],
-    ["boat_license", "A boat license is the coolest thing you can have", "You’re able to live on water, drive on water, and swim in water whenever you want."],
+    ["Energy drinks are dumb", "Why rely on caffeine? Buying that energy drink every day can add up fast, especially in today’s economy. Also, they don’t even taste that good."],
+    ["The NIH should direct all funding to cure everyone who is lactose intolerant immediately", "No justification needed for this one."],
+    ["A boat license is the coolest thing you can have", "You’re able to live on water, drive on water, and swim in water whenever you want."],
   ];
   const POSTS = [
     ["2026-09-22", "my_first_blog.txt", "blog/first-blog.html"],
@@ -29,11 +29,9 @@
   ];
 
   const dir = children => ({ type: "dir", children });
-  const topics = list => dir(Object.fromEntries(list.map(([slug, title, text]) =>
-    [slug, dir({ "why.txt": { type: "why", title, text } })])));
   const FS = dir({
-    "things_i_like": topics(LIKES),
-    "hot_takes": topics(TAKES),
+    "things_i_like.txt": { type: "doc", title: "things i like", items: LIKES },
+    "hot_takes.txt": { type: "doc", title: "hot takes", items: TAKES },
     "blog": dir(Object.fromEntries(POSTS.map(([date, name, href]) => [name, { type: "post", date, href }]))),
     "riddle": { type: "watch" },
     "github": { type: "url", href: "https://github.com/Cammm123" },
@@ -64,7 +62,7 @@
 
   const suffix = node => ({ dir: "/", url: "@" })[node.type] || "";
   const action = (path, node) => ({
-    dir: isTopic(node) ? ["cd " + path] : ["cd " + path, "ls"], why: ["cat " + path], watch: ["./riddle"],
+    dir: ["cd " + path, "ls"], doc: ["nvim " + path], watch: ["./riddle"],
     url: ["open " + path], post: ["open " + path],
   })[node.type];
   const nameHTML = (name, node, path = name) =>
@@ -84,14 +82,39 @@
     }
     return { parts, node };
   }
-  const isTopic = node => node?.type === "dir" && node.children["why.txt"];
-
   /* ---------- what things do ---------- */
-  function showTopic(node) {
-    const why = node.children["why.txt"];
-    print(`<b class="t-title-line">${esc(why.title)}</b>`);
-    print(esc(why.text), "t-text");
-    print(`<span class="t-dim">↩</span> ${cmd("cd ..")}`, "t-back");
+  // the plain way to read a text file
+  function showDoc(node) {
+    print(`<span class="t-dim"># ${esc(node.title)}</span>`);
+    for (const [head, text] of node.items) {
+      print(`<b class="t-title-line">${esc(head)}</b>`);
+      print(esc(text), "t-text");
+    }
+  }
+
+  // the fun way: neovim takes over the terminal window until :q
+  let vimOpen = false;
+  function nvim(arg) {
+    if (!arg) return print(`nvim: which file? e.g. ${cmd("nvim things_i_like.txt")}`, "t-err");
+    const { node } = resolve(arg);
+    if (!node) return notFound("nvim", arg);
+    if (node.type === "dir") return print(`nvim: ${esc(arg)} is a directory. try ${cmd("cd " + arg)}`, "t-err");
+    if (node.type !== "doc") return print(`nvim: ${esc(arg)}: not a text file`, "t-err");
+    vimOpen = true;
+    box.classList.add("in-vim");
+    const before = titleEl.textContent;
+    titleEl.textContent = before + " · nvim";
+    openVim({
+      host: box, name: arg.split("/").pop(), title: node.title, items: node.items,
+      onQuit() {
+        vimOpen = false;
+        box.classList.remove("in-vim");
+        titleEl.textContent = before;
+        out.scrollTop = out.scrollHeight;
+        panda("you made it out of vim. most people never do.", "vim-out");
+        if (!matchMedia("(pointer: coarse)").matches) input.focus({ preventScroll: true });
+      },
+    });
   }
   function go(href) {
     print(`opening ${esc(href)}…`, "t-dim");
@@ -141,7 +164,7 @@
     if (node.type === "url") return openURL(node);
     if (node.type === "post") return go(node.href);
     if (node.type === "watch") return flipWatch();
-    if (node.type === "why") return cat(arg);
+    if (node.type === "doc") return nvim(arg);
     if (node.type === "dir") return cd(arg);
   }
 
@@ -163,9 +186,8 @@
     }
     // the panda's tips, depending on where you are
     const here = cwd.join("/");
-    if (!here) panda(`this is everything. try ${cmd("cd things_i_like")}`, "ls-home");
+    if (!here) panda(`this is everything. the .txt files open in neovim: ${cmd("nvim things_i_like.txt")} (or just ${cmd("cat hot_takes.txt")})`, "ls-home");
     else if (here === "blog") panda(`open a post with ${cmd("open " + entries[0][0])}`, "ls-blog");
-    else if (here === "things_i_like" || here === "hot_takes") panda(`pick one: ${cmd("cd " + entries[0][0])}`, "ls-cat");
   }
 
   function cd(arg = "~") {
@@ -173,15 +195,13 @@
     if (!node) return notFound("cd", arg);
     if (node.type !== "dir") {
       print(`cd: not a directory: ${esc(arg)}`, "t-err");
-      const hint = { watch: "./riddle", url: "open " + arg, post: "open " + arg, why: "cat " + arg }[node.type];
+      const hint = { watch: "./riddle", url: "open " + arg, post: "open " + arg, doc: "nvim " + arg }[node.type];
       if (hint) panda(`that one's not a folder. try ${cmd(hint)}`);
       return;
     }
     cwd = parts;
     pathEl.textContent = titleEl.textContent = home();
-    if (isTopic(node)) {
-      showTopic(node);
-    } else if (parts.length && !typing) {
+    if (parts.length && !typing) {
       panda(`you're in ${esc(parts.at(-1))}/ now. type ${cmd("ls")} to look inside.`, "cd-" + parts[0]);
     }
   }
@@ -190,10 +210,7 @@
     if (!arg) return print("cat: which file?", "t-err");
     const { node } = resolve(arg);
     if (!node) return notFound("cat", arg);
-    if (node.type === "why") {
-      print(esc(node.text), "t-text");
-      return;
-    }
+    if (node.type === "doc") return showDoc(node);
     if (node.type === "post") return go(node.href);
     if (node.type === "url") return print(`${esc(arg)} -> ${esc(node.href)}`);
     if (node.type === "dir") return print(`cat: ${esc(arg)}: is a directory`, "t-err");
@@ -204,6 +221,7 @@
     ["ls", "list what's here"],
     ["cd <folder>", "go into a folder (cd .. goes back)"],
     ["cat <file>", "read a file"],
+    ["nvim <file>", "open a text file in neovim (:q quits)"],
     ["open <name>", "open a link, a post, or the riddle"],
     ["./riddle", "bring out the riddle and its watch, then flip the watch"],
     ["answer <word>", "answer the riddle"],
@@ -219,6 +237,11 @@
     "./riddle": () => flipWatch(),
     "./watch": () => flipWatch(),
     watch: () => flipWatch(),
+    nvim: a => nvim(a[0]),
+    vim: a => nvim(a[0]),
+    vi: a => nvim(a[0]),
+    nano: () => panda(`we use neovim in this house. ${cmd("nvim things_i_like.txt")}`),
+    emacs: () => panda(`we use neovim in this house. ${cmd("nvim things_i_like.txt")}`),
     answer: a => tryAnswer(a[0]),
     [ANSWER]: () => tryAnswer(ANSWER),
     pwd: () => print(home().replace("~", "/home/cameron")),
@@ -306,7 +329,7 @@
     if (b) typeOut(b.dataset.run);
   });
   box.addEventListener("click", e => {
-    if (!e.target.closest("a, button") && !getSelection().toString() && !typing) input.focus({ preventScroll: true });
+    if (!vimOpen && !e.target.closest("a, button") && !getSelection().toString() && !typing) input.focus({ preventScroll: true });
   });
 
   /* ---------- first boot: the panda types ls for you ---------- */
