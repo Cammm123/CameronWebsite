@@ -79,9 +79,10 @@ function openVim({ host, name, title, items, onQuit }) {
       const here = n === at;
       const l = buf[r.i];
       if (r.fold !== undefined) {
-        const label = `+--${String(foldLen(r.fold)).padStart(3)} lines: ${l.t.replace(/^## /, "")} `;
+        const mark = `+--${String(foldLen(r.fold)).padStart(3)} lines: `;
+        const cur = here && mode !== "command" && mode !== "search" ? 0 : null;
         html += `<div class="v-row v-fold${here ? " v-line" : ""}" data-i="${r.i}"><span class="v-ln">${r.i + 1}</span>` +
-          `<span class="v-txt">${paint(label, here && mode !== "command" && mode !== "search" ? 0 : null)}<span class="v-dots"></span></span></div>`;
+          `<span class="v-txt"><span class="v-fmark">${paint(mark, cur)}</span><span class="v-ftitle">${paint(l.t.replace(/^## /, "") + " ", null)}</span><span class="v-dots"></span></span></div>`;
       } else {
         const kind = l.head ? " v-h2" : r.i === 0 ? " v-h1" : "";
         const cur = here && mode !== "command" && mode !== "search" ? Math.min(cx, Math.max(0, l.t.length - (mode === "insert" ? 0 : 1))) : null;

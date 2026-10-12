@@ -23,7 +23,9 @@
     ["The NIH should direct all funding to cure everyone who is lactose intolerant immediately", "No justification needed for this one."],
     ["A boat license is the coolest thing you can have", "You’re able to live on water, drive on water, and swim in water whenever you want."],
   ];
+  // the blog page is the source of truth for posts; this copy is only used if it can't be read
   const POSTS = [
+    ["2026-10-04", "growing_a_second_brain.txt", "blog/growing-a-second-brain.html"],
     ["2026-09-22", "my_first_blog.txt", "blog/first-blog.html"],
     ["2024-06-01", "the_future_of_biomedical_diagnostics.txt", "blog/future-of-biomedical-diagnostics.html"],
   ];
@@ -32,11 +34,29 @@
   const FS = dir({
     "things_i_like.txt": { type: "doc", title: "things i like", items: LIKES },
     "hot_takes.txt": { type: "doc", title: "hot takes", items: TAKES },
-    "blog": dir(Object.fromEntries(POSTS.map(([date, name, href]) => [name, { type: "post", date, href }]))),
+    "blog": dir({}),
     "riddle": { type: "watch" },
     "github": { type: "url", href: "https://github.com/Cammm123" },
     "linkedin": { type: "url", href: "https://www.linkedin.com/in/cameron-kani-134b69372" },
   });
+
+  const setPosts = list => {
+    FS.children.blog.children = Object.fromEntries(list.map(([date, name, href]) => [name, { type: "post", date, href }]));
+  };
+  setPosts(POSTS);
+  // read the post list off blog/index.html, so a new post shows up here without touching this file
+  fetch("blog/index.html")
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(html => {
+      const rows = new DOMParser().parseFromString(html, "text/html").querySelectorAll("a.term-row");
+      const list = [...rows].map(a => [
+        a.querySelector(".d")?.textContent.trim() || "",
+        a.querySelector(".f")?.textContent.trim() || a.getAttribute("href").replace(/\.html$/, "").replace(/-/g, "_") + ".txt",
+        "blog/" + a.getAttribute("href"),
+      ]);
+      if (list.length) setPosts(list);
+    })
+    .catch(() => {});
 
   let cwd = [];
   const home = () => "~" + cwd.map(p => "/" + p).join("");

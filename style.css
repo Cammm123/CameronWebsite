@@ -537,28 +537,22 @@ blockquote.chat b { color: var(--purple); font-weight: 500; }
 .v-panda button { font: inherit; font-weight: 500; color: var(--bg); background: var(--purple); border: 0; border-radius: 3px; padding: 0 5px; cursor: pointer; }
 .v-input { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; border: 0; padding: 0; pointer-events: none; }
 
-/* in neovim the terminal window turns into an old phosphor monitor */
-.term-win { transition: background .45s, border-color .45s, box-shadow .45s; }
-.term-win.in-vim {
-  --purple: #39ff88; --blue: #39ff88; --text: #c9ffdc; --dim: #1fbf63; --faint: #157a42; --line: #0f3d23; --red: #ff6b6b;
-  background: #020604; border-color: #1a6b3d;
-  box-shadow: 0 0 0 1px rgba(57, 255, 136, .08), 0 0 28px rgba(57, 255, 136, .12);
-}
-.term-win.in-vim .t-bar { color: var(--dim); }
-.in-vim .vim { text-shadow: 0 0 6px rgba(57, 255, 136, .35); }
-.in-vim .v-txt { color: #9df5bd; }
-.in-vim .v-h1 .v-txt, .in-vim .v-h2 .v-txt { color: #39ff88; }
-.in-vim .v-line { background: rgba(57, 255, 136, .07); }
-.in-vim .v-fold .v-txt { color: #6fe39e; background: rgba(57, 255, 136, .06); }
-.in-vim .v-tilde .v-txt { color: #0f4a28; }
-.in-vim .v-cur, .in-vim .v-hl.v-cur { background: #39ff88; color: #020604; text-shadow: none; }
-.in-vim .v-hl { background: rgba(57, 255, 136, .35); color: #eafff1; }
-.in-vim .v-status { background: #04150b; }
-.in-vim .v-mode { color: #020604; text-shadow: none; }
-.in-vim .v-mode.v-normal { background: #39ff88; }
-.in-vim .v-mode.v-insert { background: #c9ffdc; }
-.in-vim .v-mode.v-command, .in-vim .v-mode.v-search { background: #1fbf63; }
-.in-vim .v-bar b { background: rgba(57, 255, 136, .14); }
-.in-vim .v-bar button:hover b, .in-vim .v-bar button:focus-visible b { background: rgba(57, 255, 136, .3); }
-.in-vim .v-panda { background: #04150b; color: #c9ffdc; }
-.in-vim .v-panda button { color: #020604; text-shadow: none; }
+/* in neovim, green and yellow pick out the highlights; everything else keeps the site's colors */
+.term-win.in-vim { --vg: #39ff88; --vy: #ffd866; }
+.in-vim .v-h1 .v-txt { color: var(--vg); }
+.in-vim .v-h2 .v-txt { color: var(--vy); }
+.in-vim .v-fold .v-txt { color: #8f93b4; background: rgba(255, 255, 255, .03); }
+.in-vim .v-fmark { color: var(--vg); }
+.in-vim .v-ftitle { color: var(--vy); }
+.in-vim .v-line .v-ln { color: var(--vy); }
+.in-vim .v-cur, .in-vim .v-hl.v-cur { background: var(--vg); color: var(--bg); }
+.in-vim .v-hl { background: var(--vy); color: var(--bg); }
+.in-vim .v-mode.v-normal { background: var(--vg); }
+.in-vim .v-mode.v-insert { background: var(--vy); }
+.in-vim .v-mode.v-command, .in-vim .v-mode.v-search { background: var(--blue); }
+.in-vim .v-pos { color: var(--vy); }
+.in-vim .t-bar b { color: var(--vg); }
+.in-vim .v-bar b { color: var(--vg); background: rgba(57, 255, 136, .1); }
+.in-vim .v-bar button:hover b, .in-vim .v-bar button:focus-visible b { background: rgba(57, 255, 136, .22); }
+.in-vim .v-panda { border-color: var(--vg); }
+.in-vim .v-panda button { background: var(--vg); }
