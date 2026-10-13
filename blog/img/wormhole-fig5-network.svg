@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" font-family="Inter, system-ui, sans-serif">
+<title>Two ways to recycle NAD+</title><desc>Glycolysis splits glucose into 2 pyruvate, making 2 ATP and turning 2 NAD+ into 2 NADH. With oxygen, mitochondria burn the pyruvate and turn NADH back into NAD+, making about 30 more ATP. Without enough oxygen, fermentation turns pyruvate and NADH into lactate and NAD+, making no extra ATP.</desc>
+<rect width="900" height="470" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="30" y="190" width="150" height="70" rx="10" fill="#62667f" fill-opacity="0.14" stroke="#62667f" stroke-width="1.5"/>
+<text x="105.0" y="219.0" fill="#1b1c29" font-size="17" font-weight="600" text-anchor="middle">glucose</text>
+<text x="105.0" y="241.0" fill="#62667f" font-size="13" text-anchor="middle">comes in from blood</text>
+<line x1="182" y1="225" x2="318" y2="225" stroke="#1b1c29" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="250" y="210" fill="#1b1c29" font-size="15" text-anchor="middle">glycolysis</text>
+<text x="250" y="250" fill="#12946b" font-size="13" text-anchor="middle">+2 ATP</text>
+<text x="250" y="268" fill="#d9622b" font-size="13" text-anchor="middle">2 NAD⁺ → 2 NADH</text>
+<rect x="322" y="190" width="150" height="70" rx="10" fill="#62667f" fill-opacity="0.14" stroke="#62667f" stroke-width="1.5"/>
+<text x="397.0" y="230.0" fill="#1b1c29" font-size="17" font-weight="600" text-anchor="middle">2 pyruvate</text>
+<path d="M474 205 C 530 150, 560 110, 600 104" fill="none" stroke="#6a4bd6" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="604" y="60" width="266" height="92" rx="10" fill="#6a4bd6" fill-opacity="0.14" stroke="#6a4bd6" stroke-width="1.5"/>
+<text x="737.0" y="100.0" fill="#1b1c29" font-size="17" font-weight="600" text-anchor="middle">mitochondria (needs O₂)</text>
+<text x="737.0" y="122.0" fill="#62667f" font-size="13" text-anchor="middle">burn pyruvate to CO₂: about +30 ATP</text>
+<text x="737" y="174" fill="#6a4bd6" font-size="13" text-anchor="middle">electron transport: NADH → NAD⁺</text>
+<path d="M474 245 C 530 300, 560 340, 600 346" fill="none" stroke="#d9622b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="604" y="300" width="266" height="92" rx="10" fill="#d9622b" fill-opacity="0.14" stroke="#d9622b" stroke-width="1.5"/>
+<text x="737.0" y="340.0" fill="#1b1c29" font-size="17" font-weight="600" text-anchor="middle">fermentation</text>
+<text x="737.0" y="362.0" fill="#62667f" font-size="13" text-anchor="middle">pyruvate + NADH → lactate + NAD⁺</text>
+<text x="737" y="414" fill="#d9622b" font-size="13" text-anchor="middle">no extra ATP; lactate leaves the cell</text>
+<text x="30" y="70" fill="#1b1c29" font-size="16" font-weight="600">The catch: NAD⁺</text>
+<text x="30" y="96" fill="#62667f" font-size="14">Glycolysis needs NAD⁺ and leaves NADH.</text>
+<text x="30" y="117" fill="#62667f" font-size="14">A cell has only so much NAD⁺, so it must</text>
+<text x="30" y="138" fill="#62667f" font-size="14">turn NADH back into NAD⁺, or glycolysis</text>
+<text x="30" y="159" fill="#62667f" font-size="14">stops. There are two ways to do it:</text>
+<text x="30" y="448" fill="#62667f" font-size="14">With oxygen, cells usually respire. Without enough oxygen they must ferment, like a sprinting muscle.</text>
+</svg>

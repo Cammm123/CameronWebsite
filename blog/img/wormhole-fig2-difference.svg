@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" font-family="Inter, system-ui, sans-serif">
+<title>Subtracting two solutions</title><desc>Two solutions of 6x + 10y = 8, (-2, 2) and (3, -1). The arrow between them is (5, -3). Moved to start at the origin, the same arrow ends on the line 6x + 10y = 0.</desc>
+<rect width="900" height="430" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<line x1="40" y1="356" x2="40" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="74" y1="356" x2="74" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="108" y1="356" x2="108" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="142" y1="356" x2="142" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="176" y1="356" x2="176" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="210" y1="356" x2="210" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="244" y1="356" x2="244" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="278" y1="356" x2="278" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="312" y1="356" x2="312" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="346" y1="356" x2="346" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="380" y1="356" x2="380" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="414" y1="356" x2="414" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="356" x2="414" y2="356" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="322" x2="414" y2="322" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="288" x2="414" y2="288" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="254" x2="414" y2="254" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="220" x2="414" y2="220" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="186" x2="414" y2="186" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="152" x2="414" y2="152" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="118" x2="414" y2="118" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="84" x2="414" y2="84" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="50" x2="414" y2="50" stroke="#e3e1ea" stroke-width="0.6"/>
+<line x1="40" y1="186" x2="414" y2="186" stroke="#62667f"/>
+<line x1="176" y1="356" x2="176" y2="50" stroke="#62667f"/>
+<line x1="40" y1="77.19999999999999" x2="414" y2="301.6" stroke="#d9622b" stroke-width="2" opacity="0.5"/>
+<line x1="40" y1="104.4" x2="414" y2="328.79999999999995" stroke="#62667f" stroke-width="1.5" stroke-dasharray="6 5"/>
+<circle cx="108" cy="118" r="7" fill="#d9622b"/>
+<circle cx="278" cy="220" r="7" fill="#d9622b"/>
+<text x="100" y="104" fill="#d9622b" font-size="15" text-anchor="middle">(-2, 2)</text>
+<text x="290" y="210" fill="#d9622b" font-size="15">(3, -1)</text>
+<line x1="108" y1="118" x2="271" y2="216" stroke="#12946b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="176" y1="186" x2="339" y2="284" stroke="#12946b" stroke-width="2.5" stroke-dasharray="2 0" marker-end="url(#arrow)"/>
+<circle cx="346" cy="288" r="5" fill="none" stroke="#12946b" stroke-width="2"/>
+<text x="346" y="314" fill="#12946b" font-size="15" text-anchor="middle">(5, -3)</text>
+<text x="484" y="64" fill="#1b1c29" font-size="16">Both solve 6x + 10y = 8:</text>
+<text x="484" y="88" fill="#62667f" font-size="16">6(-2) + 10(2) = 8</text>
+<text x="484" y="112" fill="#62667f" font-size="16">6(3) + 10(-1) = 8</text>
+<text x="484" y="136" fill="#1b1c29" font-size="16"></text>
+<text x="484" y="160" fill="#1b1c29" font-size="16">Their difference is (5, -3):</text>
+<text x="484" y="184" fill="#12946b" font-size="16">6(5) + 10(-3) = 0</text>
+<text x="484" y="208" fill="#1b1c29" font-size="16"></text>
+<text x="484" y="232" fill="#1b1c29" font-size="16">The 8s cancel, so the difference</text>
+<text x="484" y="256" fill="#1b1c29" font-size="16">solves the "= 0" equation.</text>
+<text x="484" y="280" fill="#1b1c29" font-size="16"></text>
+<text x="484" y="304" fill="#1b1c29" font-size="16">Linear algebra, in one line:</text>
+<text x="484" y="328" fill="#12946b" font-size="16">A(x1 - x2) = b - b = 0</text>
+<text x="40" y="414" fill="#62667f" font-size="14">Orange line: 6x + 10y = 8. Dashed line: 6x + 10y = 0. The same teal arrow, drawn twice.</text>
+</svg>

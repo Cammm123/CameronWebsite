@@ -25,6 +25,7 @@
   ];
   // the blog page is the source of truth for posts; this copy is only used if it can't be read
   const POSTS = [
+    ["2026-10-12", "a_wormhole_between_two_math_classes.txt", "blog/a-wormhole-between-two-math-classes.html"],
     ["2026-10-04", "growing_a_second_brain.txt", "blog/growing-a-second-brain.html"],
     ["2026-09-22", "my_first_blog.txt", "blog/first-blog.html"],
     ["2024-06-01", "the_future_of_biomedical_diagnostics.txt", "blog/future-of-biomedical-diagnostics.html"],

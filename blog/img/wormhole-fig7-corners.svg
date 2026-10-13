@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" font-family="Inter, system-ui, sans-serif">
+<title>The best choice is always at a corner</title><desc>Three cells, each with 1 glucose. With plenty of oxygen and mitochondria, the best corner is pure respiration (b = 1, 32 ATP). With no oxygen, the region collapses to a line and the best point is pure fermentation (a = 1, 2 ATP). With small mitochondria, the best corner is a = 0.75, b = 0.25: 9.5 ATP, fermenting most of the glucose even with oxygen.</desc>
+<rect width="900" height="440" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text x="40" y="40" fill="#1b1c29" font-size="16" font-weight="600">plenty of O₂ and mitochondria</text>
+<line x1="60" y1="300" x2="301.5" y2="300" stroke="#62667f"/>
+<line x1="60" y1="300" x2="60" y2="58.50000000000003" stroke="#62667f"/>
+<text x="301.5" y="318" fill="#d9622b" font-size="13" text-anchor="end">a (fermented)</text>
+<text x="54" y="64.79999999999998" fill="#6a4bd6" font-size="13" text-anchor="end">b</text>
+<polygon points="60.0,90.0 60.0,300.0 270.0,300.0" fill="#12946b" fill-opacity="0.18" stroke="#12946b" stroke-width="1.5"/>
+<line x1="60" y1="90.0" x2="301.5" y2="105.09375" stroke="#1b1c29" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+<circle cx="60" cy="90" r="8" fill="#d9622b" stroke="#1b1c29" stroke-width="1.5"/>
+<text x="40" y="338" fill="#1b1c29" font-size="15">best: a = 0, b = 1</text>
+<text x="40" y="360" fill="#12946b" font-size="15">32 ATP</text>
+<text x="330" y="40" fill="#1b1c29" font-size="16" font-weight="600">no oxygen</text>
+<line x1="350" y1="300" x2="591.5" y2="300" stroke="#62667f"/>
+<line x1="350" y1="300" x2="350" y2="58.50000000000003" stroke="#62667f"/>
+<text x="591.5" y="318" fill="#d9622b" font-size="13" text-anchor="end">a (fermented)</text>
+<text x="344" y="64.79999999999998" fill="#6a4bd6" font-size="13" text-anchor="end">b</text>
+<polygon points="560.0,300.0 350.0,300.0 350.0,300.0 560.0,300.0" fill="#12946b" fill-opacity="0.18" stroke="#12946b" stroke-width="1.5"/>
+<line x1="350" y1="286.875" x2="591.5" y2="301.96875" stroke="#1b1c29" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+<circle cx="560.0" cy="300.0" r="8" fill="#d9622b" stroke="#1b1c29" stroke-width="1.5"/>
+<text x="330" y="338" fill="#1b1c29" font-size="15">best: a = 1, b = 0</text>
+<text x="330" y="360" fill="#12946b" font-size="15">2 ATP</text>
+<text x="620" y="40" fill="#1b1c29" font-size="16" font-weight="600">small mitochondria (M = 0.5)</text>
+<line x1="640" y1="300" x2="881.5" y2="300" stroke="#62667f"/>
+<line x1="640" y1="300" x2="640" y2="58.50000000000003" stroke="#62667f"/>
+<text x="881.5" y="318" fill="#d9622b" font-size="13" text-anchor="end">a (fermented)</text>
+<text x="634" y="64.79999999999998" fill="#6a4bd6" font-size="13" text-anchor="end">b</text>
+<polygon points="797.5,247.5 640.0,247.5 640.0,300.0 850.0,300.0" fill="#12946b" fill-opacity="0.18" stroke="#12946b" stroke-width="1.5"/>
+<line x1="640" y1="237.65625" x2="881.5" y2="252.75" stroke="#1b1c29" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+<circle cx="797.5" cy="247.5" r="8" fill="#d9622b" stroke="#1b1c29" stroke-width="1.5"/>
+<text x="620" y="338" fill="#1b1c29" font-size="15">best: a = 0.75, b = 0.25</text>
+<text x="620" y="360" fill="#12946b" font-size="15">9.5 ATP</text>
+<text x="40" y="400" fill="#62667f" font-size="14">Shaded: every (a, b) the cell can afford. Dotted: all points with the same ATP as the best one.</text>
+<text x="40" y="420" fill="#62667f" font-size="14">More ATP is up and slightly right.</text>
+</svg>

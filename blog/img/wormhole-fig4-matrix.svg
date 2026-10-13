@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" font-family="Inter, system-ui, sans-serif">
+<title>Photosynthesis and respiration as a matrix</title><desc>A 4 by 2 matrix: rows glucose, oxygen, carbon dioxide and water; columns photosynthesis and respiration. Multiplying by v = (2, 1) gives how fast each molecule changes: glucose +1, oxygen +6, carbon dioxide -6, water -6.</desc>
+<rect width="900" height="400" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text x="40" y="40" fill="#1b1c29" font-size="20" font-weight="600">The matrix S</text>
+<text x="40" y="64" fill="#62667f" font-size="15">+ = made, − = used up</text>
+<text x="230" y="104" fill="#12946b" font-size="15" text-anchor="middle">photosynthesis</text>
+<text x="350" y="104" fill="#6a4bd6" font-size="15" text-anchor="middle">respiration</text>
+<text x="120" y="145" fill="#1b1c29" font-size="17" text-anchor="end">glucose</text>
+<text x="230" y="145" fill="#12946b" font-size="20" text-anchor="middle">+1</text>
+<text x="350" y="145" fill="#6a4bd6" font-size="20" text-anchor="middle">−1</text>
+<text x="120" y="197" fill="#1b1c29" font-size="17" text-anchor="end">O₂</text>
+<text x="230" y="197" fill="#12946b" font-size="20" text-anchor="middle">+6</text>
+<text x="350" y="197" fill="#6a4bd6" font-size="20" text-anchor="middle">−6</text>
+<text x="120" y="249" fill="#1b1c29" font-size="17" text-anchor="end">CO₂</text>
+<text x="230" y="249" fill="#12946b" font-size="20" text-anchor="middle">−6</text>
+<text x="350" y="249" fill="#6a4bd6" font-size="20" text-anchor="middle">+6</text>
+<text x="120" y="301" fill="#1b1c29" font-size="17" text-anchor="end">H₂O</text>
+<text x="230" y="301" fill="#12946b" font-size="20" text-anchor="middle">−6</text>
+<text x="350" y="301" fill="#6a4bd6" font-size="20" text-anchor="middle">+6</text>
+<path d="M165 116 L155 116 L155 315 L165 315" fill="none" stroke="#62667f" stroke-width="1.5"/>
+<path d="M405 116 L415 116 L415 315 L405 315" fill="none" stroke="#62667f" stroke-width="1.5"/>
+<text x="500" y="40" fill="#1b1c29" font-size="20" font-weight="600">S v, for v = (2, 1)</text>
+<text x="500" y="64" fill="#62667f" font-size="15">photosynthesis twice as fast as respiration</text>
+<line x1="720" y1="118" x2="720" y2="317" stroke="#62667f"/>
+<text x="575" y="145" fill="#1b1c29" font-size="16" text-anchor="end">glucose</text>
+<rect x="720" y="129" width="17" height="20" rx="3" fill="#d9622b"/>
+<text x="745" y="145" fill="#1b1c29" font-size="15" text-anchor="start">+1</text>
+<text x="575" y="197" fill="#1b1c29" font-size="16" text-anchor="end">O₂</text>
+<rect x="720" y="181" width="102" height="20" rx="3" fill="#d9622b"/>
+<text x="830" y="197" fill="#1b1c29" font-size="15" text-anchor="start">+6</text>
+<text x="575" y="249" fill="#1b1c29" font-size="16" text-anchor="end">CO₂</text>
+<rect x="618" y="233" width="102" height="20" rx="3" fill="#6a4bd6"/>
+<text x="610" y="249" fill="#1b1c29" font-size="15" text-anchor="end">−6</text>
+<text x="575" y="301" fill="#1b1c29" font-size="16" text-anchor="end">H₂O</text>
+<rect x="618" y="285" width="102" height="20" rx="3" fill="#6a4bd6"/>
+<text x="610" y="301" fill="#1b1c29" font-size="15" text-anchor="end">−6</text>
+<text x="730" y="118" fill="#d9622b" font-size="13">builds up →</text>
+<text x="710" y="118" fill="#6a4bd6" font-size="13" text-anchor="end">← used up</text>
+<text x="40" y="378" fill="#62667f" font-size="15">Each row of S v adds up one molecule: glucose = 1(2) + (−1)(1) = +1. Sugar and oxygen pile up; the plant is growing.</text>
+</svg>

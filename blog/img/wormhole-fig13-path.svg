@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" role="img" font-family="Inter, system-ui, sans-serif">
+<title>The path through the wormhole</title><desc>Eight stops: linear Diophantine equations and Ax = b in math class, photosynthesis and respiration as a matrix, balancing equations as a null space, fermentation and respiration as the two pathways of a null space, flux balance analysis picking the best corner, a cellular automaton from programming class, and the tumor simulation.</desc>
+<rect width="900" height="400" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="30" y="50" width="190" height="92" rx="10" fill="#12946b" fill-opacity="0.13" stroke="#12946b" stroke-width="1.5"/>
+<text x="125.0" y="80" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Diophantine equations</text>
+<text x="125.0" y="104" fill="#1b1c29" font-size="13" text-anchor="middle">one solution + "= 0" ones</text>
+<text x="125.0" y="126" fill="#62667f" font-size="12" text-anchor="middle">math class</text>
+<line x1="222" y1="96.0" x2="248" y2="96.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="250" y="50" width="190" height="92" rx="10" fill="#12946b" fill-opacity="0.13" stroke="#12946b" stroke-width="1.5"/>
+<text x="345.0" y="80" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Ax = b</text>
+<text x="345.0" y="104" fill="#1b1c29" font-size="13" text-anchor="middle">the null space</text>
+<text x="345.0" y="126" fill="#62667f" font-size="12" text-anchor="middle">linear algebra</text>
+<line x1="442" y1="96.0" x2="468" y2="96.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="470" y="50" width="190" height="92" rx="10" fill="#d9622b" fill-opacity="0.13" stroke="#d9622b" stroke-width="1.5"/>
+<text x="565.0" y="80" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Photosynthesis</text>
+<text x="565.0" y="104" fill="#1b1c29" font-size="13" text-anchor="middle">a cell as a matrix S</text>
+<text x="565.0" y="126" fill="#62667f" font-size="12" text-anchor="middle">Modern Biology</text>
+<line x1="662" y1="96.0" x2="688" y2="96.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="690" y="50" width="190" height="92" rx="10" fill="#d9622b" fill-opacity="0.13" stroke="#d9622b" stroke-width="1.5"/>
+<text x="785.0" y="80" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Balancing</text>
+<text x="785.0" y="104" fill="#1b1c29" font-size="13" text-anchor="middle">whole numbers on a null line</text>
+<text x="785.0" y="126" fill="#62667f" font-size="12" text-anchor="middle">Modern Biology</text>
+<path d="M785.0 144 L785.0 218" fill="none" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="690" y="220" width="190" height="92" rx="10" fill="#6a4bd6" fill-opacity="0.13" stroke="#6a4bd6" stroke-width="1.5"/>
+<text x="785.0" y="250" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Fermentation</text>
+<text x="785.0" y="274" fill="#1b1c29" font-size="13" text-anchor="middle">null space = 2 pathways</text>
+<text x="785.0" y="296" fill="#62667f" font-size="12" text-anchor="middle">biology + linear algebra</text>
+<line x1="688" y1="266.0" x2="662" y2="266.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="470" y="220" width="190" height="92" rx="10" fill="#6a4bd6" fill-opacity="0.13" stroke="#6a4bd6" stroke-width="1.5"/>
+<text x="565.0" y="250" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Flux balance analysis</text>
+<text x="565.0" y="274" fill="#1b1c29" font-size="13" text-anchor="middle">the best corner</text>
+<text x="565.0" y="296" fill="#62667f" font-size="12" text-anchor="middle">computational biology</text>
+<line x1="468" y1="266.0" x2="442" y2="266.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="250" y="220" width="190" height="92" rx="10" fill="#12946b" fill-opacity="0.13" stroke="#12946b" stroke-width="1.5"/>
+<text x="345.0" y="250" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">Cellular automaton</text>
+<text x="345.0" y="274" fill="#1b1c29" font-size="13" text-anchor="middle">thousands of cells</text>
+<text x="345.0" y="296" fill="#62667f" font-size="12" text-anchor="middle">programming class</text>
+<line x1="248" y1="266.0" x2="222" y2="266.0" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="220" width="190" height="92" rx="10" fill="#d9622b" fill-opacity="0.13" stroke="#d9622b" stroke-width="1.5"/>
+<text x="125.0" y="250" fill="#1b1c29" font-size="16" font-weight="600" text-anchor="middle">The simulation</text>
+<text x="125.0" y="274" fill="#1b1c29" font-size="13" text-anchor="middle">acid, evolution, Warburg</text>
+<text x="125.0" y="296" fill="#62667f" font-size="12" text-anchor="middle">warburg-sim.vercel.app</text>
+<text x="30" y="378" fill="#62667f" font-size="14">The thread through the first five stops: the balanced solutions of a linear system form a null space.</text>
+</svg>

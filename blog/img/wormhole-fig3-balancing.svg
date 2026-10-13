@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" font-family="Inter, system-ui, sans-serif">
+<title>Balancing photosynthesis with a null space</title><desc>An atom-count matrix for carbon, hydrogen and oxygen across CO2, H2O, glucose and O2. Its null space is spanned by (1, 1, 1/6, 1). Multiplying by 6 clears the fraction and gives the balanced coefficients 6, 6, 1, 6.</desc>
+<rect width="900" height="420" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text x="40" y="40" fill="#1b1c29" font-size="20" font-weight="600">1. Count atoms</text>
+<text x="40" y="62" fill="#62667f" font-size="14">reactants +, products −</text>
+<text x="130" y="100" fill="#12946b" font-size="14" text-anchor="middle">CO₂</text>
+<text x="195" y="100" fill="#12946b" font-size="14" text-anchor="middle">H₂O</text>
+<text x="270" y="100" fill="#d9622b" font-size="14" text-anchor="middle">C₆H₁₂O₆</text>
+<text x="345" y="100" fill="#d9622b" font-size="14" text-anchor="middle">O₂</text>
+<text x="70" y="140" fill="#1b1c29" font-size="17">C</text>
+<text x="130" y="140" fill="#1b1c29" font-size="17" text-anchor="middle">+1</text>
+<text x="195" y="140" fill="#62667f" font-size="17" text-anchor="middle">0</text>
+<text x="270" y="140" fill="#1b1c29" font-size="17" text-anchor="middle">−6</text>
+<text x="345" y="140" fill="#62667f" font-size="17" text-anchor="middle">0</text>
+<text x="70" y="180" fill="#1b1c29" font-size="17">H</text>
+<text x="130" y="180" fill="#62667f" font-size="17" text-anchor="middle">0</text>
+<text x="195" y="180" fill="#1b1c29" font-size="17" text-anchor="middle">+2</text>
+<text x="270" y="180" fill="#1b1c29" font-size="17" text-anchor="middle">−12</text>
+<text x="345" y="180" fill="#62667f" font-size="17" text-anchor="middle">0</text>
+<text x="70" y="220" fill="#1b1c29" font-size="17">O</text>
+<text x="130" y="220" fill="#1b1c29" font-size="17" text-anchor="middle">+2</text>
+<text x="195" y="220" fill="#1b1c29" font-size="17" text-anchor="middle">+1</text>
+<text x="270" y="220" fill="#1b1c29" font-size="17" text-anchor="middle">−6</text>
+<text x="345" y="220" fill="#1b1c29" font-size="17" text-anchor="middle">−2</text>
+<text x="40" y="270" fill="#62667f" font-size="14">Each row: atoms in = atoms out.</text>
+<text x="40" y="292" fill="#62667f" font-size="14">Balanced coefficients x solve A x = 0.</text>
+<line x1="400" y1="170" x2="455" y2="170" stroke="#62667f" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="475" y="40" fill="#1b1c29" font-size="20" font-weight="600">2. Row reduce</text>
+<text x="475" y="62" fill="#62667f" font-size="14">the null space is one line:</text>
+<text x="475" y="120" fill="#1b1c29" font-size="20">x = t · (1, 1, <tspan fill="#d9622b">1/6</tspan>, 1)</text>
+<text x="475" y="150" fill="#62667f" font-size="14">for any number t</text>
+<text x="475" y="186" fill="#d9622b" font-size="15">1/6 of a glucose molecule?</text>
+<text x="475" y="208" fill="#d9622b" font-size="15">Balanced, but not real chemistry.</text>
+<text x="475" y="260" fill="#1b1c29" font-size="20" font-weight="600">3. Make it whole</text>
+<text x="475" y="282" fill="#62667f" font-size="14">multiply by 6 (the lcm of the denominators):</text>
+<text x="475" y="322" fill="#12946b" font-size="22" font-weight="600">(6, 6, 1, 6)</text>
+<text x="475" y="352" fill="#1b1c29" font-size="16">6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂</text>
+<text x="40" y="398" fill="#62667f" font-size="14">Like the Diophantine dots in Figure 1: of all the solutions on the line, chemistry only allows whole numbers.</text>
+</svg>

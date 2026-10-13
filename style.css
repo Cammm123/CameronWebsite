@@ -556,3 +556,18 @@ blockquote.chat b { color: var(--purple); font-weight: 500; }
 .in-vim .v-bar button:hover b, .in-vim .v-bar button:focus-visible b { background: rgba(57, 255, 136, .22); }
 .in-vim .v-panda { border-color: var(--vg); }
 .in-vim .v-panda button { background: var(--vg); }
+
+/* A Wormhole Between Two Math Classes: subsections, numbered lists, equations, the decisions table, interactive figures */
+.post h3.subsec { font: 600 16px var(--sans); color: var(--text); margin: 34px 0 12px; }
+.post ol.plain { padding-left: 22px; color: var(--soft); font-size: 17px; line-height: 1.85; margin: 0 0 22px; }
+.post ol.plain li { margin-bottom: 8px; }
+.post ol.plain li::marker { color: var(--purple); font: 13px var(--mono); }
+.post ol.plain ol.plain { margin: 8px 0 0; }
+.post .eq { font: 15px/1.7 var(--mono); color: var(--text); text-align: center; background: var(--code); border-radius: 6px; padding: 10px 14px; overflow-x: auto; }
+.table-wrap { overflow-x: auto; margin: 0 0 26px; }
+table.decisions { border-collapse: collapse; font-size: 14px; line-height: 1.6; color: var(--soft); min-width: 560px; }
+table.decisions th, table.decisions td { text-align: left; vertical-align: top; padding: 9px 10px; border-top: 1px solid var(--line); }
+table.decisions th { font: 500 12px var(--mono); color: var(--dim); }
+table.decisions td:first-child { color: var(--text); font-weight: 500; }
+table.decisions tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+.post-interactive > div { min-width: 0; }
